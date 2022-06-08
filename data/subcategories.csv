@@ -1,0 +1,121 @@
+id,link,subcategory,catId
+SC001,https://www.allrecipes.com/recipes/1310/breakfast-and-brunch/eggs/breakfast-burritos/,Breakfast Burrito Recipes,C001
+SC002,https://www.allrecipes.com/recipes/144/breakfast-and-brunch/breakfast-casseroles/,Breakfast Casserole Recipes,C001
+SC003,https://www.allrecipes.com/recipes/147/breakfast-and-brunch/crepes/,Crepe Recipes,C001
+SC004,https://www.allrecipes.com/recipes/148/breakfast-and-brunch/eggs/,Egg Recipes,C001
+SC005,https://www.allrecipes.com/recipes/149/breakfast-and-brunch/french-toast/,French Toast Recipes,C001
+SC006,https://www.allrecipes.com/recipes/1564/breakfast-and-brunch/eggs/frittata/,Frittata Recipes,C001
+SC007,https://www.allrecipes.com/recipes/1311/breakfast-and-brunch/cereals/granola/,Granola Recipes,C001
+SC008,https://www.allrecipes.com/recipes/1314/breakfast-and-brunch/eggs/omelets/,Omelet Recipes,C001
+SC009,https://www.allrecipes.com/recipes/23121/breakfast-and-brunch/cereals/oatmeal/overnight-oats/,Overnight Oat Recipes,C001
+SC010,https://www.allrecipes.com/recipes/151/breakfast-and-brunch/pancakes/,Pancake Recipes,C001
+SC011,https://www.allrecipes.com/recipes/16793/main-dish/quiche/,Quiche Recipes,C001
+SC012,https://www.allrecipes.com/recipes/1316/breakfast-and-brunch/waffles/,Waffle Recipes,C001
+SC013,https://www.allrecipes.com/recipes/16376/healthy-recipes/lunches/,Healthy Lunch Recipes,C002
+SC014,https://www.allrecipes.com/recipes/251/main-dish/sandwiches/,Sandwich Recipes,C002
+SC015,https://www.allrecipes.com/recipes/17557/main-dish/sandwiches/wraps-and-roll-ups/,Sandwich Wraps and Roll-Up Recipes,C002
+SC016,https://www.allrecipes.com/recipes/12154/everyday-cooking/family-friendly/back-to-school/lunch-box/,School Lunch Ideas and Recipes,C002
+SC017,https://www.allrecipes.com/kitchen-tips/how-to/dinner-fix/,Dinner Fix,C003
+SC018,https://www.allrecipes.com/recipes/201/meat-and-poultry/chicken/,Chicken Recipes,C003
+SC019,https://www.allrecipes.com/recipes/659/meat-and-poultry/chicken/chicken-breasts/,Chicken Breasts,C003
+SC020,https://www.allrecipes.com/recipes/661/meat-and-poultry/chicken/chicken-thighs/,Chicken Thigh Recipes,C003
+SC021,https://www.allrecipes.com/recipes/200/meat-and-poultry/beef/,Beef Recipes,C003
+SC022,https://www.allrecipes.com/recipes/471/meat-and-poultry/beef/ground/,Ground Beef Recipes,C003
+SC023,https://www.allrecipes.com/recipes/95/pasta-and-noodles/,Pasta and Noodle Recipes,C003
+SC024,https://www.allrecipes.com/recipes/205/meat-and-poultry/pork/,Pork Recipes,C003
+SC025,https://www.allrecipes.com/recipes/1014/meat-and-poultry/pork/tenderloin/,Pork Tenderloin Recipes,C003
+SC026,https://www.allrecipes.com/recipes/206/meat-and-poultry/turkey/,Turkey Recipes,C003
+SC027,https://www.allrecipes.com/recipes/693/meat-and-poultry/turkey/ground/,Ground Turkey Recipes,C003
+SC028,https://www.allrecipes.com/recipes/93/seafood/,Seafood Recipes,C003
+SC029,https://www.allrecipes.com/recipes/416/seafood/fish/salmon/,Salmon Recipes,C003
+SC030,https://www.allrecipes.com/recipes/430/seafood/shellfish/shrimp/,Shrimp Recipes,C003
+SC031,https://www.allrecipes.com/recipes/17024/appetizers-and-snacks/cheese/baked-brie/,Baked Brie Recipes,C004
+SC032,https://www.allrecipes.com/recipes/16833/appetizers-and-snacks/bruschetta/,Bruschetta Recipes,C004
+SC033,https://www.allrecipes.com/recipes/663/meat-and-poultry/chicken/chicken-wings/,Chicken Wing Recipes,C004
+SC034,https://www.allrecipes.com/recipes/1240/appetizers-and-snacks/seafood/crab/crab-cakes/,Crab Cake Recipes,C004
+SC035,https://www.allrecipes.com/recipes/110/appetizers-and-snacks/deviled-eggs/,Deviled Egg Recipes,C004
+SC036,https://www.allrecipes.com/recipes/13362/appetizers-and-snacks/dips-and-spreads/fruit-dip/,Fruit Dip Recipes,C004
+SC037,https://www.allrecipes.com/recipes/434/appetizers-and-snacks/dips-and-spreads/guacamole/,Guacamole Recipes,C004
+SC038,https://www.allrecipes.com/recipes/1281/appetizers-and-snacks/dips-and-spreads/hummus/,Hummus Recipes,C004
+SC039,https://www.allrecipes.com/recipes/1241/appetizers-and-snacks/vegetable/jalapeno-poppers/,Jalapeno Popper Recipes,C004
+SC040,https://www.allrecipes.com/recipes/15852/appetizers-and-snacks/meat-and-poultry/meatball-appetizers/,Meatball Appetizers,C004
+SC041,https://www.allrecipes.com/recipes/1228/appetizers-and-snacks/cheese/nachos/,Nacho Recipes,C004
+SC042,https://www.allrecipes.com/recipes/436/appetizers-and-snacks/dips-and-spreads/salsa/,Salsa Recipes,C004
+SC043,https://www.allrecipes.com/recipes/14906/appetizers-and-snacks/vegetable/mushrooms/stuffed-mushrooms/,Stuffed Mushroom Recipes,C004
+SC044,https://www.allrecipes.com/recipes/343/bread/quick-bread/fruit-bread/banana-bread/,Banana Bread Recipes,C005
+SC045,https://www.allrecipes.com/recipes/1998/bread/quick-bread/biscuits/,Biscuit Recipes,C005
+SC046,https://www.allrecipes.com/recipes/338/bread/bread-machine/,Bread Machine Recipes,C005
+SC047,https://www.allrecipes.com/recipes/342/bread/quick-bread/cornbread/,Cornbread Recipes,C005
+SC048,https://www.allrecipes.com/recipes/355/bread/pastries/doughnuts/,Doughnut Recipes,C005
+SC049,https://www.allrecipes.com/recipes/350/bread/quick-bread/muffins/,Muffin Recipes,C005
+SC050,https://www.allrecipes.com/recipes/347/bread/quick-bread/pumpkin-bread/,Pumpkin Bread Recipes,C005
+SC051,https://www.allrecipes.com/recipes/360/bread/quick-bread/,Quick Bread Recipes,C005
+SC052,https://www.allrecipes.com/recipes/349/bread/yeast-bread/sourdough-bread/,Sourdough Bread Recipes,C005
+SC053,https://www.allrecipes.com/recipes/339/bread/yeast-bread/,Yeast Bread Recipes,C005
+SC054,https://www.allrecipes.com/recipes/348/bread/quick-bread/zucchini-bread/,Zucchini Bread Recipes,C005
+SC055,https://www.allrecipes.com/how-to/baking/,Baking Tips and Techniques,C006
+SC056,https://www.allrecipes.com/recipes/276/desserts/cakes/,Cake Recipes,C006
+SC057,https://www.allrecipes.com/recipes/860/desserts/cakes/carrot-cake/,Carrot Cake Recipes,C006
+SC058,https://www.allrecipes.com/recipes/387/desserts/cakes/cheesecake/,Cheesecake Recipes,C006
+SC059,https://www.allrecipes.com/recipes/835/desserts/cakes/chocolate-cake/,Chocolate Cake Recipes,C006
+SC060,https://www.allrecipes.com/recipes/362/desserts/cookies/,Cookie Recipes,C006
+SC061,https://www.allrecipes.com/recipes/377/desserts/cakes/cupcakes/,Cupcake Recipes,C006
+SC062,https://www.allrecipes.com/recipes/17100/desserts/frostings-and-icings/,Frosting and Icing Recipes,C006
+SC063,https://www.allrecipes.com/recipes/1556/desserts/frozen-desserts/ice-cream/,Ice Cream Recipes,C006
+SC064,https://www.allrecipes.com/recipes/2022/desserts/cobbler/peach-cobbler/,Peach Cobbler Recipes,C006
+SC065,https://www.allrecipes.com/recipes/367/desserts/pies/,Pie Recipes,C006
+SC066,https://www.allrecipes.com/recipes/16209/desserts/cakes/upside-down-cake/pineapple-upside-down-cake/,Pineapple Upside-Down Cake Recipes,C006
+SC067,https://www.allrecipes.com/recipes/395/desserts/cakes/pound-cake/,Pound Cake Recipes,C006
+SC068,https://www.allrecipes.com/recipes/1684/healthy-recipes/sugar-free/desserts/,Sugar-Free Dessert Recipes,C006
+SC069,https://www.allrecipes.com/kitchen-tips/how-to/sweet-spot/,Sweet Spot,C006
+SC070,https://www.allrecipes.com/recipes/15044/drinks/cocktails/bloody-marys/,Bloody Mary Recipes,C007
+SC071,https://www.allrecipes.com/recipes/133/drinks/cocktails/,Cocktail Recipes,C007
+SC072,https://www.allrecipes.com/recipes/134/drinks/coffee/,Coffee Drink Recipes,C007
+SC073,https://www.allrecipes.com/recipes/16832/drinks/shots/jell-o-shots/,Jell-o Shot Recipes,C007
+SC074,https://www.allrecipes.com/recipes/14933/drinks/cocktails/margaritas/,Margarita Recipes,C007
+SC075,https://www.allrecipes.com/recipes/14932/drinks/cocktails/martinis/,Martini Recipes,C007
+SC076,https://www.allrecipes.com/recipes/136/drinks/punch/,Punch Recipes,C007
+SC077,https://www.allrecipes.com/recipes/242/drinks/sangria/,Sangria Recipes,C007
+SC078,https://www.allrecipes.com/recipes/138/drinks/smoothies/,Smoothie Recipes,C007
+SC079,https://www.allrecipes.com/kitchen-tips/how-to/cocktail-hour/,Cocktail Tips and Techniques,C007
+SC080,https://www.allrecipes.com/recipes/649/meat-and-poultry/chicken/chicken-salad/,Chicken Salad Recipes,C008
+SC081,https://www.allrecipes.com/recipes/218/salad/coleslaw/,Coleslaw Recipes,C008
+SC082,https://www.allrecipes.com/recipes/15094/salad/vegetable-salads/cucumber-salad/,Cucumber Salad Recipes,C008
+SC083,https://www.allrecipes.com/recipes/1986/salad/egg-salad/,Egg Salad Recipes,C008
+SC084,https://www.allrecipes.com/recipes/211/salad/fruit-salads/,Fruit Salad Recipes,C008
+SC085,https://www.allrecipes.com/recipes/215/salad/pasta-salad/,Pasta Salad Recipes,C008
+SC086,https://www.allrecipes.com/recipes/217/salad/potato-salad/,Potato Salad Recipes,C008
+SC087,https://www.allrecipes.com/recipes/15111/salad/green-salads/spinach-salad/,Spinach Salad Recipes,C008
+SC088,https://www.allrecipes.com/recipes/2809/salad/seafood-salad/tuna-salad/,Tuna Salad Recipes,C008
+SC089,https://www.allrecipes.com/recipes/1673/side-dish/beans-and-peas/baked-beans/,Baked Bean Recipes,C009
+SC090,https://www.allrecipes.com/recipes/919/side-dish/vegetables/broccoli/,Broccoli Side Dish Recipes,C009
+SC091,https://www.allrecipes.com/recipes/1457/side-dish/potatoes/mashed-potatoes/,Mashed Potato Recipes,C009
+SC092,https://www.allrecipes.com/recipes/496/side-dish/sauces-and-condiments/sauces/pasta-sauces/,Pasta Sauce Recipes,C009
+SC093,https://www.allrecipes.com/recipes/917/side-dish/potatoes/,Potato Side Dish Recipes,C009
+SC094,https://www.allrecipes.com/recipes/224/side-dish/rice/,Rice Side Dish Recipes,C009
+SC095,https://www.allrecipes.com/recipes/210/side-dish/sauces-and-condiments/salad-dressings/,Salad Dressing Recipes,C009
+SC096,https://www.allrecipes.com/recipes/1548/side-dish/potatoes/scalloped-potatoes/,Scalloped Potato Recipes,C009
+SC097,https://www.allrecipes.com/recipes/225/side-dish/vegetables/,Vegetable Side Dish Recipes,C009
+SC098,https://www.allrecipes.com/recipes/14730/soups-stews-and-chili/stews/beef/,Beef Stew Recipes,C010
+SC099,https://www.allrecipes.com/recipes/16973/soups-stews-and-chili/soup/vegetable-soup/cabbage-soup/,Cabbage Soup Recipes,C010
+SC100,https://www.allrecipes.com/recipes/14723/soups-stews-and-chili/soup/chicken-soup/chicken-and-dumplings/,Chicken and Dumpling Recipes,C010
+SC101,https://www.allrecipes.com/recipes/173/soups-stews-and-chili/chili/,Chili Recipes,C010
+SC102,https://www.allrecipes.com/recipes/14770/soups-stews-and-chili/chowders/corn-chowder/,Corn Chowder Recipes,C010
+SC103,https://www.allrecipes.com/recipes/1426/soups-stews-and-chili/stews/gumbo/,Gumbo Recipes,C010
+SC104,https://www.allrecipes.com/recipes/1428/soups-stews-and-chili/stews/jambalaya/,Jambalaya Recipes,C010
+SC105,https://www.allrecipes.com/recipes/1552/soups-stews-and-chili/soup/vegetable-soup/potato-soup/,Potato Soup Recipes,C010
+SC106,https://www.allrecipes.com/recipes/16942/soups-stews-and-chili/soup/taco-soup/,Taco Soup Recipes,C010
+SC107,https://www.allrecipes.com/recipes/14731/soups-stews-and-chili/soup/vegetable-soup/tomato-soup/,Tomato Soup Recipes,C010
+SC108,https://www.allrecipes.com/recipes/16369/soups-stews-and-chili/soup/,More Soup Recipes,C010
+SC109,https://www.allrecipes.com/recipes/14730/soups-stews-and-chili/stews/,More Stew Recipes,C010
+SC110,https://www.allrecipes.com/kitchen-tips/health-nutrition/,Well Fed,C011
+SC111,https://www.allrecipes.com/recipes/739/healthy-recipes/diabetic/,Diabetic Recipes,C011
+SC112,https://www.allrecipes.com/recipes/741/healthy-recipes/gluten-free/,Gluten-Free Recipes,C011
+SC113,https://www.allrecipes.com/recipes/22959/healthy-recipes/keto-diet/,Keto Recipes,C011
+SC114,https://www.allrecipes.com/recipes/1232/healthy-recipes/low-calorie/,Low Calorie Recipes,C011
+SC115,https://www.allrecipes.com/recipes/742/healthy-recipes/low-carb/,Low Carb Recipes,C011
+SC116,https://www.allrecipes.com/recipes/737/healthy-recipes/low-cholesterol/,Low Cholesterol Recipes,C011
+SC117,https://www.allrecipes.com/recipes/1231/healthy-recipes/low-fat/,Low Fat Recipes,C011
+SC118,https://www.allrecipes.com/recipes/1788/healthy-recipes/low-sodium/,Low Sodium Recipes,C011
+SC119,https://www.allrecipes.com/recipes/16704/healthy-recipes/mediterranean-diet/,Mediterranean Diet Recipes,C011
+SC120,https://www.allrecipes.com/recipes/22590/healthy-recipes/whole30/,Whole30 Recipes,C011
