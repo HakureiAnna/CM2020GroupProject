@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Questionnaire</title>
+
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <style>
+      #header {
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #5c9ead;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+        margin:0;
+      }
+      #body {
+        background-color: #eeeeee;
+        color: #326273;
+        text-align: left;
+        height: 100vh;
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 10px;
+      }
+      #footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #326273;
+        color: white;
+        text-align: center;
+      }
+      #menu {
+        text-align: left;
+        width:auto;
+      }
+      #menu{
+        width:auto;
+      }
+      #profile {
+        text-align: right;
+        width:auto;
+      }
+    </style>
+  
+  </head>
+  <body>
+
+    <div class="row" id="header">
+      <div class="col" id="menu"><i class="bi bi-border-width"></i></div>
+      <div class="col-8" id="title">EAT RIGHT DAILY</div>
+      <div class="col" id="profile"><i class="bi bi-person-circle"></i></div>
+    </div>
+
+    <div id="body">
+        <h2>Let's get started!</h2>
+          <p>We're going to use the following questions to help determine your recommended total daily caloric intake.</p>
+        <form action="/action_page.php">
+            <p><label for="gender">Gender:</label><br>
+              <input type="radio" id="male" name="gender" value="male">
+              <label for="male">Male</label><br>
+              <input type="radio" id="female" name="gender" value="female">
+              <label for="female">Female</label><br>
+              <input type="radio" id="other" name="gender" value="other">
+              <label for="other">Other</label><br></p>
+            <p><label for="age">Age:</label><br>
+              <input type="text" id="age" name="age" value="Your age"><br></p>
+            <p><label for="weight">Weight: (in kgs)</label><br>
+              <input type="text" id="weight" name="weight" value="Your weight in kgs"><br></p>
+            <p><label for="exercise">Weekly Physical Exercise:</label><br>
+              <input type="radio" id="light" name="exercise" value="light">
+              <label for="light">Light (less than twice a week)</label><br>
+              <input type="radio" id="moderate" name="exercise" value="moderate">
+              <label for="moderate">Moderate (2-4 times a week)</label><br>
+              <input type="radio" id="heavy" name="exercise" value="heavy">
+              <label for="heavy">Heavy (more than 3 times a week)</label><br></p>
+            <p><label for="goal">Nutritional Goal:</label><br>
+              <input type="radio" id="weight-loss" name="goal" value="weight-loss">
+              <label for="light">Weight Loss</label><br>
+              <input type="radio" id="maintenance" name="exercise" value="maintenance">
+              <label for="moderate">Weight Maintenance</label><br>
+              <input type="radio" id="heavy" name="exercise" value="heavy">
+              <label for="heavy">Weight Gain (Bulking)</label><br></p>
+            <input type="submit" value="Submit">
+        </form>
+      </div>
+
+      <div id="footer">Footer</div>
+
+          
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
