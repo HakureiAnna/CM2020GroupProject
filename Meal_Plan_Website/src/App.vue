@@ -5,12 +5,7 @@ import Nav from "@/components/Nav.vue";
 
 <template>
   <Nav />
-
-  <div class="auth-wrapper">
-    <div class="auth-inner">
-      <RouterView />
-    </div>
-  </div>
+  <RouterView />
 </template>
 
 <style>

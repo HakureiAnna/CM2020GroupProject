@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import { useAuthStore } from "@/stores";
+
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -20,13 +23,16 @@ import { RouterLink } from "vue-router";
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink class="active" to="/">Home</RouterLink>
-          </li>
-          <li class="nav-item">
             <RouterLink to="/login">Login</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/signup">Sign Up</RouterLink>
+          </li>
+          <li class="nav-item">
+            <a @click="authStore.logout()" class="">Logout</a>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/questions">Questions</RouterLink>
           </li>
         </ul>
       </div>

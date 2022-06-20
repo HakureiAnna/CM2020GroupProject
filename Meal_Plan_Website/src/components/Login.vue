@@ -1,19 +1,21 @@
 <script setup>
 import { reactive } from "vue";
-import axios from "axios";
-
-import rounter from "../router/index";
+import { useAuthStore } from "@/stores";
 
 const login_info = reactive({
   username: "",
   password: "",
 });
 
-const handleSubmit = () => {
-  console.log(login_info);
+function handleSubmit(event) {
+  const authStore = useAuthStore();
 
-  rounter.push("/");
-};
+  return authStore
+    .login(login_info.username, login_info.password)
+    .catch((err) => {
+      console.log(err);
+    });
+}
 </script>
 
 <template>

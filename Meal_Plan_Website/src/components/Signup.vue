@@ -1,8 +1,6 @@
 <script setup>
 import { reactive } from "vue";
-import axios from "axios";
-
-import router from "../router/index";
+import { useAuthStore } from "@/stores";
 
 // A proxy object
 const signup_info = reactive({
@@ -11,23 +9,19 @@ const signup_info = reactive({
   password_confirm: "",
 });
 
-// const handleSubmit = async () => {
-//   try {
-//     // Waiting for endpoint response
-//     const response = await axios.post("signup", signup_info);
-//     console.log(response);
-//   } catch (error) {
-//     console.log(error);
-//   }
-
-//   this.$router.push("/login");
-// };
-
 // Static Transition to Login Page
 const handleSubmit = () => {
-  console.log(signup_info);
+  const authStore = useAuthStore();
 
-  router.push("/login");
+  return authStore
+    .signup(
+      signup_info.username,
+      signup_info.password,
+      signup_info.password_confirm
+    )
+    .catch((err) => {
+      console.log(err);
+    });
 };
 </script>
 

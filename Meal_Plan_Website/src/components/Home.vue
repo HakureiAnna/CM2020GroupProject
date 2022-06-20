@@ -1,24 +1,30 @@
 <script setup>
-import { ref } from "vue";
-import axios from "axios";
+import { storeToRefs } from "pinia";
 
-let user = ref(null);
+import { useAuthStore, useUsersStore } from "@/stores";
 
-const vHomeDirective = {
-  created: async () => {
-    const response = await axios.get("user");
-    console.log(response);
+const authStore = useAuthStore();
+const { user: authUser } = storeToRefs(authStore);
 
-    user.value = response;
-  },
-};
+const usersStore = useUsersStore();
+const { users } = storeToRefs(usersStore);
+
+usersStore.getAll();
 </script>
 
 <template>
   <div>
-    <h1 v-if="user.username">Hi, {{ user }}</h1>
-    <h1></h1>
+    <h1>Hi {{ authUser?.firstName }}!</h1>
+    <p>You're logged in with Fake Token(JWT)!!</p>
+    <h3>Users from secure api end point:</h3>
+    <ul v-if="users.length">
+      <li v-for="user in users" :key="user.id">
+        {{ user.firstName }} {{ user.lastName }}
+      </li>
+    </ul>
+    <div v-if="users.loading" class="spinner-border spinner-border-sm"></div>
+    <div v-if="users.error" class="text-danger">
+      Error loading users: {{ users.error }}
+    </div>
   </div>
 </template>
-
-<style></style>
