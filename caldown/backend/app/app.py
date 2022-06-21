@@ -3,14 +3,17 @@ import mysql.connector as mc
 import os
 from time import sleep
 
-sleep(5)
-
-conn = mc.connect(
-    host=os.environ['MYSQL_HOST'],
-    user=os.environ['MYSQL_USER'],
-    password=os.environ['MYSQL_PASSWORD'],
-    database=os.environ['MYSQL_DB']
-)
+while True:
+    try:
+        conn = mc.connect(
+            host=os.environ['MYSQL_HOST'],
+            user=os.environ['MYSQL_USER'],
+            password=os.environ['MYSQL_PASSWORD'],
+            database=os.environ['MYSQL_DB']
+        )
+        break
+    except:
+        sleep(10)
 
 app = Flask(__name__)
 

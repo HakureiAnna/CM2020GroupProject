@@ -1,14 +1,36 @@
 version: "3.9"
 
 services:
+  frontend:
+  ### START DEV
+    image: node:12.18.1
+    command: sh -c "npm install && npm run dev"
+    volumes:
+      - ./frontend/app:/app
+  ### END DEV
+  ### START RELEASE
+#    build:
+#      context: .
+#      dockerfile: ./frontend/frontend.Dockerfile
+  ### END RELEASE
+    working_dir: /app
+    ports:
+    - 8080:3000
+    environment:   
+      BACKEND_HOST: backend
+      BACKEND_PORT: 5000
+    depends_on:
+      - "backend"
   backend:
     build:
       context: .
       dockerfile: ./backend/backend.Dockerfile
     depends_on:
-      - "dbserver"
+      - "dbserver"   
+### START DEV
     ports:
-      - "8000:5000"      
+    - 8081:5000 
+### END DEV
     working_dir: /app
     environment:
       MYSQL_HOST: dbserver
