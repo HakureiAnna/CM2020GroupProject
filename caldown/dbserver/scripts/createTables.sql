@@ -1,0 +1,12 @@
+CREATE TABLE users (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(20),
+	password VARCHAR(256),
+	datecreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	datelastloggedin TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	status INT NOT NULL
+);
+
+INSERT INTO users(username, password, status)
+VALUES
+('testuser', (SHA2(CONCAT('password'), 256)), 0);
