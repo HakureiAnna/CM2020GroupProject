@@ -68,8 +68,8 @@ def login():
         c.execute(q, args)
     return createToken(uid)
 
-@app.route('/logoff', methods=['POST'])
-def logoff():
+@app.route('/logout', methods=['POST'])
+def logout():
     tok = request.form['tok']
     uid = checkToken(tok)
     if uid is None:
