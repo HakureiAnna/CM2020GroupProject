@@ -1,5 +1,5 @@
 CREATE TABLE users (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id VARCHAR(36) PRIMARY KEY,
 	username VARCHAR(20),
 	password VARCHAR(256),
 	datecreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -7,6 +7,18 @@ CREATE TABLE users (
 	status INT NOT NULL
 );
 
-INSERT INTO users(username, password, status)
+CREATE TABLE profiles(
+	id VARCHAR(36) PRIMARY KEY,
+	age INT NOT NULL,
+	weight INT NOT NULL,
+	height INT NOT NULL,
+	gender INT NOT NULL,
+	userid VARCHAR(36),
+	datecreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY userid REFERENCES user(id) ON DELETE CASCADE
+);
+	
+
+INSERT INTO users(id, username, password, status)
 VALUES
-('testuser', (SHA2(CONCAT('password'), 256)), 0);
+(UUID(), 'testuser', (SHA2(CONCAT('password'), 256)), 0);

@@ -41,5 +41,7 @@ services:
     build:
       context: .
       dockerfile: ./dbserver/dbserver.Dockerfile
+    ports:
+    - 8082:3306
     volumes:
       - ./dbserver/data:/var/lib/mysql
