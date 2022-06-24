@@ -34,7 +34,7 @@ services:
   dbserver:
     build:
       context: .
-      dockerfile: ./dbserver/dbserver.Dockerfile
+      dockerfile: ./dbserver/dbserver.Dockerfile      
     volumes:
       - ./dbserver/data:/var/lib/mysql
   proxy:
