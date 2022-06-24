@@ -118,7 +118,7 @@ def logout():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
-        tok = request.args.get('userid')
+        tok = request.args.get('token')
         uid = checkToken(tok)
         return getProfile(uid)
     else:                
