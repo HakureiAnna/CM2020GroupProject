@@ -5,6 +5,7 @@ import jwt
 import mysql.connector as mc
 import os
 from time import sleep
+import uuid
 
 def createToken(sub):
     delta = int(os.environ['JWT_DELTA'])
@@ -28,12 +29,15 @@ def checkUser(token, conn):
     data = checkToken(token)
     if data is None:
         return False
+    
+    uid = data['sub']
     with conn.cursor() as c:
-        q = 'SELECT COUNT(*) FROM users WHERE id == %s'
-        args = (data['sub'])
+        q = 'SELECT COUNT(*) FROM users WHERE id = %s'
+        args = (uid,)
         c.execute(q, args)
         retVal = c.fetchall()
-        return len(retVal) == 1
+        if retVal[0][0] == 1:
+            return uid
     return False
 
 while True:
@@ -50,10 +54,31 @@ while True:
 
 app = Flask(__name__)
 
+#####################################
+# THIS IS USED FOR ENDPOINT TESTING
+# REMOVE IN FINAL VERSION
+#####################################
+@app.route('/users', methods=['GET'])
+def users():
+    data = [
+        {
+            'firstName': 'alice',
+            'lastName': 'smith',
+        },
+        {
+            'firstName': 'john',
+            'lastName': 'smith'
+        }
+    ]
+    return jsonify(data)
+#####################################
+        
+
 @app.route('/login', methods=['POST'])
 def login():
-    user = request.form['user']
-    pw = request.form['pass']
+    data = request.get_json()
+    user = data['user']
+    pw = data['pass']
     pw = hashlib.sha256(pw.encode()).hexdigest()
     q = 'SELECT id FROM users WHERE username=%s AND password=%s'
     args = (user, pw)
@@ -66,11 +91,15 @@ def login():
         q = 'UPDATE users SET status=1 WHERE id=%s'
         args = (uid,)
         c.execute(q, args)
-    return createToken(uid)
+    retVal = {
+        'token': createToken(uid)
+    }
+    return jsonify(retVal)
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    tok = request.form['tok']
+    data = request.get_json()
+    tok = data['token']
     uid = checkToken(tok)
     if uid is None:
         return abort(401)
@@ -89,9 +118,75 @@ def logout():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
-        return abort(501)
-    else:
-        return abort(501)
+        tok = request.args.get('userid')
+        uid = checkToken(tok)
+        return getProfile(uid)
+    else:                
+        data = request.get_json()
+        tok = data['token']
+        uid = checkToken(tok)
+        # weight, height, gender, age
+        if uid is None:
+            return abort(401)
+        weight = data['weight']
+        height = data['height']
+        gender = data['gender']
+        age = data['age']
+        if weight is None or height is None or gender is None or age is None:
+            abort(400)
+        try:
+            weight = int(weight)
+            height = int(height)
+            gender = int(gender)
+            age = int(age)
+        except:
+            abort(400)
+        args = {
+            'weight': weight,
+            'height': height,
+            'gender': gender,
+            'age': age
+        }
+        return postProfile(uid, args)
     
+def getProfile(uid):
+    with conn.cursor() as c:
+        q = 'SELECT weight, height, gender, age FROM profiles WHERE userid=%s'
+        args = (uid,)
+        c.execute(q, args)
+        retVal = c.fetchall()
+        if len(retVal) != 1:
+            return abort(400)
+        retVal = {
+            'weight': retVal[0][0],
+            'height': retVal[0][1],
+            'gender': retVal[0][2],
+            'age': retVal[0][3]
+        }
+    return jsonify(retVal)
+
+def postProfile(uid, args):
+    with conn.cursor() as c:
+        q = 'SELECT COUNT(*) FROM profiles WHERE userid=%s'
+        sargs = (uid,)
+        c.execute(q, sargs)
+        retVal = c.fetchall()
+        print(retVal)
+        if retVal[0][0] == 0:
+            q = 'INSERT INTO profiles (id, userid, weight, height, gender, age) VALUES(%s, %s, %s, %s, %s, %s)'
+            sargs = (str(uuid.uuid4()), uid, args['weight'], args['height'], args['gender'], args['age'])
+            c.execute(q, sargs)
+        else:
+            q = 'UPDATE profiles SET weight=%s, height=%s, gender=%s, age=%s WHERE userid=%s'
+            sargs = (args['weight'], args['height'], args['gender'], args['age'], uid)
+            c.execute(q, sargs)
+        try:
+            conn.commit()
+        except:
+            abort(500)
+    return jsonify({
+        'message': 'ok'
+    })        
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
