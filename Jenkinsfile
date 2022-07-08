@@ -1,11 +1,12 @@
 pipeline {
 	agent any
+	
 	stages {
 		stage('test') {
 			steps {
-				docker-compose -f caldown/docker-compose.yaml up --build
-				pytest caldown/backend/tests
+				docker-compose up -f .\caldown\docker-compose.yaml --build
+				pytest caldown\backend\tests
 			}
-		}
+		} 
 	}
 }
