@@ -4,8 +4,8 @@ pipeline {
 	stages {
 		stage('test') {
 			steps {
-				docker-compose up -f .\caldown\docker-compose.yaml --build
-				pytest caldown\backend\tests
+				sh 'docker-compose up -f .\caldown\docker-compose.yaml --build'
+				sh 'pytest caldown\backend\tests'
 			}
 		} 
 	}
