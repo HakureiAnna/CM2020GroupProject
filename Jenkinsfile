@@ -4,7 +4,6 @@ pipeline {
 	stages {
 		stage('test') {
 			steps {
-				bat "echo $PATH"
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
 				sleep 45
 				bat 'pytest "caldown/backend/tests"'
