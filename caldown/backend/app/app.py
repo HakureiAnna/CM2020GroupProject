@@ -69,7 +69,7 @@ def logout():
         return abort(401)        
     with conn.cursor() as c:
         q = 'SELECT status FROM users WHERE id=%s'
-        args = (uid,)
+        args = (uid)
         c.execute(q, args)
         retVal = c.fetchall()
         if len(retVal) != 1:
@@ -78,6 +78,42 @@ def logout():
             q = 'UPDATE users SET status=0 WHERE id=%s'
             c.execute(q, args)
     return jsonify(message='logged off successfully')
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    user = data['user']
+    pw = data['pass']
+
+    # check conditions
+    # user name valid
+    # password valid
+
+    pw = hashlib.sha256(pw.encode()).hexdigest()
+    q = 'SELECT id FROM users WHERE username=%s'
+    args = (user,)
+    with conn.cursor() as c:
+        c.execute(q, args)
+        retVal = c.fetchall()
+        if len(retVal) != 0:
+            retVal = {
+                message: 'user already exists'
+            }
+            return jsonify(retVal)
+        q = 'INSERT INTO users(username, password) VALUES (%s, %s)'
+        args = (user, pw)
+        c.execute(q, args)
+        q = 'SELECT id FROM users WHERE username=%s'
+        args = (user)
+        c.execute(q.args)
+        retVal = c.fetchall()
+        uid = retVal[0][0]
+    retVal = {
+        'token': createToken(uid)
+    }
+    return jsonify(retVal)
+
+
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():    
