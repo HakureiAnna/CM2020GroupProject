@@ -69,7 +69,7 @@ def logout():
         return abort(401)        
     with conn.cursor() as c:
         q = 'SELECT status FROM users WHERE id=%s'
-        args = (uid)
+        args = (uid,)
         c.execute(q, args)
         retVal = c.fetchall()
         if len(retVal) != 1:
@@ -97,22 +97,21 @@ def signup():
         retVal = c.fetchall()
         if len(retVal) != 0:
             retVal = {
-                message: 'user already exists'
+                'message': 'user already exists'
             }
             return jsonify(retVal)
-        q = 'INSERT INTO users(username, password) VALUES (%s, %s)'
-        args = (user, pw)
+        q = 'INSERT INTO users(id, username, password, status) VALUES (%s, %s, %s, %s)'
+        args = (createUUID(), user, pw, '0')
         c.execute(q, args)
         q = 'SELECT id FROM users WHERE username=%s'
-        args = (user)
-        c.execute(q.args)
+        args = (user,)
+        c.execute(q, args)
         retVal = c.fetchall()
         uid = retVal[0][0]
     retVal = {
         'token': createToken(uid)
     }
     return jsonify(retVal)
-
 
 
 @app.route('/profile', methods=['GET', 'POST'])

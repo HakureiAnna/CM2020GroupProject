@@ -4,6 +4,8 @@ import jwt
 import os
 import uuid
 
+def createUUID():
+    return str(uuid.uuid4())
 
 def getProfile(conn, uid):
     with conn.cursor() as c:
