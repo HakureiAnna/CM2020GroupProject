@@ -2,6 +2,8 @@ pipeline {
 	agent any
 	
 	stages {
+		stage('pull') {
+		}
 		stage('build') {
 			steps {			
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
