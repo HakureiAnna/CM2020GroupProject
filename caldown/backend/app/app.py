@@ -23,6 +23,8 @@ app = Flask(__name__)
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    if data is None:
+        return abort(401)
     if 'user' not in data:
         return abort(401)
     if 'pass' not in data:
