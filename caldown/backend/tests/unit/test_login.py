@@ -4,7 +4,6 @@ import mysql.connector as mc
 import requests
 
 def test_login():    
-    uid = requests.post(url, verify=False).json()['id']
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
