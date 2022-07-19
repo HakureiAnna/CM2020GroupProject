@@ -23,12 +23,10 @@ app = Flask(__name__)
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    if data is None:
-        return abort(401)
     if 'user' not in data:
-        return abort(401)
+        return abort(400)
     if 'pass' not in data:
-        return abort(401)
+        return abort(400)
     user = data['user']
     pw = data['pass']
     pw = hashlib.sha256(pw.encode()).hexdigest()

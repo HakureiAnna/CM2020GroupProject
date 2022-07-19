@@ -7,7 +7,7 @@ def test_login_no_data():
     url = 'https://localhost/api/login'
     retVal = requests.post(url,
         verify=False).status_code
-    assert retVal == 401
+    assert retVal == 400
 
 def test_login_missing_data():
     url = 'https://localhost/api/login'
@@ -17,7 +17,7 @@ def test_login_missing_data():
     retVal = requests.post(url,
         verify=False,
         json=data).status_code
-    assert retVal == 401
+    assert retVal == 400
 
 
 def test_login_invalid_credentials():

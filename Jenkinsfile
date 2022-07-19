@@ -5,6 +5,8 @@ pipeline {
 		stage('pull') {
 			steps {
 				echo 'pulled from GitHub'
+				bat 'rmdir caldown/dbserverdata/ /S /Q'
+				batr 'md caldonw/dbserver/data/'
 			}
 		}
 		stage('build') {
