@@ -45,4 +45,18 @@ def test_login_valid_credentials():
     assert len(sub) == 36
 
 def test_login_already_logged_in():
-    assert True
+    
+    url = 'https://localhost/api/login'
+    data = {
+        'user': 'testuser',
+        'pass': 'password'
+    }
+    # log in
+    requests.post(url, 
+            verify=False,
+            json=data)
+    # log in aggain
+    retVal = requests.post(url, 
+            verify=False,
+            json=data).json()
+    assert retVal['message'] == 'already logged in'
