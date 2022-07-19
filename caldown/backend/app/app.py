@@ -27,6 +27,7 @@ def login():
         return abort(400)
     if 'pass' not in data:
         return abort(400)
+    print(data)
     user = data['user']
     pw = data['pass']
     pw = hashlib.sha256(pw.encode()).hexdigest()

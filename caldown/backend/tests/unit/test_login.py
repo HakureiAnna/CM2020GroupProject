@@ -11,7 +11,7 @@ def test_login_invalid_method():
     }
     retVal = requests.get(url, 
             verify=False).status_code
-    assert retVal == 500
+    assert retVal == 405
 
 def test_login_no_data():
     url = 'https://localhost/api/login'
