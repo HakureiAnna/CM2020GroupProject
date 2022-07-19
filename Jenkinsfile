@@ -4,9 +4,6 @@ pipeline {
 	stages {
 		stage('pull') {
 			steps {
-				dir('caldown/dbserver/data') {
-					deletedir()
-				}
 				echo 'pulled from GitHub'
 			}
 		}
