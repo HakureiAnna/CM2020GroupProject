@@ -1,8 +1,11 @@
 import json
-import requests
 import jwt
+import mysql.connector as mc
+import requests
 
-def test_login():
+def test_login():    
+    assert len(retval) == 1
+    uid = requests.post(url, verify=False).json()['id']
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -11,5 +14,6 @@ def test_login():
     retVal = requests.post(url, 
             verify=False,
             json=data).json()
-    sub = jwt.decode(retVal['token'], 'p@ssw0rd123', algorithms=['HS256'])['sub']
-    assert sub == 'e1fc7bf0-f3c5-11ec-bbd2-0242ac160003'
+    try:
+        sub = jwt.decode(retVal['token'], 'p@ssw0rd123', algorithms=['HS256'])['sub']
+    assert len(sub) == 36

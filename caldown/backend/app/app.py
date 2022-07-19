@@ -20,26 +20,6 @@ while True:
 
 app = Flask(__name__)
 
-#####################################
-# THIS IS USED FOR ENDPOINT TESTING
-# REMOVE IN FINAL VERSION
-#####################################
-@app.route('/users', methods=['GET'])
-def users():
-    data = [
-        {
-            'firstName': 'alice',
-            'lastName': 'smith',
-        },
-        {
-            'firstName': 'john',
-            'lastName': 'smith'
-        }
-    ]
-    return jsonify(data)
-#####################################
-        
-
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
