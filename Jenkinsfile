@@ -4,6 +4,7 @@ pipeline {
 	stages {
 		stage('pull') {
 			steps {
+				echo 'pulled from GitHub'
 			}
 		}
 		stage('build') {
