@@ -30,22 +30,17 @@ def login():
     user = data['user']
     pw = data['pass']
     pw = hashlib.sha256(pw.encode()).hexdigest()
-    q = 'SELECT id, status FROM users WHERE username=%s AND password=%s'
+    q = 'SELECT id FROM users WHERE username=%s AND password=%s'
     args = (user, pw)
     with conn.cursor() as c:
         c.execute(q, args)
         retVal = c.fetchall()
         if len(retVal) == 0:
             return abort(401)
-        if retVal[0][1] == 1:
-            return jsonify({
-                'message': 'already logged in'
-            })
         uid = retVal[0][0]
         q = 'UPDATE users SET status=1 WHERE id=%s'
         args = (uid,)
-        c.execute(q, args)
-
+        c.execute(q, args)    
     retVal = {
         'token': createToken(uid)
     }
