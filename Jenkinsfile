@@ -3,6 +3,8 @@ pipeline {
 	
 	stages {
 		stage('pull') {
+			steps {
+			}
 		}
 		stage('build') {
 			steps {			
