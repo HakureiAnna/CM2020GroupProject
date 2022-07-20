@@ -50,6 +50,7 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     auth_hdr = (request.headers.get('Authorization', None)
+    print('TESTING: ' + auth_hdr)
     if auth_hdr is None:
         return abort(401)
     uid = checkUser(conn, auth_hdr)
