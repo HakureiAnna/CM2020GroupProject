@@ -51,7 +51,7 @@ def login():
 def logout():
     if 'Authorization' not in request.headers:
         return abort(401)
-    uid = checkUser(conn, request.headers['Authorization'])
+    uid = checkUser(conn, request.headers.get('Authorization'))
     if uid is None:
         return abort(401)        
     with conn.cursor() as c:
