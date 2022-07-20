@@ -30,7 +30,7 @@ def test_login_expired_token():
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
-        'pass': 'test123'
+        'pass': 'password'
     }    
     retVal = requests.post(url, 
             verify=False,

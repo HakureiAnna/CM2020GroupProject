@@ -64,7 +64,7 @@ def logout():
         if retVal[0][0] == 1:
             q = 'UPDATE users SET status=0 WHERE id=%s'
             c.execute(q, args)
-    return jsonify({message:'logged off successfully'})
+    return jsonify({'message':'logged off successfully'})
 
 @app.route('/signup', methods=['POST'])
 def signup():
