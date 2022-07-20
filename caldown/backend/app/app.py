@@ -51,7 +51,7 @@ def login():
 def logout():
     auth_hdr = (request.headers.get('Authorization', None)
     if auth_hdr is None:
-    return abort(401)
+        return abort(401)
     uid = checkUser(conn, auth_hdr)
     if uid is None:
         return abort(401)        
