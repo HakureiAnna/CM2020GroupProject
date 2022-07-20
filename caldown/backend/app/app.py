@@ -49,6 +49,8 @@ def login():
 
 @app.route('/logout', methods=['POST'])
 def logout():
+    if 'Authorization' not in request.headers:
+        return abort(401)
     uid = checkUser(conn, request.headers['Authorization'])
     if uid is None:
         return abort(401)        

@@ -53,7 +53,7 @@ def test_login_expired_token():
     assert retVal == 401
 
 
-def test_login_valid_token():    
+def test_logout_valid_token():    
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -67,7 +67,7 @@ def test_login_valid_token():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    retVal = request.post(url,
+    retVal = requests.post(url,
         verify=False,
         headers=headers).json()
     assert retVal['message'] == 'logged off successfully'
