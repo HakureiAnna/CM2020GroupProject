@@ -5,10 +5,6 @@ import requests
 
 def test_login_invalid_method():    
     url = 'https://localhost/api/login'
-    data = {
-        'user': 'testuser',
-        'pass': 'password'
-    }
     retVal = requests.get(url, 
             verify=False).status_code
     assert retVal == 405
