@@ -10,7 +10,7 @@ pipeline {
 		stage('build') {
 			steps {			
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
-				sleep 45
+				sleep 25
 			}
 		}
 		stage('test') {

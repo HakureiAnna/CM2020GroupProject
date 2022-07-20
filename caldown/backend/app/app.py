@@ -27,7 +27,6 @@ def login():
         return abort(400)
     if 'pass' not in data:
         return abort(400)
-    print(data)
     user = data['user']
     pw = data['pass']
     pw = hashlib.sha256(pw.encode()).hexdigest()
@@ -53,7 +52,7 @@ def logout():
     if auth_hdr is None:
         return abort(401)
     uid = checkUser(conn, auth_hdr)
-    if uid is None:
+    if not uid:
         return abort(401)        
     with conn.cursor() as c:
         q = 'SELECT status FROM users WHERE id=%s'
@@ -65,7 +64,7 @@ def logout():
         if retVal[0][0] == 1:
             q = 'UPDATE users SET status=0 WHERE id=%s'
             c.execute(q, args)
-    return jsonify(message='logged off successfully')
+    return jsonify({message:'logged off successfully'})
 
 @app.route('/signup', methods=['POST'])
 def signup():
