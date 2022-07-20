@@ -13,7 +13,7 @@ def test_logout_no_data():
     url = 'https://localhost/api/logout'
     retVal = requests.post(url,
         verify=False).status_code
-    assert retVal == 400
+    assert retVal == 401
 
 def test_logout_invalid_token():
     url = 'https://localhost/api/logout'
@@ -23,7 +23,7 @@ def test_logout_invalid_token():
     retVal = requests.post(url,
         verify=False,
         headers=headers).status_code
-    assert retVal == 400
+    assert retVal == 401
 
 
 def test_login_expired_token():
