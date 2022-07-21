@@ -56,5 +56,6 @@ def test_signup_new_user():
     }
     retVal = requests.post(url, 
             verify=False,
-            json=data).json()            
-    assert len(retVal['token'] )== 36
+            json=data).json()      
+    sub = jwt.decode(retVal['token'], 'p@ssw0rd123', algorithms=['HS256'])['sub']      
+    assert len(sub)== 36
