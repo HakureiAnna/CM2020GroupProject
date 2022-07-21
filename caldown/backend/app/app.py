@@ -88,9 +88,9 @@ def signup():
         return abort(400)
 
     pw = hashlib.sha256(pw.encode()).hexdigest()
-    q = 'SELECT id FROM users WHERE username=%s'
-    args = (user,)
     with conn.cursor() as c:
+        q = 'SELECT id FROM users WHERE username=%s'
+        args = (user,)
         c.execute(q, args)
         retVal = c.fetchall()
         if len(retVal) != 0:

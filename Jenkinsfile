@@ -11,7 +11,7 @@ pipeline {
 			steps {			
 				bat 'mkdir \"caldown/dbserver/data\"'
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
-				sleep 25
+				sleep 20
 			}
 		}
 		stage('test') {
@@ -19,12 +19,16 @@ pipeline {
 				bat 'pytest "caldown/backend/tests"'
 			}
 		} 
+		
+		stage('cleanup') {
+			steps {
+				echo 'cleaning up'
+			}
+		}
 	}
 	post {	
 		always {
 			bat 'docker compose -f caldown/docker-compose.yaml down'
-			sleep 20
-			bat 'docker system prune'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 		}
 	}			
