@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, abort
 import hashlib
 import mysql.connector as mc
 import os
+from string import punctuation
 from time import sleep
 
 from util import *
@@ -69,12 +70,23 @@ def logout():
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
+    if 'user' not in data:
+        return abort(400)
+    if 'pass' not in data:
+        return abort(400)
     user = data['user']
     pw = data['pass']
 
+
     # check conditions
     # user name valid
+    userValid = len(user) >= 8
+    userValid &= userValid[0].isalpha()
     # password valid
+    passValid = len(pw) >= 12
+    passValid &= any(ch.isdigit() for ch in pw) and any(ch.isalpha() for ch in pw) and any(p in pw for p in punctuation)
+    if not userValid or not passValid:
+        return abort(400)
 
     pw = hashlib.sha256(pw.encode()).hexdigest()
     q = 'SELECT id FROM users WHERE username=%s'

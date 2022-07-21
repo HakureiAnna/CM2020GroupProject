@@ -26,7 +26,6 @@ def test_logout_invalid_token():
         headers=headers).status_code
     assert retVal == 401
 
-
 def test_login_expired_token():
     url = 'https://localhost/api/login'
     data = {
