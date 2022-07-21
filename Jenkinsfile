@@ -22,9 +22,10 @@ pipeline {
 	}
 	post {	
 		always {
-			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
-			bat 'docker compose down'
+			bat 'docker compose -f caldown/docker-compose.yaml down'
+			sleep 20
 			bat 'docker system prune'
+			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 		}
 	}			
 }

@@ -80,7 +80,7 @@ def signup():
     # check conditions
     # user name valid
     userValid = len(user) >= 8
-    userValid &= userValid[0].isalpha()
+    userValid &= user[0].isalpha()
     # password valid
     passValid = len(pw) >= 12
     passValid &= any(ch.isdigit() for ch in pw) and any(ch.isalpha() for ch in pw) and any(p in pw for p in punctuation)
