@@ -77,7 +77,6 @@ def signup():
     user = data['user']
     pw = data['pass']
 
-
     # check conditions
     # user name valid
     userValid = len(user) >= 8

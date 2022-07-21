@@ -9,7 +9,7 @@ def test_signup_missing_data():
     data = {
         'user': 'haha'
     }
-    retVal = requests.get(url, 
+    retVal = requests.post(url, 
             verify=False,
             json=data).status_code
     assert retVal == 400
@@ -27,13 +27,12 @@ def test_signup_invalid_username():
 
 def test_signup_invalid_password():    
     url = 'https://localhost/api/signup'
-    headers = {
+    data = {
         'user': 'leeroyjenkins',
         'pass': 'password'
     }
     retVal = requests.post(url,
         verify=False,
-        headers=headers,
         json=data).status_code
     assert retVal == 400
 

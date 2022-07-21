@@ -19,12 +19,12 @@ pipeline {
 				bat 'pytest "caldown/backend/tests"'
 			}
 		} 
-		stage('cleanup') {
-			steps {
-				bat 'rmdir \"caldown/dbserver/data\" /S /Q'
-				bat 'docker compose down'
-				bat 'docker system prune'
-			}
-		}
 	}
+	post {	
+		always {
+			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
+			bat 'docker compose down'
+			bat 'docker system prune'
+		}
+	}			
 }
