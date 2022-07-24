@@ -31,5 +31,8 @@ pipeline {
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 		}
+		success {
+			bat 'docker system prune'
+		}
 	}			
 }

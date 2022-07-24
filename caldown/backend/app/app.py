@@ -21,6 +21,24 @@ while True:
 
 app = Flask(__name__)
 
+#############################################
+# test use
+@app.route('/users', methods=['GET'])
+def getUsers():
+    return jsonify([
+            {
+                'firstName': 'John',
+                'lastName': 'Smith'
+            },
+            {
+                'firstName': 'Jane',
+                'lastName': 'Smith'
+            }
+        ]        
+    )
+# test use
+#############################################
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
