@@ -51,7 +51,7 @@ def test_signup_existing_user():
 def test_signup_new_user():    
     url = 'https://localhost/api/signup'
     data = {
-        'user': 'testuser1',
+        'user': 'testuser2',
         'pass': 'p@ssw0rd!234'
     }
     retVal = requests.post(url, 
@@ -62,7 +62,7 @@ def test_signup_new_user():
     
     url = 'https://localhost/api/deactivate'
     data = {
-        'user': 'testuser1',
+        'user': 'testuser2',
         'pass': 'p@ssw0rd!234'
     }
     headers = {

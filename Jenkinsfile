@@ -10,7 +10,7 @@ pipeline {
 		stage('build') {
 			steps {			
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
-				sleep 20
+				sleep 10
 			}
 		}
 		stage('test') {
@@ -27,6 +27,7 @@ pipeline {
 	}
 	post {	
 		success {
+			sleep 60
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 			bat 'docker system prune'
@@ -34,7 +35,7 @@ pipeline {
 		}
 		
 		failure {
-			sleep 300			
+			sleep 180			
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 			bat 'docker system prune'

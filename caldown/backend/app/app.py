@@ -169,7 +169,6 @@ def deactivate():
     auth_hdr = request.headers.get('Authorization', None)
     if auth_hdr is None:
         return abort(401)
-    uid = checkUser(conn, auth_hdr)
     data = request.get_json()
     if 'user' not in data:
         return abort(400)
@@ -178,6 +177,7 @@ def deactivate():
     user = data['user']
     pw = data['pass']
 
+    uid = checkUser(conn, auth_hdr)
     if not uid:
         return abort(401)
 
@@ -190,7 +190,7 @@ def deactivate():
             return abort(401)
     
     return jsonify({
-        'message': 'user account deactivated permanently.'
+        'message': 'user account deactivated permanently'
     })
             
 if __name__ == '__main__':

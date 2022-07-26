@@ -4,13 +4,13 @@ import jwt
 import mysql.connector as mc
 import requests
 
-def test_logout_invalid_method():    
+def test_deactivate_invalid_method():    
     url = 'https://localhost/api/deactivate'
     retVal = requests.get(url, 
             verify=False).status_code
     assert retVal == 405
 
-def test_logout_no_token():
+def test_deactivate_no_token():
     url = 'https://localhost/api/deactivate'
     data = {
         'user': 'testuser',
@@ -21,7 +21,7 @@ def test_logout_no_token():
         json=data).status_code
     assert retVal == 401
 
-def test_logout_no_data():
+def test_deactivate_no_data():
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -39,7 +39,7 @@ def test_logout_no_data():
         headers=headers).status_code
     assert retVal == 400
 
-def test_login_missing_data():
+def test_deactivatemissing_data():
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -63,7 +63,7 @@ def test_login_missing_data():
     assert retVal == 400
 
 
-def test_logout_valid_arguments():  
+def test_deactivate_valid_arguments():  
     url = 'https://localhost/api/signup'
     data = {
         'user': 'testuser1',
