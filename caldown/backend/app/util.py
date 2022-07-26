@@ -9,7 +9,7 @@ def createUUID():
 
 def getProfile(conn, uid):
     with conn.cursor() as c:
-        q = 'SELECT weight, height, gender, age FROM profiles WHERE userid=%s'
+        q = 'SELECT weight, height, gender, age FROM profiles WHERE userid=%s ORDER BY datecreated DESC LIMIT 1'
         args = (uid,)
         c.execute(q, args)
         retVal = c.fetchall()

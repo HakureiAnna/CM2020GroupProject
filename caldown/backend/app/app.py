@@ -36,6 +36,7 @@ def getUsers():
             }
         ]        
     )
+
 # test use
 #############################################
 
@@ -129,10 +130,12 @@ def signup():
     }
     return jsonify(retVal)
 
-
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():    
-    uid = checkUser(conn, request.headers['Authorization'])
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return 401
+    uid = checkUser(conn, auth_hdr)
     if uid is None:
         return abort(401)
     if request.method == 'GET':
@@ -160,6 +163,35 @@ def profile():
             'age': age
         }
         return postProfile(conn, uid, args)
+
+@app.route('/deactivate', method=['POST'])
+def deactivate():
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+    uid = checkUser(conn, auth_hdr)
+    data = request.get_json()
+    if 'user' not in data:
+        return abort(400)
+    if 'pass' not in data:
+        return abort(400)
+    user = data['user']
+    pw = data['pass']
+
+    if not uid:
+        return abort(401)
+
+    with conn.cursor() as c:
+        q = 'DELETE FROM users WHERE id=%s AND username=%s and password=%s'
+        args = (uid, user, pw)
+        try:
+            c.execute(q, args)
+        except:
+            return abort(401)
+    
+    return jsonify({
+        'message': 'user account deactivated permanently.'
+    })
             
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
