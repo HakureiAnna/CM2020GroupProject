@@ -164,7 +164,7 @@ def profile():
         }
         return postProfile(conn, uid, args)
 
-@app.route('/deactivate', method=['POST'])
+@app.route('/deactivate', methods=['POST'])
 def deactivate():
     auth_hdr = request.headers.get('Authorization', None)
     if auth_hdr is None:
