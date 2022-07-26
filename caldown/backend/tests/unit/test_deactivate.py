@@ -12,7 +12,7 @@ def test_logout_invalid_method():
 
 def test_logout_no_token():
     url = 'https://localhost/api/deactivate'
-    var data = {
+    data = {
         'user': 'testuser',
         'pass': 'password'
     }
