@@ -37,7 +37,7 @@ def test_logout_no_data():
     retVal = requests.post(url,
         verify=False,
         headers=headers).status_code
-    assert retVal == 401
+    assert retVal == 400
 
 def test_login_missing_data():
     url = 'https://localhost/api/login'
@@ -57,9 +57,10 @@ def test_login_missing_data():
     }
     retVal = requests.post(url, 
             verify=False,
+            headers=headers,
             json=data).status_code
 
-    assert retVal == 401
+    assert retVal == 400
 
 
 def test_logout_valid_arguments():  
@@ -84,4 +85,4 @@ def test_logout_valid_arguments():
             verify=False,
             headers=headers,
             json=data).json()
-    assert retVal['message'] == 'logged off successfully'
+    assert retVal['message'] == 'user account deactivated successfully'

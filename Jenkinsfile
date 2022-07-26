@@ -9,7 +9,6 @@ pipeline {
 		}
 		stage('build') {
 			steps {			
-				bat 'mkdir \"caldown/dbserver/data\"'
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
 				sleep 20
 			}
@@ -31,6 +30,7 @@ pipeline {
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 			bat 'docker system prune'
+			bat 'mkdir \"caldown/dbserver/data\"'
 		}
 	}			
 }
