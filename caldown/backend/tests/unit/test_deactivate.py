@@ -85,4 +85,4 @@ def test_logout_valid_arguments():
             verify=False,
             headers=headers,
             json=data).json()
-    assert retVal['message'] == 'user account deactivated successfully'
+    assert retVal['message'] == 'user account deactivated permanently'

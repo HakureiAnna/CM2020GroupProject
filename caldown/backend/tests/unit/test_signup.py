@@ -60,7 +60,7 @@ def test_signup_new_user():
     sub = jwt.decode(retVal['token'], 'p@ssw0rd123', algorithms=['HS256'])['sub']      
     assert len(sub)== 36
     
-    url = 'https://localhost/api/signup'
+    url = 'https://localhost/api/deactivate'
     data = {
         'user': 'testuser1',
         'pass': 'p@ssw0rd!234'
