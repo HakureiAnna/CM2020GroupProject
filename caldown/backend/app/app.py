@@ -130,41 +130,6 @@ def signup():
     }
     return jsonify(retVal)
 
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():    
-    auth_hdr = request.headers.get('Authorization', None)
-    if auth_hdr is None:
-        return 401
-    uid = checkUser(conn, auth_hdr)
-    if uid is None:
-        return abort(401)
-        
-    if request.method == 'GET':
-        return getProfile(conn, uid)
-    else:                
-        data = request.get_json()
-        # weight, height, gender, age
-        weight = data['weight']
-        height = data['height']
-        gender = data['gender']
-        age = data['age']
-        if weight is None or height is None or gender is None or age is None:
-            return abort(400)
-        try:
-            weight = int(weight)
-            height = int(height)
-            gender = int(gender)
-            age = int(age)
-        except:
-            abort(400)
-        args = {
-            'weight': weight,
-            'height': height,
-            'gender': gender,
-            'age': age
-        }
-        return postProfile(conn, uid, args)
-
 @app.route('/deactivate', methods=['POST'])
 def deactivate():
     auth_hdr = request.headers.get('Authorization', None)
@@ -192,7 +157,42 @@ def deactivate():
     
     return jsonify({
         'message': 'user account deactivated permanently'
-    })
-            
+    })       
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():    
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+    uid = checkUser(conn, auth_hdr)
+    if uid is None:
+        return abort(401)
+        
+    if request.method == 'GET':
+        return getProfile(conn, uid)
+    else:                
+        data = request.get_json()
+        # weight, height, gender, age
+        weight = data['weight']
+        height = data['height']
+        gender = data['gender']
+        age = data['age']
+        if weight is None or height is None or gender is None or age is None:
+            return abort(400)
+        try:
+            weight = int(weight)
+            height = int(height)
+            gender = int(gender)
+            age = int(age)
+        except:
+            return abort(400)
+        args = {
+            'weight': weight,
+            'height': height,
+            'gender': gender,
+            'age': age
+        }
+        return postProfile(conn, uid, args)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
