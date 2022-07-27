@@ -39,7 +39,7 @@ def test_deactivate_no_data():
         headers=headers).status_code
     assert retVal == 400
 
-def test_deactivatemissing_data():
+def test_deactivate_missing_data():
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
