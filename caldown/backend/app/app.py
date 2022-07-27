@@ -138,6 +138,7 @@ def profile():
     uid = checkUser(conn, auth_hdr)
     if uid is None:
         return abort(401)
+        
     if request.method == 'GET':
         return getProfile(conn, uid)
     else:                
@@ -148,7 +149,7 @@ def profile():
         gender = data['gender']
         age = data['age']
         if weight is None or height is None or gender is None or age is None:
-            abort(400)
+            return abort(400)
         try:
             weight = int(weight)
             height = int(height)
