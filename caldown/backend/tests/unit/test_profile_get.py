@@ -4,30 +4,30 @@ import jwt
 import mysql.connector as mc
 import requests
 
-def test_logout_invalid_method():    
-    url = 'https://localhost/api/logout'
-    retVal = requests.get(url, 
+def test_profile_get_invalid_method():    
+    url = 'https://localhost/api/profile'
+    retVal = requests.put(url, 
             verify=False).status_code
     assert retVal == 405
 
-def test_logout_no_data():
-    url = 'https://localhost/api/logout'
-    retVal = requests.post(url,
+def test_profile_get_no_credentials():
+    url = 'https://localhost/api/profile'
+    retVal = requests.get(url,
         verify=False).status_code
     assert retVal == 401
 
-def test_logout_invalid_token():
-    url = 'https://localhost/api/logout'
+def test_profile_get_invalid_credentials():
+    url = 'https://localhost/api/profile'
     headers = {
         'Authorization': 'Bearer test123'
     }
-    retVal = requests.post(url,
+    retVal = requests.get(url,
         verify=False,
         headers=headers).status_code
     assert retVal == 401
 
-def test_logout_expired_token():
-    url = 'https://localhost/api/login'
+def test_profile_get_expired_credentials():
+    url = 'https://localhost/api/signin'
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -43,18 +43,18 @@ def test_logout_expired_token():
         'exp': expiry,
         'sub': sub
     }, 'p@ssw0rd123')
-    url = 'https://localhost/api/logout'
+    url = 'https://localhost/api/profile'
     headers = {
         'Authorization': 'Bearer ' + tok
     }
-    retVal = requests.post(url,
+    retVal = requests.get(url,
         verify=False,
         headers=headers).status_code
     assert retVal == 401
 
 
-def test_logout_valid_token():    
-    url = 'https://localhost/api/login'
+def test_profile_get_valid_credentials():    
+    url = 'https://localhost/api/signin'
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -67,7 +67,7 @@ def test_logout_valid_token():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    retVal = requests.post(url,
+    retVal = requests.get(url,
         verify=False,
         headers=headers).json()
-    assert retVal['message'] == 'logged off successfully'
+        assert retVal['gender'] == 1
