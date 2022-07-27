@@ -70,4 +70,4 @@ def test_profile_get_valid_credentials():
     retVal = requests.get(url,
         verify=False,
         headers=headers).json()
-        assert retVal['gender'] == 1
+    assert retVal['gender'] == 1
