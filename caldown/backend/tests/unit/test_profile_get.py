@@ -27,7 +27,7 @@ def test_profile_get_invalid_credentials():
     assert retVal == 401
 
 def test_profile_get_expired_credentials():
-    url = 'https://localhost/api/signin'
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -54,7 +54,7 @@ def test_profile_get_expired_credentials():
 
 
 def test_profile_get_valid_credentials():    
-    url = 'https://localhost/api/signin'
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -63,7 +63,7 @@ def test_profile_get_valid_credentials():
             verify=False,
             json=data).json()
 
-    url = 'https://localhost/api/logout'
+    url = 'https://localhost/api/profile'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }

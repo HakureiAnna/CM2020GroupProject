@@ -165,7 +165,7 @@ def profile():
     if auth_hdr is None:
         return abort(401)
     uid = checkUser(conn, auth_hdr)
-    if uid is None:
+    if not uid:
         return abort(401)
         
     if request.method == 'GET':
