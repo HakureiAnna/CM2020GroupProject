@@ -99,7 +99,7 @@ def test_profile_post_create_new():
         headers=headers,
         json=data
     ).json()
-    assert retVal['message'] = 'profile created/ updated successfully'
+    assert retVal['message'] == 'profile created/ updated successfully'
 
     # check profile exists
     url = 'https://localhost/api/profile'  
@@ -124,22 +124,46 @@ def test_profile_post_create_new():
         json=data
     )
 
+def test_profile_post_update_existing():    
+    # log in
+    url = 'https://localhost/api/login'
+    data = {
+        'user': 'testuser',
+        'pass': 'password'
+    }
+    retVal = requests.post(url, 
+            verify=False,
+            json=data).json()
 
-# def test_profile_post_update_existing():    
-#     url = 'https://localhost/api/login'
-#     data = {
-#         'user': 'testuser',
-#         'pass': 'password'
-#     }
-#     retVal = requests.post(url, 
-#             verify=False,
-#             json=data).json()
+    # check current profile valid
+    url = 'https://localhost/api/profile'
+    headers = {
+        'Authorization': 'Bearer ' + retVal['token']
+    }
+    retVal = requests.get(url,
+        verify=False,
+        headers=headers).json()
+    assert retVal['weight'] == 50
 
-#     url = 'https://localhost/api/profile'
-#     headers = {
-#         'Authorization': 'Bearer ' + retVal['token']
-#     }
-#     retVal = requests.get(url,
-#         verify=False,
-#         headers=headers).json()
-#     assert retVal['gender'] == 1
+    # update profile
+    data = {
+        'age': retVal['age'].
+        'weight': 46,
+        'height': retVal['height'],
+        'gender': retVal['gender'],
+        'userid': retVal['uid']
+    }
+    retVal = requests.post(
+        url,
+        verify=False,
+        headers=headers,
+        json=data
+    ).json()
+    assert retVal['message'] == 'profile created/ updated successfully'
+
+    # check updated profile
+    retVal = requests.get(url,
+        verify=False,
+        headers=headers).json()
+    assert retVal['weihgt'] == 46
+

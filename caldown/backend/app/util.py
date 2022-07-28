@@ -9,7 +9,7 @@ def createUUID():
 
 def getProfile(conn, uid):
     with conn.cursor() as c:
-        q = 'SELECT weight, height, gender, age FROM profiles WHERE userid=%s ORDER BY datecreated DESC LIMIT 1'
+        q = 'SELECT weight, height, gender, age uid FROM profiles WHERE userid=%s ORDER BY datecreated DESC LIMIT 1'
         args = (uid,)
         c.execute(q, args)
         retVal = c.fetchall()
@@ -19,7 +19,8 @@ def getProfile(conn, uid):
             'weight': retVal[0][0],
             'height': retVal[0][1],
             'gender': retVal[0][2],
-            'age': retVal[0][3]
+            'age': retVal[0][3],
+            'uid': retVal[0][4]
         }
     return jsonify(retVal)
     
