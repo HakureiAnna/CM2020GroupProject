@@ -63,7 +63,7 @@ def test_profile_post_invalid_data():
         'gender': 0,
         'age': 25
     }
-    retVal = requests.get(
+    retVal = requests.post(
         url,
         verify=False,
         headers=headers,
