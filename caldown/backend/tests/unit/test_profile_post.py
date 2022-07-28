@@ -51,7 +51,7 @@ def test_profile_post_invalid_data():
         url,
         verify=False,
         json=data
-    ).json
+    ).json()
 
     url = 'https://localhost/api/profile'
     headers = {
@@ -71,31 +71,58 @@ def test_profile_post_invalid_data():
     ).status_code
     assert retVal == 400
 
-# def test_profile_post_create_new():
-#     url = 'https://localhost/api/login'
-#     data = {
-#         'user': 'testuser',
-#         'pass': 'password'
-#     }    
-#     retVal = requests.post(url, 
-#             verify=False,
-#             json=data).json()
-#     sub = jwt.decode(retVal['token'], 'p@ssw0rd123', algorithms=['HS256'])['sub']    
-#     now = datetime.now(tz=timezone.utc)
-#     expiry = now + timedelta(seconds=-30)
-#     tok = jwt.encode({
-#         'iat': now,
-#         'exp': expiry,
-#         'sub': sub
-#     }, 'p@ssw0rd123')
-#     url = 'https://localhost/api/profile'
-#     headers = {
-#         'Authorization': 'Bearer ' + tok
-#     }
-#     retVal = requests.get(url,
-#         verify=False,
-#         headers=headers).status_code
-#     assert retVal == 401
+def test_profile_post_create_new():
+    # sign up for new user
+    url = 'https://localhost/api/signup'
+    data = {
+        'user': 'testuser3',
+        'pass': 'p@ssw0rd!234'
+    }    
+    retVal = requests.post(url, 
+            verify=False,
+            json=data).json()
+            
+    # create profile
+    url = 'https://localhost/api/profile'  
+    headers = {
+        'Authorization': 'Bearer ' + retVal['token']
+    }  
+    data = {
+        'weight': 45,
+        'height': 160,
+        'gender': 0,
+        'age': 25
+    }
+    retVal = requests.post(
+        url,
+        verify=False,
+        headers=headers,
+        json=data
+    ).json()
+    assert retVal['message'] = 'profile created/ updated successfully'
+
+    # check profile exists
+    url = 'https://localhost/api/profile'  
+    retVal = requests.get(
+        url,
+        verify=False,
+        headers=headers
+    ).json()
+    
+    assert retVal['weight'] == 45
+
+    # deactivate new user
+    url = 'https://localhost/api/deactivate'
+    data = {
+        'user': 'testuser3',
+        'pass': 'p@ssw0rd!234'
+    }    
+    requests.post(
+        url,
+        verify=False,
+        headers=headers,
+        json=data
+    )
 
 
 # def test_profile_post_update_existing():    

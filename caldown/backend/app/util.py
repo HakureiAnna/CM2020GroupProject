@@ -33,7 +33,7 @@ def postProfile(conn, uid, args):
         except:
             abort(500)
     return jsonify({
-        'message': 'ok'
+        'message': 'profile created/ updated successfully'
     })        
 
 def createToken(sub):
