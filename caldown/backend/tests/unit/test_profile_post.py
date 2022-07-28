@@ -29,7 +29,7 @@ def test_profile_post_missing_data():
         url,
         verify=False,
         json=data
-    )
+    ).json()
     url = 'https://localhost/api/profile'    
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -47,9 +47,11 @@ def test_profile_post_invalid_data():
         'user': 'testuser',
         'pass': 'password'
     }    
-    retVal = requests.post(url,
+    retVal = requests.post(
+        url,
         verify=False,
-        headers=headers).status_code
+        json=data
+    ).json
 
     url = 'https://localhost/api/profile'
     headers = {
@@ -61,10 +63,12 @@ def test_profile_post_invalid_data():
         'gender': 0,
         'age': 25
     }
-    retVal = requests.get(url,
+    retVal = requests.get(
+        url,
         verify=False,
         headers=headers,
-        json=data).status_code
+        json=data
+    ).status_code
     assert retVal == 400
 
 # def test_profile_post_create_new():

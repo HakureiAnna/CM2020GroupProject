@@ -25,18 +25,9 @@ def getProfile(conn, uid):
     
 def postProfile(conn, uid, args):
     with conn.cursor() as c:
-        q = 'SELECT COUNT(*) FROM profiles WHERE userid=%s'
-        sargs = (uid,)
-        c.execute(q, sargs)
-        retVal = c.fetchall()
-        if retVal[0][0] == 0:
-            q = 'INSERT INTO profiles (id, userid, weight, height, gender, age) VALUES(%s, %s, %s, %s, %s, %s)'
-            sargs = (str(uuid.uuid4()), uid, args['weight'], args['height'], args['gender'], args['age'])
-            c.execute(q, sargs)
-        else:
-            q = 'UPDATE profiles SET weight=%s, height=%s, gender=%s, age=%s WHERE userid=%s'
-            sargs = (args['weight'], args['height'], args['gender'], args['age'], uid)
-            c.execute(q, sargs)
+        q = 'INSERT INTO profiles (id, userid, weight, height, gender, age) VALUES(%s, %s, %s, %s, %s, %s)'
+        args = (str(uuid.uuid4()), uid, args['weight'], args['height'], args['gender'], args['age'])
+        c.execute(q, args)
         try:
             conn.commit()
         except:
