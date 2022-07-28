@@ -147,7 +147,7 @@ def test_profile_post_update_existing():
 
     # update profile
     data = {
-        'age': retVal['age'].
+        'age': retVal['age'],
         'weight': 46,
         'height': retVal['height'],
         'gender': retVal['gender'],
@@ -165,5 +165,5 @@ def test_profile_post_update_existing():
     retVal = requests.get(url,
         verify=False,
         headers=headers).json()
-    assert retVal['weihgt'] == 46
+    assert retVal['weight'] == 46
 
