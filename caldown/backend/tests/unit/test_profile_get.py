@@ -67,7 +67,9 @@ def test_profile_get_valid_credentials():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    retVal = requests.get(url,
+    retVal = requests.get(
+        url,
         verify=False,
-        headers=headers).json()
+        headers=headers
+    ).json()
     assert retVal['gender'] == 1
