@@ -180,12 +180,22 @@ def profile():
         if weight is None or height is None or gender is None or age is None:
             return abort(400)
         try:
-            weight = int(weight)
+            weight = int(weight)            
             height = int(height)
             gender = int(gender)
             age = int(age)
         except:
             return abort(400)
+
+        if weight < 40:
+            return abort(400)
+        if height < 120:
+            return abort(400)
+        if gender < 0 or gender > 1:
+            return abort(400)
+        if age < 16 or age > 110:
+            return abort(400)
+            
         args = {
             'weight': weight,
             'height': height,
