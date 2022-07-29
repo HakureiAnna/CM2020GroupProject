@@ -28,11 +28,6 @@ export const useUsersStore = defineStore({
       await axios.get(`https://localhost/api/users`).then(
         (res) => (this.users = res.data)
       );
-      // this.users = { loading: true };
-      // fetchWrapper
-      //   .get(baseUrl)
-      //   .then((users) => (this.users = users))
-      //   .catch((error) => (this.users = { error }));
     },
   },
 });
