@@ -39,7 +39,8 @@ services:
     volumes:
       - ./dbserver/data:/var/lib/mysql
   proxy:
-
+    depends_on:
+      - "frontend"
     build:
       context: .
       dockerfile: ./proxy/proxy.Dockerfile
