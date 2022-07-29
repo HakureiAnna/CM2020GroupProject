@@ -2,5 +2,6 @@ import axios from "axios";
 
 // axios.defaults.baseURL = <endpoint />
 
-// axios.defaults.headers.common["Authorization"] =
-//   "Bearer " + localStorage.getItem("token");
+// remove unwanted double quotation marks
+const token = localStorage.getItem("user").replace(/["]/g, '');
+axios.defaults.headers.common["Authorization"] = token ? `Bearer ${token}` : '';

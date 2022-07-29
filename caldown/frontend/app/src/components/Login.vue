@@ -1,20 +1,18 @@
 <script setup>
-import { reactive } from "vue";
+import { Form, Field } from "vee-validate";
+import * as Yup from "yup";
+
 import { useAuthStore } from "@/stores";
 
-const login_info = reactive({
-  username: "",
-  password: "",
-});
+const schema = Yup.object().shape({
+  username: Yup.string().required("Username is required"),
+  password: Yup.string().required("Password is required")
+})
 
-function handleSubmit(event) {
+async function handleSubmit(values) {
   const authStore = useAuthStore();
-
-  return authStore
-    .login(login_info.username, login_info.password)
-    .catch((err) => {
-      console.log(err);
-    });
+  const { username, password } = values;
+  await authStore.login(username, password);
 }
 </script>
 
@@ -24,31 +22,24 @@ function handleSubmit(event) {
       <img src="./icons/logoidea2.png" alt="" />
     </div>
     <div class="container">
-      <div class="login">
-        <form @submit.prevent="handleSubmit">
+        <Form @submit="handleSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
           <div class="form-group input-field">
             <i class="fa fa-user" aria-hidden="true"></i>
-            <input
-              type="text"
-              placeholder="Username"
-              class="form-control"
-              v-model="login_info.username"
-            />
+            <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
+            <div class="invalid-feedback">{{ errors.username }}</div>
           </div>
           <div class="form-group input-field">
             <i class="fa fa-lock" aria-hidden="true"></i>
-            <input
-              type="password"
-              placeholder="Password"
-              class="form-control"
-              v-model="login_info.password"
-            />
+            <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
+            <div class="invalid-feedback">{{ errors.password }}</div>
           </div>
-          <button class="btn solid">Login</button>
-        </form>
+          <div class="form-group">
+            <button type="submit" class="btn solid">Login</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+          </div>
+        </Form>
       </div>
     </div>
-  </div>
 </template>
 
 <style>
