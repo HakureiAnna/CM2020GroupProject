@@ -177,6 +177,7 @@ def profile():
         height = data['height']
         gender = data['gender']
         age = data['age']
+        goal = data['goal']
         if weight is None or height is None or gender is None or age is None:
             return abort(400)
         try:
@@ -195,12 +196,15 @@ def profile():
             return abort(400)
         if age < 16 or age > 110:
             return abort(400)
+        if len(goal) < 1:
+            return abort(400)
             
         args = {
             'weight': weight,
             'height': height,
             'gender': gender,
-            'age': age
+            'age': age,
+            'goal': goal
         }
         return postProfile(conn, uid, args)
 

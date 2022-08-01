@@ -9,7 +9,7 @@ def createUUID():
 
 def getProfile(conn, uid):
     with conn.cursor() as c:
-        q = 'SELECT weight, height, gender, age, userid FROM profiles WHERE userid=%s ORDER BY datecreated DESC LIMIT 1'
+        q = 'SELECT weight, height, gender, age, goal, userid FROM profiles WHERE userid=%s ORDER BY datecreated DESC LIMIT 1'
         args = (uid,)
         c.execute(q, args)
         retVal = c.fetchall()
@@ -20,14 +20,15 @@ def getProfile(conn, uid):
             'height': retVal[0][1],
             'gender': retVal[0][2],
             'age': retVal[0][3],
-            'uid': retVal[0][4]
+            'goal': retVal[0][4],
+            'uid': retVal[0][5]
         }
     return jsonify(retVal)
     
 def postProfile(conn, uid, args):
     with conn.cursor() as c:
-        q = 'INSERT INTO profiles (id, userid, weight, height, gender, age) VALUES(%s, %s, %s, %s, %s, %s)'
-        args = (str(uuid.uuid4()), uid, args['weight'], args['height'], args['gender'], args['age'])
+        q = 'INSERT INTO profiles (id, userid, weight, height, gender, age, goal) VALUES(%s, %s, %s, %s, %s, %s, %s)'
+        args = (str(uuid.uuid4()), uid, args['weight'], args['height'], args['gender'], args['age'], args['goal'])
         c.execute(q, args)
         try:
             conn.commit()
