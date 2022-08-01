@@ -61,7 +61,8 @@ def test_profile_post_invalid_data():
         'weight': 39,
         'height': 160,
         'gender': 0,
-        'age': 25
+        'age': 25,
+        'goal': 'balanced'
     }
     retVal = requests.post(
         url,
@@ -91,7 +92,8 @@ def test_profile_post_create_new():
         'weight': 45,
         'height': 160,
         'gender': 0,
-        'age': 25
+        'age': 25,
+        'goal': 'balanced'
     }
     retVal = requests.post(
         url,
@@ -151,7 +153,8 @@ def test_profile_post_update_existing():
         'weight': 46,
         'height': retVal['height'],
         'gender': retVal['gender'],
-        'userid': retVal['uid']
+        'userid': retVal['uid'],
+        'goal': retVal['goal']
     }
     retVal = requests.post(
         url,

@@ -178,7 +178,7 @@ def profile():
         gender = data['gender']
         age = data['age']
         goal = data['goal']
-        if weight is None or height is None or gender is None or age is None:
+        if weight is None or height is None or gender is None or age is None or goal is None:
             return abort(400)
         try:
             weight = int(weight)            
