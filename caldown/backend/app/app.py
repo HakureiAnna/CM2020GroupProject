@@ -208,5 +208,51 @@ def profile():
         }
         return postProfile(conn, uid, args)
 
+@app.route('/recommendations', method=['POST'])
+def getRecommendations():
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+    uid = checkUser(conn, auth_hdr)
+
+    data = request.get_json()
+    mealType = data['type']
+    keyword = data['keyword']
+    if mealType is None or keyword is None:
+        return abort(400)
+
+    if mealType == 'Breakfast':
+        factor = 0.35
+    elif mealType == 'Lunch':
+        factor = 0.4
+    else mealType == 'Dinner':
+        factor = 0.25
+
+    profile = getProfileFromDb(conn, uid)
+    # Revised Harris-Benedict Equation
+    if profile['gender'] == 0:
+        calories = 9.247*profile['weight'] + 309.8*profile['height'] -4.330*profile['age'] + 447.593
+    else:
+        calories = 13.397*profile['weight'] + 479.9*profile['height'] -5.677*profile['age'] + 88.362
+    calories = int(factor * calories)
+
+    with open('./secrets/secret', 'r') as f:
+        lines = f.readlines()
+        app_id = lines[0].split('=')[-1]
+        app_key = lines[1].split('=')[-1]
+
+    uri = 'https://api.edamam.com/api/recipes/v2?type=public'
+    uri += 'q=' + keyword
+    uri += '&app_id=' + app_id
+    uri += '&app_key=' + app_key
+    uri += '&diet=balanced'
+    uri += '&mealType=' + mealType
+    uri += '&calories=' + '{:d}'.format(calories)
+    uri += '&field=uri&field=image&field=calories'
+
+    return jsonify({
+        'uri': uri
+    })
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)

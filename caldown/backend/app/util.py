@@ -7,7 +7,7 @@ import uuid
 def createUUID():
     return str(uuid.uuid4())
 
-def getProfile(conn, uid):
+def getProfileFromDb(conn, uid):    
     with conn.cursor() as c:
         q = 'SELECT weight, height, gender, age, goal, userid FROM profiles WHERE userid=%s ORDER BY datecreated DESC LIMIT 1'
         args = (uid,)
@@ -23,7 +23,12 @@ def getProfile(conn, uid):
             'goal': retVal[0][4],
             'uid': retVal[0][5]
         }
-    return jsonify(retVal)
+
+    return retVal
+
+
+def getProfile(conn, uid):
+    return jsonify(getProfileFromDb(conn, uid))
     
 def postProfile(conn, uid, args):
     with conn.cursor() as c:
