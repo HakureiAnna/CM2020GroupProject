@@ -236,7 +236,7 @@ def getRecommendations():
         calories = 13.397*profile['weight'] + 479.9*profile['height'] -5.677*profile['age'] + 88.362
     calories = int(factor * calories)
 
-    with open('./secrets/secret', 'r') as f:
+    with open('/app/secrets/secret', 'r') as f:
         lines = f.readlines()
         app_id = lines[0].split('=')[-1]
         app_key = lines[1].split('=')[-1]
