@@ -225,7 +225,7 @@ def getRecommendations():
         factor = 0.35
     elif mealType == 'Lunch':
         factor = 0.4
-    else mealType == 'Dinner':
+    elif mealType == 'Dinner':
         factor = 0.25
 
     profile = getProfileFromDb(conn, uid)
