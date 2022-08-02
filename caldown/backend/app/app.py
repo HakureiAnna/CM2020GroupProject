@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, abort
 import hashlib
 import mysql.connector as mc
 import os
+import requests
 from string import punctuation
 from time import sleep
 
@@ -238,8 +239,8 @@ def getRecommendations():
 
     with open('secret', 'r') as f:
         lines = f.readlines()
-        app_id = lines[0].split('=')[-1]
-        app_key = lines[1].split('=')[-1]
+        app_id = lines[0].split('=')[-1].strip()
+        app_key = lines[1].split('=')[-1].strip()
 
     uri = 'https://api.edamam.com/api/recipes/v2?type=public'
     uri += 'q=' + keyword
@@ -250,8 +251,20 @@ def getRecommendations():
     uri += '&calories=' + '{:d}'.format(calories)
     uri += '&field=uri&field=image&field=calories'
 
+    data = requests.get(uri).json()
+    results = data['hits']
+    recipes = []
+
+    for r in results:
+        recipe = r['recipe']
+        recipes.append({
+            'uri': recipe['uri'],
+            'image': recipe['image'],
+            'calories': recipe['calories']
+        })
+
     return jsonify({
-        'uri': uri
+        'recipes': recipes
     })
 
 if __name__ == '__main__':
