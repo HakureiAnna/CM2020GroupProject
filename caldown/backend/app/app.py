@@ -252,7 +252,6 @@ def getRecommendations():
     uri += '&field=uri&field=image&field=calories'
 
     data = requests.get(uri).json()
-    print(data)
     results = data['hits']
     recipes = []
 
