@@ -27,7 +27,7 @@ pipeline {
 	}
 	post {	
 		success {
-			sleep 1
+			sleep 120
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 			bat 'docker system prune'
