@@ -255,6 +255,7 @@ def getRecommendations():
     results = data['hits']
     recipes = []
 
+    print(data)
     for r in results:
         recipe = r['recipe']
         recipes.append({
