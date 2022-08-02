@@ -208,7 +208,7 @@ def profile():
         }
         return postProfile(conn, uid, args)
 
-@app.route('/recommendations', method=['POST'])
+@app.route('/recommendations', methods=['POST'])
 def getRecommendations():
     auth_hdr = request.headers.get('Authorization', None)
     if auth_hdr is None:
