@@ -243,7 +243,7 @@ def getRecommendations():
         app_key = lines[1].split('=')[-1].strip()
 
     uri = 'https://api.edamam.com/api/recipes/v2?type=public'
-    uri += 'q=' + keyword
+    uri += '&q=' + keyword
     uri += '&app_id=' + app_id
     uri += '&app_key=' + app_key
     uri += '&diet=balanced'
