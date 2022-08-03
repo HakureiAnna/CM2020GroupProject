@@ -62,6 +62,7 @@ def login():
         q = 'UPDATE users SET status=1 WHERE id=%s'
         args = (uid,)
         c.execute(q, args)    
+        conn.commit()
     retVal = {
         'token': createToken(uid)
     }
@@ -85,6 +86,7 @@ def logout():
         if retVal[0][0] == 1:
             q = 'UPDATE users SET status=0 WHERE id=%s'
             c.execute(q, args)
+            conn.commit()
     return jsonify({'message':'logged off successfully'})
 
 @app.route('/signup', methods=['POST'])
@@ -121,7 +123,7 @@ def signup():
         q = 'INSERT INTO users(id, username, password, status) VALUES (%s, %s, %s, %s)'
         args = (createUUID(), user, pw, '0')
         c.execute(q, args)
-        c.commit()
+        conn.commit()
         q = 'SELECT id FROM users WHERE username=%s'
         args = (user,)
         c.execute(q, args)
@@ -154,7 +156,7 @@ def deactivate():
         args = (uid, user, pw)        
         try:
             c.execute(q, args)
-            c.commit()
+            conn.commit()
         except:
             return abort(401)
     
@@ -311,7 +313,7 @@ def createPlan():
         args = (createUUID(), breakfastUri, breakfastCalories, lunchUri, lunchCalories, dinnerUri, dinnerCalories, plannedDate, uid)
         try:
             c.execute(q, args)
-            c.commit()
+            conn.commit()
         except:
             abort(500)
     return jsonify({
