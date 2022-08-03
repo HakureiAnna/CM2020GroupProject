@@ -287,13 +287,13 @@ def createPlan():
     dinnerCalories = data['dinner']['calories']
     plannedDate = data['plannedDate']
 
-    if breakfastUri is None or
-        breakfastCalories is None or
-        lunchUri is None or
-        lunchCalories is None or
-        dinnerUri is None or
-        dinnerCalories is None or
-        plannedDate is None:
+    if breakfastUri is None or breakfastCalories is None:
+        return abort(400)
+    if lunchUri is None or lunchCalories is None:
+        return abort(400)
+    if dinnerUri is None or dinnerCalories is None:
+        return abort(400)
+    if plannedDate is None:
         return abort(400)
 
     try:
