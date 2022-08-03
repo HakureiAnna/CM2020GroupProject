@@ -4,6 +4,7 @@ pipeline {
 	environment {
 		EDAMAM_APP_ID = credentials('edamam_app_id')
 		EDAMAM_APP_KEY = credentials('edamam_app_key')
+	}
 	
 	stages {
 		stage('pull') {
