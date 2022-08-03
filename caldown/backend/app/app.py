@@ -146,6 +146,7 @@ def deactivate():
         return abort(400)
     user = data['user']
     pw = data['pass']
+    pw = hashlib.sha256(pw.encode()).hexdigest()
 
     uid = checkUser(conn, auth_hdr)
     if not uid:
