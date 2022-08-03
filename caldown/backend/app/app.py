@@ -121,6 +121,7 @@ def signup():
         q = 'INSERT INTO users(id, username, password, status) VALUES (%s, %s, %s, %s)'
         args = (createUUID(), user, pw, '0')
         c.execute(q, args)
+        c.commit()
         q = 'SELECT id FROM users WHERE username=%s'
         args = (user,)
         c.execute(q, args)
@@ -150,9 +151,10 @@ def deactivate():
 
     with conn.cursor() as c:
         q = 'DELETE FROM users WHERE id=%s AND username=%s and password=%s'
-        args = (uid, user, pw)
+        args = (uid, user, pw)        
         try:
             c.execute(q, args)
+            c.commit()
         except:
             return abort(401)
     
@@ -309,6 +311,7 @@ def createPlan():
         args = (createUUID(), breakfastUri, breakfastCalories, lunchUri, lunchCalories, dinnerUri, dinnerCalories, plannedDate, uid)
         try:
             c.execute(q, args)
+            c.commit()
         except:
             abort(500)
     return jsonify({
