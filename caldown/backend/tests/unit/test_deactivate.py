@@ -78,8 +78,8 @@ def test_deactivate_valid_arguments():
         'Authorization': 'Bearer ' + retVal['token']
     }
     data = {
-        'user': 'testuser',
-        'pass': 'password'
+        'user': 'testuser1',
+        'pass': 'p@ssw0rd!234'
     }
     retVal = requests.post(url, 
             verify=False,
