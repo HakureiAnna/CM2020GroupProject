@@ -210,11 +210,13 @@ def profile():
         return postProfile(conn, uid, args)
 
 @app.route('/recommendations', methods=['POST'])
-def getRecommendations():
+def recommendations():
     auth_hdr = request.headers.get('Authorization', None)
     if auth_hdr is None:
         return abort(401)
     uid = checkUser(conn, auth_hdr)
+    if not uid:
+        return abort(401)
 
     data = request.get_json()
     mealType = data['type']
@@ -266,6 +268,53 @@ def getRecommendations():
     return jsonify({
         'recipes': recipes
     })
+
+@app.route('/createPlan', methods=['POST'])
+def createPlan():
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+    uid = checkUser(conn, auth_hdr)
+    if not uid:
+        return abort(401)
+
+    data = requst.get_json()
+    breakfastUri = data['breakfast']['uri']
+    breakfastCalories = data['breakfast']['calories']
+    lunchUri = data['lunch']['uri']
+    lunchCalories = data['lunch']['calories']
+    dinnerUri = data['dinner']['uri']
+    dinnerCalories = data['dinner']['calories']
+    plannedDate = data['plannedDate']
+
+    if breakfastUri is None or
+        breakfastCalories is None or
+        lunchUri is None or
+        lunchCalories is None or
+        dinnerUri is None or
+        dinnerCalories is None or
+        plannedDate is None:
+        return abort(400)
+
+    try:
+        breakfastCalories = int(breakfastCalories)
+        lunchCalories = int(lunchCalories)
+        dinnerCalories = int(dinnerCalories)
+        plannedDate = datetime.strptime(plannedDate, '%Y/%m/%d').strftime('%Y-%m-%d')
+    except:
+        abort(400)
+
+    with conn.cursor() as c:
+        q = 'INSERT INTO plans(id, breakfast_uri, breakfast_calories, lunch_uri, lunch_calories, dinner_uri, dinner_calories, datePlanned, userid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        args = (createUUID(), breakfastUri, breakfastCalories, lunchUri, lunchCalories, dinnerUri, dinnerCalories, datePlanned, uid)
+        try:
+            c.execute(q, args)
+        except:
+            abort(500)
+    return jsonify({
+        'message': 'plan successfully created.'
+    })
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)

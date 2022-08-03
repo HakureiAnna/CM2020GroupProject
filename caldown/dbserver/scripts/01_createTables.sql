@@ -19,3 +19,16 @@ CREATE TABLE profiles(
 	FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
 );
 	
+	
+CREATE TABLE plans(
+	id VARCHAR(36) PRIMARY KEY,
+	breakfast_uri VARCHAR(256) NOT NULL,
+	breakfast_calories INT NOT NULL,
+	lunch_uri VARCHAR(256) NOT NULL,
+	lunch_calories INT NOT NULL,
+	dinner_uri VARCHAR(256) NOT NULL,
+	lunch_calories INT NOT NULL,
+	datecreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	dateplanned DATE NOT NULL,
+	FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
+);
