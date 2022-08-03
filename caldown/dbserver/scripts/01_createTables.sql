@@ -13,8 +13,8 @@ CREATE TABLE profiles(
 	weight INT NOT NULL,
 	height INT NOT NULL,
 	gender INT NOT NULL,
-	userid VARCHAR(36),
-	goal VARCHAR(20),
+	goal VARCHAR(20) NOT NULL,
+	userid VARCHAR(36) NOT NULL,
 	datecreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,	
 	FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -28,6 +28,7 @@ CREATE TABLE plans(
 	lunch_calories INT NOT NULL,
 	dinner_uri VARCHAR(256) NOT NULL,
 	dinner_calories INT NOT NULL,
+	userid VARCHAR(36) NOT NULL,
 	datecreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	dateplanned DATE NOT NULL,
 	FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
