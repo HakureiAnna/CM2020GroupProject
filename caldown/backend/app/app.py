@@ -306,7 +306,7 @@ def createPlan():
 
     with conn.cursor() as c:
         q = 'INSERT INTO plans(id, breakfast_uri, breakfast_calories, lunch_uri, lunch_calories, dinner_uri, dinner_calories, datePlanned, userid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
-        args = (createUUID(), breakfastUri, breakfastCalories, lunchUri, lunchCalories, dinnerUri, dinnerCalories, datePlanned, uid)
+        args = (createUUID(), breakfastUri, breakfastCalories, lunchUri, lunchCalories, dinnerUri, dinnerCalories, plannedDate, uid)
         try:
             c.execute(q, args)
         except:
