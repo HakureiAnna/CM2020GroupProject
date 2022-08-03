@@ -2,8 +2,8 @@ pipeline {
 	agent any
 	
 	environment {
-		EDAMAM_APP_ID = credentials('edamam_app_id')
-		EDAMAM_APP_KEY = credentials('edamam_app_key')
+		EDAMAM_APP_ID = credentials('EDAMAM_APP_ID')
+		EDAMAM_APP_KEY = credentials('EDAMAM_APP_KEY')
 	}
 	
 	stages {
