@@ -1,6 +1,10 @@
 pipeline {
 	agent any
 	
+	environment {
+		EDAMAM_APP_ID = credentials('edamam_app_id')
+		EDAMAM_APP_KEY = credentials('edamam_app_key')
+	
 	stages {
 		stage('pull') {
 			steps {
@@ -9,6 +13,7 @@ pipeline {
 		}
 		stage('build') {
 			steps {			
+				bat 'echo "echo "app_id=$EDAMAM_APP_ID\napp_key=$EDAMAM_APP_KEY" > caldown/backend/app/secret'
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
 				sleep 10
 			}
