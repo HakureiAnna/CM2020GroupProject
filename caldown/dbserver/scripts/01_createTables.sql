@@ -27,7 +27,7 @@ CREATE TABLE plans(
 	lunch_uri VARCHAR(256) NOT NULL,
 	lunch_calories INT NOT NULL,
 	dinner_uri VARCHAR(256) NOT NULL,
-	lunch_calories INT NOT NULL,
+	dinner_calories INT NOT NULL,
 	datecreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	dateplanned DATE NOT NULL,
 	FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
