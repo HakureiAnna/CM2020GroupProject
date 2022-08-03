@@ -278,7 +278,7 @@ def createPlan():
     if not uid:
         return abort(401)
 
-    data = requst.get_json()
+    data = request.get_json()
     breakfastUri = data['breakfast']['uri']
     breakfastCalories = data['breakfast']['calories']
     lunchUri = data['lunch']['uri']
