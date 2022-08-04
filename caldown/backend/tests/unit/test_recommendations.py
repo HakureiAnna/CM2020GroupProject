@@ -53,7 +53,7 @@ def test_recommendations_missing_data():
         'Authorization': 'Bearer ' + retVal['token']
     }
     data = {
-        'mealType': 'Breakfast'
+        'type': 'Breakfast'
     }
     retVal = requests.post(url,
         verify=False,
@@ -78,7 +78,7 @@ def test_recommendations_invalid_data():
         'Authorization': 'Bearer ' + retVal['token']
     }
     data = {
-        'mealType': 'Supper',
+        'type': 'Supper',
         'keyword': 'venison'
     }
     retVal = requests.post(url,
@@ -105,7 +105,7 @@ def test_recommendations_valid_data():
         'Authorization': 'Bearer ' + retVal['token']
     }
     data = {
-        'mealType': 'Breakfast',
+        'type': 'Breakfast',
         'keyword': 'chikecn'
     }
     retVal = requests.post(url,
