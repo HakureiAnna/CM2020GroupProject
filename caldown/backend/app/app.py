@@ -178,7 +178,17 @@ def profile():
         return getProfile(conn, uid)
     else:                
         data = request.get_json()
-        # weight, height, gender, age
+        if 'weight' not in data:
+            return abort(400)
+        if 'height' not in data:
+            return abort(400)
+        if 'gender' not in data:
+            return abort(400)
+        if 'age' not in data:
+            return abort(400)
+        if 'goal' not in data:
+            return abort(400)
+         # weight, height, gender, age
         weight = data['weight']
         height = data['height']
         gender = data['gender']
@@ -221,6 +231,11 @@ def recommendations():
         return abort(401)
 
     data = request.get_json()
+    if 'type' not in data:
+        return abort(400)
+    if 'keyword' not in data:
+        return abort(400)
+
     mealType = data['type']
     keyword = data['keyword']
     if mealType is None or keyword is None:
@@ -283,6 +298,32 @@ def createPlan():
         return abort(401)
 
     data = request.get_json()
+    if 'breakfast' not in data:
+        return abort(400)
+    else:
+        tmp = data['breakfast']
+        if 'uri' not in tmp:
+            return abort(400)
+        if 'calories' not in tmp:
+            return abort(400)
+    if 'lunch' not in data:
+        return abort(400)
+    else:
+        tmp = data['lunch']
+        if 'uri' not in tmp:
+            return abort(400)
+        if 'calories' not in tmp:
+            return abort(400)
+    if 'dinner' not in data:
+        return abort(400)
+    else:
+        tmp = data['dinner']
+        if 'uri' not in tmp:
+            return abort(400)
+        if 'calories' not in tmp:
+            return abort(400)
+    if 'plannedDate' not in data:
+        return abort(400)
     breakfastUri = data['breakfast']['uri']
     breakfastCalories = data['breakfast']['calories']
     lunchUri = data['lunch']['uri']
