@@ -10,7 +10,7 @@ def test_recommendations_invalid_method():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = request.post(
+    retVal = requests.post(
         url,
         verify=False,
         json=data
@@ -42,7 +42,7 @@ def test_recommendations_missing_data():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = request.post(
+    retVal = requests.post(
         url,
         verify=False,
         json=data
@@ -55,7 +55,7 @@ def test_recommendations_missing_data():
     data = {
         'mealType': 'Breakfast'
     }
-    retVal = requests.get(url,
+    retVal = requests.post(url,
         verify=False,
         headers=headers,
         json=data).status_code
@@ -67,7 +67,7 @@ def test_recommendations_invalid_data():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = request.post(
+    retVal = requests.post(
         url,
         verify=False,
         json=data
@@ -81,7 +81,7 @@ def test_recommendations_invalid_data():
         'mealType': 'Supper',
         'keyword': 'venison'
     }
-    retVal = requests.get(url,
+    retVal = requests.post(url,
         verify=False,
         headers=headers,
         json=data).status_code
@@ -94,7 +94,7 @@ def test_recommendations_valid_data():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = request.post(
+    retVal = requests.post(
         url,
         verify=False,
         json=data
@@ -108,8 +108,8 @@ def test_recommendations_valid_data():
         'mealType': 'Breakfast',
         'keyword': 'chikecn'
     }
-    retVal = requests.get(url,
+    retVal = requests.post(url,
         verify=False,
         headers=headers,
         json=data).json()
-    assert len(retVal[recipes]) > 0
+    assert len(retVal['recipes']) > 0
