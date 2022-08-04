@@ -232,6 +232,8 @@ def recommendations():
         factor = 0.4
     elif mealType == 'Dinner':
         factor = 0.25
+    else:
+        return abort(400)
 
     profile = getProfileFromDb(conn, uid)
     # Revised Harris-Benedict Equation
