@@ -1,29 +1,41 @@
 <script setup>
-import { Form, Field } from "vee-validate";
+import { ref, computed } from "vue";
+import { useForm } from "vee-validate";
 import * as Yup from "yup";
 
 import { useUsersStore } from "@/stores";
-import { router } from "@/helpers";
 
 const schema = Yup.object().shape({
   username: Yup.string()
-            .required("username is required"),
+            .min(8, "Username Must be at least 8 characters and Start with a letter")
+            .required("username is required")
+            .label("Your User Name"),
   password: Yup.string()
-            .min(12, "Password must be at least 6 characters")
-            .required("Password is required"),
+            .min(12, "Password must be at least 12 characters")
+            .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{12,}$/, "Password Must contain at least 1 letter, 1 digit, and 1 special character")
+            .required("Password is required")
+            .label("Your Password"),
   confirmPassword: Yup.string()
             .oneOf([Yup.ref("password"), null], "Password Must Match")
             .required("Confirm Password is required")
+            .label("Confirm Password")
 })
 
-// Static Transition to Login Page
-async function handleSubmit(values) {
+
+const { meta, errors, useFieldModel, handleSubmit, isSubmitting, resetForm } = useForm({
+  validationSchema: schema,
+});
+
+const [username, password, confirmPassword] = useFieldModel(["username", "password", "confirmPassword"]);
+
+const onSubmit = handleSubmit( async values => {
   const usersStore = useUsersStore();
-  const { username, password, confirmPassword } = values;
-  await usersStore.signUp(username, password, confirmPassword).catch(error=>{
-    console.log(error);
-  });
-};
+  const response = await usersStore.signUp(username.value, password.value, confirmPassword.value);
+
+  // Dear Calvin / Latifa
+  // the variable "response" has the responses from the bad end, can you make a display message that notify users about this, Thank you.
+  console.log(response);
+});
 </script>
 
 <template>
@@ -32,27 +44,27 @@ async function handleSubmit(values) {
       <img src="./icons/logoidea2.png" alt="" />
     </div>
     <div class="container">
-        <Form @submit="handleSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
+        <form @submit="onSubmit">
           <div class="form-group input-field">
             <i class="fa fa-user" aria-hidden="true"></i>
-            <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-            <div class="invalid-feedback">{{ errors.username }}</div>
+            <input name="username" v-model="username" type="text" class="form-control" />
+            <span>{{ errors.username }}</span>
           </div>
           <div class="form-group input-field">
             <i class="fa fa-lock" aria-hidden="true"></i>
-            <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
-            <div class="invalid-feedback">{{ errors.password }}</div>
+            <input name="password" v-model="password" type="password" class="form-control" />
+            <span>{{ errors.password }}</span>
           </div>
           <div class="form-group input-field">
             <i class="fa fa-lock" aria-hidden="true"></i>
-            <Field name="confirmPassword" type="password" class="form-control" :class="{ 'is-invalid': errors.confirmPassword }" />
-            <div class="invalid-feedback">{{ errors.confirmPassword }}</div>
+            <input name="confirmPassword" v-model="confirmPassword" type="password" class="form-control" />
+            <span>{{ errors.confirmPassword }}</span>
           </div>
           <div class="form-group">
-            <button type="submit" class="btn solid">Sign Up</button>
-            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button :disabled="isSubmitting" type="submit" class="btn solid">Sign Up</button>
+            <button @click="resetForm()" type="reset" class="btn btn-secondary">Reset</button>
           </div>
-        </Form>
+        </form>
       </div>
     </div>
 </template>
