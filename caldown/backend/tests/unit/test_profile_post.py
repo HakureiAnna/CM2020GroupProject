@@ -91,7 +91,7 @@ def test_profile_post_create_new():
     data = {
         'weight': 45,
         'height': 160,
-        'gender': 0,
+        'gender': 'female',
         'age': 25,
         'goal': 'balanced'
     }

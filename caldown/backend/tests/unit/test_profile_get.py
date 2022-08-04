@@ -72,4 +72,4 @@ def test_profile_get_valid_credentials():
         verify=False,
         headers=headers
     ).json()
-    assert retVal['gender'] == 1
+    assert retVal['gender'] == 'male'

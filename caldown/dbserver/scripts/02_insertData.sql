@@ -4,7 +4,7 @@ VALUES
 
 INSERT INTO profiles(id, age, weight, height, gender, goal, userid) 
 SELECT
-	UUID(), 20, 50, 165, 1, 'balanced', id
+	UUID(), 20, 50, 165, 'male', 'balanced', id
 FROM users 
 WHERE username='testuser'
 LIMIT 1;

@@ -189,7 +189,6 @@ def profile():
         try:
             weight = int(weight)            
             height = int(height)
-            gender = int(gender)
             age = int(age)
         except:
             return abort(400)
@@ -197,8 +196,6 @@ def profile():
         if weight < 40:
             return abort(400)
         if height < 120:
-            return abort(400)
-        if gender < 0 or gender > 1:
             return abort(400)
         if age < 16 or age > 110:
             return abort(400)
@@ -238,7 +235,7 @@ def recommendations():
 
     profile = getProfileFromDb(conn, uid)
     # Revised Harris-Benedict Equation
-    if profile['gender'] == 0:
+    if profile['gender'] == 'female':
         calories = 9.247*profile['weight'] + 309.8*profile['height'] -4.330*profile['age'] + 447.593
     else:
         calories = 13.397*profile['weight'] + 479.9*profile['height'] -5.677*profile['age'] + 88.362
@@ -320,7 +317,6 @@ def createPlan():
     return jsonify({
         'message': 'plan successfully created.'
     })
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
