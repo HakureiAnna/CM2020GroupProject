@@ -106,7 +106,7 @@ def test_recommendations_valid_data():
     }
     data = {
         'type': 'Breakfast',
-        'keyword': 'chikecn'
+        'keyword': 'chicken'
     }
     retVal = requests.post(url,
         verify=False,
