@@ -41,7 +41,7 @@ pipeline {
 		}
 		
 		failure {
-			sleep 1	
+			sleep 30	
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 			bat 'docker system prune'
