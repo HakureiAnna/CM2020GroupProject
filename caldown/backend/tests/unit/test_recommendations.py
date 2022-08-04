@@ -88,7 +88,7 @@ def test_recommendations_invalid_data():
     assert retVal == 400
 
 
-def test_recommendations_valid data():  
+def test_recommendations_valid_data():  
     data = {
         'user': 'testuser',
         'pass': 'password'
