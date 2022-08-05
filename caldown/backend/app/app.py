@@ -325,6 +325,9 @@ def createPlan():
             return abort(400)
     if 'plannedDate' not in data:
         return abort(400)
+    
+    
+    print('error 1')
     breakfastUri = data['breakfast']['uri']
     breakfastCalories = data['breakfast']['calories']
     lunchUri = data['lunch']['uri']
@@ -341,6 +344,7 @@ def createPlan():
         return abort(400)
     if plannedDate is None:
         return abort(400)
+    print('error 2')
     
 
     try:
@@ -350,6 +354,7 @@ def createPlan():
         dt = datetime.strptime(plannedDate, '%Y/%m/%d')
         today = date.today()
         if dt < today:
+            print('error 3')
             abort(400)
         plannedDate = dt.strftime('%Y-%m-%d')
     except:

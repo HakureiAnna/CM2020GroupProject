@@ -153,4 +153,4 @@ def test_createPlan_valid_data():
         verify=False,
         headers=headers,
         json=data).json()
-    assert len(retVal['recipes']) > 0
+    assert retVal['message'] == 'plan successfully created.'
