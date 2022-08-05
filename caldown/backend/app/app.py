@@ -5,6 +5,7 @@ import os
 import requests
 from string import punctuation
 from time import sleep
+from datetime import datetime, date
 
 from util import *
 
@@ -340,12 +341,17 @@ def createPlan():
         return abort(400)
     if plannedDate is None:
         return abort(400)
+    
 
     try:
         breakfastCalories = int(breakfastCalories)
         lunchCalories = int(lunchCalories)
         dinnerCalories = int(dinnerCalories)
-        plannedDate = datetime.strptime(plannedDate, '%Y/%m/%d').strftime('%Y-%m-%d')
+        dt = datetime.strptime(plannedDate, '%Y/%m/%d')
+        today = date.today()
+        if dt < today:
+            abort(400)
+        plannedDate = dt.strftime('%Y-%m-%d')
     except:
         abort(400)
 
