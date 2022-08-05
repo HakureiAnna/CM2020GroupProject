@@ -1,5 +1,6 @@
 <script setup>
-import { Form, Field } from "vee-validate";
+import { ref, computed } from "vue";
+import { useForm } from "vee-validate";
 import * as Yup from "yup";
 
 import { useAuthStore } from "@/stores";
@@ -9,11 +10,24 @@ const schema = Yup.object().shape({
   password: Yup.string().required("Password is required")
 })
 
-async function handleSubmit(values) {
+const { meta, errors, useFieldModel, handleSubmit, submitCount } = useForm({
+  validationSchema: schema,
+});
+
+const [username, password] = useFieldModel(["username", "password"]);
+
+const onSubmit = handleSubmit(async values => {
   const authStore = useAuthStore();
-  const { username, password } = values;
-  await authStore.login(username, password);
-}
+  const response = await authStore.login(username.value, password.value);
+
+  // Dear Calvin / Latifa
+  // the variable "response" has the responses from the bad end, can you make a display message that notify users about this, Thank you.
+  console.log(response);
+});
+
+const isTooManyAttempts = computed(() => {
+  return submitCount.value >= 10;
+})
 </script>
 
 <template>
@@ -22,22 +36,19 @@ async function handleSubmit(values) {
       <img src="./icons/logoidea2.png" alt="" />
     </div>
     <div class="container">
-        <Form @submit="handleSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
+        <form @submit="onSubmit">
           <div class="form-group input-field">
             <i class="fa fa-user" aria-hidden="true"></i>
-            <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-            <div class="invalid-feedback">{{ errors.username }}</div>
+            <input name="username" v-model="username" type="text" class="form-control" />
           </div>
           <div class="form-group input-field">
             <i class="fa fa-lock" aria-hidden="true"></i>
-            <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
-            <div class="invalid-feedback">{{ errors.password }}</div>
+            <input name="password" v-model="password" type="password" class="form-control" />
           </div>
           <div class="form-group">
-            <button type="submit" class="btn solid">Login</button>
-            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button :disabled="isTooManyAttempts" type="submit" class="btn solid">Login</button>
           </div>
-        </Form>
+        </form>
       </div>
     </div>
 </template>
