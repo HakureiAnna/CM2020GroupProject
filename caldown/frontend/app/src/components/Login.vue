@@ -10,7 +10,7 @@ const schema = Yup.object().shape({
   password: Yup.string().required("Password is required")
 })
 
-const { meta, errors, useFieldModel, handleSubmit, isSubmitting, submitCount } = useForm({
+const { meta, errors, useFieldModel, handleSubmit, submitCount } = useForm({
   validationSchema: schema,
 });
 

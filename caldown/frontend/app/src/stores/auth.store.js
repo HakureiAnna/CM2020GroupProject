@@ -14,20 +14,20 @@ export const useAuthStore = defineStore({
           (res) => {
             this.user = res.data.token;
             localStorage.setItem("user", JSON.stringify(this.user));
+            router.push("/");
           }
-        ).then(() => {
-          router.push("/");
-        }).catch(error => {
+        ).catch(error => {
           console.log(error);
           return {
             error: "Username / Password is incorrect / does not exist"
           }
       });
+      this.message = response;
       return response;
     },
     async logout() {
       if (!this.user) return;
-      
+
       // Update headers.
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("user").replace(/["]/g, '')}`;
 
@@ -43,6 +43,7 @@ export const useAuthStore = defineStore({
       }).catch(error => {
         console.log(error);
       });
+      this.message = response;
       return response;
     }
   },

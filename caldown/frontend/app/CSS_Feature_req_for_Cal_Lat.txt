@@ -1,8 +1,8 @@
 * Features
     Login.vue line 23
     Signup.vue line 35
-    
+    Profile.vue line 14
 
 
 * CSS
-    Login.vue & Signup.vue CSS, anything you'd like to change
+    Login.vue & Signup.vue * Profile.vue & questions.vue CSS, anything you'd like to change

@@ -7,14 +7,16 @@ export const useUsersStore = defineStore({
   id: "users",
   state: () => ({
     users: {},
-    user: {}
+    user: {},
+    errors: {}
   }),
   actions: {
     async signUp(username, password, confirmed_password) {
       if (password !== confirmed_password) {
         console.log("Error: Password Does Not Match");
       }
-      const response = await axios.post(`https://localhost/api/signup`, { user:username, pass:password }).then(
+      const response = await axios.post(`https://localhost/api/signup`, { user:username, pass:password })
+        .then(
           (res) => {
             if (res.data.token) {
               router.push("/login");
@@ -27,8 +29,11 @@ export const useUsersStore = defineStore({
           console.log(`from stores ${error}`);
 
           // Bad Practice to return backend error to frontend page, need to properly handle the error.
+          this.errors = error;
           return error;
       });
+
+      this.message = response;
       return response;
     },
     async getAll() {

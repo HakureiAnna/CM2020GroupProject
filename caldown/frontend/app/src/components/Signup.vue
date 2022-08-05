@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import { useForm } from "vee-validate";
 import * as Yup from "yup";
+import { storeToRefs } from "pinia";
 
 import { useUsersStore } from "@/stores";
 
@@ -22,14 +23,15 @@ const schema = Yup.object().shape({
 })
 
 
-const { meta, errors, useFieldModel, handleSubmit, isSubmitting, resetForm } = useForm({
+const { meta, errors, useFieldModel, handleSubmit, isSubmitting, resetForm, } = useForm({
   validationSchema: schema,
 });
 
 const [username, password, confirmPassword] = useFieldModel(["username", "password", "confirmPassword"]);
 
+const usersStore = useUsersStore();
+
 const onSubmit = handleSubmit( async values => {
-  const usersStore = useUsersStore();
   const response = await usersStore.signUp(username.value, password.value, confirmPassword.value);
 
   // Dear Calvin / Latifa
