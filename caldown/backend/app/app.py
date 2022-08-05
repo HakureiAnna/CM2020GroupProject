@@ -353,6 +353,7 @@ def createPlan():
         dinnerCalories = int(dinnerCalories)
         dt = datetime.strptime(plannedDate, '%Y/%m/%d')
         today = date.today()
+        print(today, dt)
         if dt < today:
             print('error 3')
             abort(400)
