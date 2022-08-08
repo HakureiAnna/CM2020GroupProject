@@ -300,6 +300,7 @@ def createPlan():
         return abort(401)
 
     if request.method == 'GET':
+        pass
     else:
         return postPlan(conn, uid, request.get_json())
  
