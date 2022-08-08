@@ -313,6 +313,18 @@ def history():
     uid = checkUser(conn, auth_hdr)
     startDate = request.args['startDate']
     endDate = request.args['endDate']
+    try:
+        tmp = datetime.strptime(startDate, '%Y/%m/%d').date()
+        startDate = tmp.strftime('%Y-%m-%d')
+        tmp = datetime.strptime(endDate, '%Y/%m/%d').date()
+        startDate = tmp.strftime('%Y-%m-%d')
+    except:
+        abort(400)
+    return jsonify({
+        'startDate': startDate,
+        'endDate': endDate
+    })
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
