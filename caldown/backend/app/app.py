@@ -279,6 +279,8 @@ def recommendations():
 
     for r in results:
         recipe = r['recipe']
+        if 'label' not in recipe:
+            continue
         recipes.append({
             'uri': recipe['uri'],
             'image': recipe['image'],
