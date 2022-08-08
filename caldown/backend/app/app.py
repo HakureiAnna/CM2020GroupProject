@@ -306,10 +306,10 @@ def createPlan():
  
 
 @app.route('history', method=['GET'])
-
-@app.route('/previousPlan', methods=['POST'])
-def previousPlan():
-    pass
+def history():
+    return jsonify({
+        'message': 'OK'
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
