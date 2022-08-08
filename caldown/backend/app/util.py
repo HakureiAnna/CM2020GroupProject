@@ -117,7 +117,6 @@ def postPlan(conn, uid, data):
     if not breakfast or not lunch or not dinner or not plannedDate:
         return abort(400)
 
-
     try:
         dt = datetime.strptime(plannedDate, '%Y/%m/%d').date()
         today = date.today()
