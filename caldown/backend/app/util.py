@@ -110,20 +110,24 @@ def postPlan(conn, uid, data):
     if 'plannedDate' not in data:
         return abort(400)
 
+    print(1)
+
     breakfast = parseMeal(data['breakfast'])
     lunch = parseMeal(data['lunch'])
     dinner = parseMeal(data['dinner'])
     plannedDate = data['plannedDate']
     if not breakfast or not lunch or not dinner or not plannedDate:
         return abort(400)
-
+    print(2)
     try:
         dt = datetime.strptime(plannedDate, '%Y/%m/%d').date()
         today = date.today()
         if dt < today:
             return abort(400)
+        print(3)
         plannedDate = dt.strftime('%Y-%m-%d')
     except:
+        print(4)
         return abort(400)
     with conn.cursor() as c:
         q = 'INSERT INTO plans(id, breakfast_name, breakfast_uri, breakfast_image, breakfast_calories, lunch_name, lunch_uri, lunch_image, lunch_calories, dinner_name, dinner_uri, dinner_image, dinner_calories, datePlanned, userid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
