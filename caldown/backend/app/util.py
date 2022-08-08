@@ -73,7 +73,7 @@ def getPlan(conn, uid, data):
         return abort(400)
     planId = data['planId']
     with conn.cursor() as c:
-        q = 'SELECT breakfast_name, breakfast_uri, breakfast_image, breakfast_calories, lunch_name, lunch_uri, lunch_image, lunch_calories, dinner_name, dinner_uri, dinner_image, dinner_calories, dateplanned FROM plans WHERE userid=%s AND id=%s'
+        q = 'SELECT breakfast_name, breakfast_uri, breakfast_image, breakfast_calories, lunch_name, lunch_uri, lunch_image, lunch_calories, dinner_name, dinner_uri, dinner_image, dinner_calories, DATE_FORMAT(dateplanned %Y/%m/%d) FROM plans WHERE userid=%s AND id=%s'
         args = (uid, planId)
         print(args)
         c.execute(q, args)

@@ -307,9 +307,12 @@ def plan():
 
 @app.route('/history', methods=['GET'])
 def history():
-    return jsonify({
-        'message': 'OK'
-    })
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+    uid = checkUser(conn, auth_hdr)
+    startDate = request.args['startDate']
+    endDate = request.args['endDate']
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
