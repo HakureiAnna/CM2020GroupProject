@@ -82,9 +82,9 @@ def postPlan(conn, uid, data):
     if 'plannedDate' not in data:
         return abort(400)
 
-    breakfast = checkMeal(data['breakfast'])
-    lunch = checkMeal(data['lunch'])
-    dinner = checkMeal(data['dinner'])
+    breakfast = parseMeal(data['breakfast'])
+    lunch = parseMeal(data['lunch'])
+    dinner = parseMeal(data['dinner'])
     if not breakfast or not lunch or not dinner:
         return abort(400)
     try:

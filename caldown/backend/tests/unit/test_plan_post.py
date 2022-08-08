@@ -4,7 +4,7 @@ import jwt
 import mysql.connector as mc
 import requests
 
-def test_plan_postinvalid_method():  
+def test_plan_post_invalid_method():  
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -20,7 +20,7 @@ def test_plan_postinvalid_method():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }    
-    retVal = requests.get(url, 
+    retVal = requests.put(url, 
             verify=False,
             headers=headers).status_code
     assert retVal == 405
