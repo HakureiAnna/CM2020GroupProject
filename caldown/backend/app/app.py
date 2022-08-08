@@ -305,7 +305,7 @@ def createPlan():
         return postPlan(conn, uid, request.get_json())
  
 
-@app.route('history', method=['GET'])
+@app.route('history', methods=['GET'])
 def history():
     return jsonify({
         'message': 'OK'
