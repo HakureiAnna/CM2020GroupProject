@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, date, timedelta, timezone
 from flask import jsonify, abort
 import jwt
 import os
