@@ -68,7 +68,6 @@ def parseMeal(meal):
         'calories': calories
     }
 
-
 def getPlan(conn, uid, data):
     if 'planId' not in data:
         return abort(400)
@@ -76,6 +75,7 @@ def getPlan(conn, uid, data):
     with conn.cursor() as c:
         q = 'SELECT breakfast_name, breakfast_uri, breakfast_image, breakfast_calories, lunch_name, lunch_uri, lunch_image, lunch_calories, dinner_name, dinner_url, dinner_image, dinner_calories, dateplanned FROM plans WHERE userid=%s AND id=%s'
         args = (uid, planId)
+        print(args)
         c.execute(q, args)
         retVal = c.fetchall()
     return jsonify({
@@ -110,24 +110,19 @@ def postPlan(conn, uid, data):
     if 'plannedDate' not in data:
         return abort(400)
 
-    print(1)
-
     breakfast = parseMeal(data['breakfast'])
     lunch = parseMeal(data['lunch'])
     dinner = parseMeal(data['dinner'])
     plannedDate = data['plannedDate']
     if not breakfast or not lunch or not dinner or not plannedDate:
         return abort(400)
-    print(2)
     try:
         dt = datetime.strptime(plannedDate, '%Y/%m/%d').date()
         today = date.today()
         if dt < today:
             return abort(400)
-        print(3)
         plannedDate = dt.strftime('%Y-%m-%d')
     except:
-        print(4)
         return abort(400)
     with conn.cursor() as c:
         q = 'INSERT INTO plans(id, breakfast_name, breakfast_uri, breakfast_image, breakfast_calories, lunch_name, lunch_uri, lunch_image, lunch_calories, dinner_name, dinner_uri, dinner_image, dinner_calories, datePlanned, userid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
