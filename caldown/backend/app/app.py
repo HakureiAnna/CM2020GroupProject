@@ -271,7 +271,7 @@ def recommendations():
     uri += '&diet=balanced'
     uri += '&mealType=' + mealType
     uri += '&calories=' + '{:d}'.format(calories)
-    uri += '&field=uri&field=image&field=calories'
+    uri += '&field=uri&field=image&field=calories&field=label'
 
     data = requests.get(uri).json()
     results = data['hits']
@@ -279,8 +279,6 @@ def recommendations():
 
     for r in results:
         recipe = r['recipe']
-        if 'label' not in recipe:
-            continue
         recipes.append({
             'uri': recipe['uri'],
             'image': recipe['image'],

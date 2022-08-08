@@ -4,7 +4,7 @@ import jwt
 import mysql.connector as mc
 import requests
 
-def test_createPlan_invalid_method():  
+def test_plan_postinvalid_method():  
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -16,7 +16,7 @@ def test_createPlan_invalid_method():
         json=data
     ).json()
     
-    url = 'https://localhost/api/createPlan'
+    url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }    
@@ -25,19 +25,25 @@ def test_createPlan_invalid_method():
             headers=headers).status_code
     assert retVal == 405
 
-def test_createPlan_no_credentials():
-    url = 'https://localhost/api/createPlan'
+def test_plan_post_no_credentials():
+    url = 'https://localhost/api/plan'
     data = {
         'breakfast': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'lunch': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'dinner': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'plannedDate': '2022/08/09'
@@ -47,7 +53,7 @@ def test_createPlan_no_credentials():
         json=data).status_code
     assert retVal == 401
 
-def test_createPlan_missing_data(): 
+def test_plan_post_missing_data(): 
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -59,7 +65,7 @@ def test_createPlan_missing_data():
         json=data
     ).json()
 
-    url = 'https://localhost/api/createPlan'
+    url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
@@ -80,7 +86,7 @@ def test_createPlan_missing_data():
         json=data).status_code
     assert retVal == 400
 
-def test_createPlan_invalid_data():
+def test_plan_post_invalid_data():
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -92,21 +98,27 @@ def test_createPlan_invalid_data():
         json=data
     ).json()
 
-    url = 'https://localhost/api/createPlan'
+    url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
     data = {
         'breakfast': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'lunch': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'dinner': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'plannedDate': '2022/07/31'
@@ -118,7 +130,7 @@ def test_createPlan_invalid_data():
     assert retVal == 400
 
 
-def test_createPlan_valid_data():  
+def test_plan_post_valid_data():  
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -130,7 +142,7 @@ def test_createPlan_valid_data():
         json=data
     ).json()
 
-    url = 'https://localhost/api/createPlan'
+    url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
