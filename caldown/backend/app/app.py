@@ -343,7 +343,7 @@ def history():
         q = 'SELECT id, DATE_FORMAT(dateplanned, "%Y/%m/%d"), breakfast_calories+lunch_calories+dinner_calories FROM plans WHERE userid=%s AND dateplanned BETWEEN %s AND %s'
         args = (uid, startDate, endDate)
         c.execute(q, args)
-        retVal = c.fetchAll()
+        retVal = c.fetchall()
         for p in retVal:
             result['plans'].append({
                 'planId': p[0],

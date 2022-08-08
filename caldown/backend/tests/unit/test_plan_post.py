@@ -146,6 +146,9 @@ def test_plan_post_valid_data():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
+    d = date.today()
+    d.day + 2
+    d = d.strftime('%Y/%m/%d')
     data = {
         'breakfast': {
             'name': 'chicken chops',
@@ -165,7 +168,7 @@ def test_plan_post_valid_data():
             'image': 'https://yahoo.com',
             'calories': 1000
         },
-        'plannedDate': '2022/08/09'
+        'plannedDate': d
     }
     retVal = requests.post(url,
         verify=False,
