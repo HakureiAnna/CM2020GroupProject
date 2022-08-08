@@ -335,7 +335,7 @@ def history():
         c.execute(q, args)
         retVal = c.fetchall()
         for p in retVal:
-            result['profiles']append({
+            result['profiles'].append({
                 'goal': p[0],
                 'weight': p[1],
                 'dateCreated': p[2]
