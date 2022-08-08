@@ -291,7 +291,7 @@ def recommendations():
     })
 
 @app.route('/plan', methods=['POST', 'GET'])
-def createPlan():
+def plan():
     auth_hdr = request.headers.get('Authorization', None)
     if auth_hdr is None:
         return abort(401)
@@ -300,7 +300,7 @@ def createPlan():
         return abort(401)
 
     if request.method == 'GET':
-        pass
+        return getPlan(conn, uid, request.args)
     else:
         return postPlan(conn, uid, request.get_json())
  

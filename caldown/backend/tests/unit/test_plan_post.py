@@ -148,15 +148,21 @@ def test_plan_post_valid_data():
     }
     data = {
         'breakfast': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'lunch': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'dinner': {
+            'name': 'chicken chops',
             'uri': 'https://www.google.com',
+            'image': 'https://yahoo.com',
             'calories': 1000
         },
         'plannedDate': '2022/08/09'

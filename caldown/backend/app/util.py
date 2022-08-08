@@ -69,8 +69,36 @@ def parseMeal(meal):
     }
 
 
-def getPlan(conn, uid):
-    pass
+def getPlan(conn, uid, data):
+    if 'planId' not in data:
+        return abort(400)
+    planId = data['planId']
+    with conn.cursor() as c:
+        q = 'SELECT breakfast_name, breakfast_uri, breakfast_image, breakfast_calories, lunch_name, lunch_uri, lunch_image, lunch_calories, dinner_name, dinner_url, dinner_image, dinner_calories, datePlanned FROM plans WHERE userid=%s AND id=%s'
+        args = (uid, planId)
+        c.execute(q, args)
+        retVal = c.fetchall()
+    return jsonify({
+        'breakfast': {
+            'name': retVal[0][0],
+            'uri': retVal[0][1],
+            'image': retVal[0][2],
+            'calories': retVal[0][3]
+        },
+        'lunch': {
+            'name': retVal[0][4],
+            'uri': retVal[0][5],
+            'image': retVal[0][6],
+            'calories': retVal[0][7]
+        },
+        'dinner': {
+            'name': retVal[0][8],
+            'uri': retVal[0][9],
+            'image': retVal[0][10],
+            'calories': retVal[0][11]
+        },
+        'plannedDate': retVal[0][12]
+    })
 
 def postPlan(conn, uid, data):       
     if 'breakfast' not in data:
@@ -85,8 +113,11 @@ def postPlan(conn, uid, data):
     breakfast = parseMeal(data['breakfast'])
     lunch = parseMeal(data['lunch'])
     dinner = parseMeal(data['dinner'])
-    if not breakfast or not lunch or not dinner:
+    plannedDate = data['plannedDate']
+    if not breakfast or not lunch or not dinner or not plannedDate:
         return abort(400)
+
+
     try:
         dt = datetime.strptime(plannedDate, '%Y/%m/%d').date()
         today = date.today()
