@@ -26,7 +26,6 @@ def getProfileFromDb(conn, uid):
 
     return retVal
 
-
 def getProfile(conn, uid):
     return jsonify(getProfileFromDb(conn, uid))
     
@@ -42,6 +41,71 @@ def postProfile(conn, uid, args):
     return jsonify({
         'message': 'profile created/ updated successfully'
     })        
+
+def parseMeal(meal):
+    if 'name' not in meal:
+        return False
+    if 'uri' not in meal:
+        return False
+    if 'image' not in meal:
+        return False
+    if 'calories' not in meal:
+        return False
+    name = meal['name']
+    uri = meal['uri']
+    image = meal['image']
+    calories = meal['calories']
+    if name is None or uri is None or image is None or calories is None:
+        return False
+    try:
+        calories = int(calories)
+    except:
+        return False
+    return {
+        'name': name,
+        'uri': uri,
+        'image': image,
+        'calories': calories
+    }
+
+
+def getPlan(conn, uid):
+    pass
+
+def postPlan(conn, uid, data):       
+    if 'breakfast' not in data:
+        return abort(400)        
+    if 'lunch' not in data:
+        return abort(400)
+    if 'dinner' not in data:
+        return abort(400)
+    if 'plannedDate' not in data:
+        return abort(400)
+
+    breakfast = checkMeal(data['breakfast'])
+    lunch = checkMeal(data['lunch'])
+    dinner = checkMeal(data['dinner'])
+    if not breakfast or not lunch or not dinner:
+        return abort(400)
+    try:
+        dt = datetime.strptime(plannedDate, '%Y/%m/%d').date()
+        today = date.today()
+        if dt < today:
+            abort(400)
+        plannedDate = dt.strftime('%Y-%m-%d')
+    except:
+        abort(400)
+    with conn.cursor() as c:
+        q = 'INSERT INTO plans(id, breakfast_name, breakfast_uri, breakfast_image, breakfast_calories, lunch_name, lunch_uri, lunch_image, lunch_calories, dinner_name, dinner_uri, dinner_image, dinner_calories, datePlanned, userid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        args = (createUUID(), breakfast['name'], breakfast['uri'], breakfast['image'], breakfast['calories'], lunch['name'], lunch['uri'], lunch['image'], lunch['calories'], dinner['name'], dinner['uri'], dinner['image'], dinner['calories'], plannedDate, uid)
+        try:
+            c.execute(q, args)
+            conn.commit()
+        except:
+            abort(500)
+    return jsonify({
+        'message': 'plan successfully created.'
+    })
 
 def createToken(sub):
     delta = int(os.environ['JWT_DELTA'])

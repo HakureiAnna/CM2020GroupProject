@@ -282,14 +282,15 @@ def recommendations():
         recipes.append({
             'uri': recipe['uri'],
             'image': recipe['image'],
-            'calories': recipe['calories']
+            'calories': recipe['calories'],
+            'name': recipe['label']
         })
 
     return jsonify({
         'recipes': recipes
     })
 
-@app.route('/createPlan', methods=['POST'])
+@app.route('/plan', methods=['POST', 'GET'])
 def createPlan():
     auth_hdr = request.headers.get('Authorization', None)
     if auth_hdr is None:
@@ -298,76 +299,16 @@ def createPlan():
     if not uid:
         return abort(401)
 
-    data = request.get_json()
-    if 'breakfast' not in data:
-        return abort(400)
+    if request.method == 'GET':
     else:
-        tmp = data['breakfast']
-        if 'uri' not in tmp:
-            return abort(400)
-        if 'calories' not in tmp:
-            return abort(400)
-    if 'lunch' not in data:
-        return abort(400)
-    else:
-        tmp = data['lunch']
-        if 'uri' not in tmp:
-            return abort(400)
-        if 'calories' not in tmp:
-            return abort(400)
-    if 'dinner' not in data:
-        return abort(400)
-    else:
-        tmp = data['dinner']
-        if 'uri' not in tmp:
-            return abort(400)
-        if 'calories' not in tmp:
-            return abort(400)
-    if 'plannedDate' not in data:
-        return abort(400)
-    
-    breakfastUri = data['breakfast']['uri']
-    breakfastCalories = data['breakfast']['calories']
-    lunchUri = data['lunch']['uri']
-    lunchCalories = data['lunch']['calories']
-    dinnerUri = data['dinner']['uri']
-    dinnerCalories = data['dinner']['calories']
-    plannedDate = data['plannedDate']
+        return postPlan(conn, uid, request.get_json())
+ 
 
-    if breakfastUri is None or breakfastCalories is None:
-        return abort(400)
-    if lunchUri is None or lunchCalories is None:
-        return abort(400)
-    if dinnerUri is None or dinnerCalories is None:
-        return abort(400)
-    if plannedDate is None:
-        return abort(400)    
+@app.route('history', method=['GET'])
 
-    try:
-        breakfastCalories = int(breakfastCalories)
-        lunchCalories = int(lunchCalories)
-        dinnerCalories = int(dinnerCalories)
-        dt = datetime.strptime(plannedDate, '%Y/%m/%d').date()
-        today = date.today()
-        print(dt, today, dt<today)
-        if dt < today:
-            print('error')
-            abort(400)
-        plannedDate = dt.strftime('%Y-%m-%d')
-    except:
-        abort(400)
-
-    with conn.cursor() as c:
-        q = 'INSERT INTO plans(id, breakfast_uri, breakfast_calories, lunch_uri, lunch_calories, dinner_uri, dinner_calories, datePlanned, userid) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
-        args = (createUUID(), breakfastUri, breakfastCalories, lunchUri, lunchCalories, dinnerUri, dinnerCalories, plannedDate, uid)
-        try:
-            c.execute(q, args)
-            conn.commit()
-        except:
-            abort(500)
-    return jsonify({
-        'message': 'plan successfully created.'
-    })
+@app.route('/previousPlan', methods=['POST'])
+def previousPlan():
+    pass
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
