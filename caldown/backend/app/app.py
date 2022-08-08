@@ -317,14 +317,40 @@ def history():
         tmp = datetime.strptime(startDate, '%Y/%m/%d').date()
         startDate = tmp.strftime('%Y-%m-%d')
         tmp = datetime.strptime(endDate, '%Y/%m/%d').date()
-        startDate = tmp.strftime('%Y-%m-%d')
+        endDate = tmp.strftime('%Y-%m-%d')
     except:
-        abort(400)
-    return jsonify({
-        'startDate': startDate,
-        'endDate': endDate
-    })
+        return abort(400)
 
+    if endDate < startDate:
+        return abort(400)
+
+    result = {
+        'profiles': [],
+        'plans': []
+    }
+
+    with conn.cursor() as c:
+        q = 'SELECT goal, weight, DATE_FORMAT(dateCreated, "%Y/%m/%d") FROM profiles WHERE userid=%s AND datecreated BETWEEN %s AND %s'
+        args = (uid, startDate, endDate)
+        c.execute(q, args)
+        retVal = c.fetchall()
+        for p in retVal:
+            result['profiles']append({
+                'goal': p[0],
+                'weight': p[1],
+                'dateCreated': p[2]
+            })
+        q = 'SELECT id, DATE_FORMAT(dateplanned, "%Y/%m/%d"), breakfast_calories+lunch_calories+dinner_calories FROM plans WHERE userid=%s AND dateplanned BETWEEN %s AND %s'
+        args = (uid, startDate, endDate)
+        c.execute(q, args)
+        retVal = c.fetchAll()
+        for p in retVal:
+            result['plans'].append({
+                'planId': p[0],
+                'plannedDate': p[1],
+                'calories': p[2]
+            })
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=80)
