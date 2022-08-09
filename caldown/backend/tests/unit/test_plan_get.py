@@ -128,6 +128,7 @@ def test_plan_get_valid_data():
         headers=headers,
         json=data).json()
         
+    d = date.today()
     d1 = d - timedelta(days=7)
     d2 = d + timedelta(days=7)
     d1 = d1.strftime('%Y/%m/%d')
