@@ -53,7 +53,7 @@ def test_plan_get_missing_data():
         'Authorization': 'Bearer ' + retVal['token']
     }
     
-    retVal = requests.data(url,
+    retVal = requests.get(url,
         verify=False,
         headers=headers).status_code
     assert retVal == 400
@@ -75,7 +75,7 @@ def test_plan_get_invalid_data():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    retVal = requests.post(url + '?' + params,
+    retVal = requests.get(url + '?' + params,
         verify=False,
         headers=headers,).status_code
     assert retVal == 400
@@ -87,15 +87,15 @@ def test_plan_get_valid_data():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = requests.post(
+    retVal = requests.get(
         url,
         verify=False,
         json=data
     ).json()
 
     d = date.today() 
-    d1 = d - datetime.timedelta(days=7)
-    d2 = d + datetime.timedelta(days=7)
+    d1 = d - timedelta(days=7)
+    d2 = d + timedelta(days=7)
     d1 = d1.strftime('%Y/%m/%d')
     d2 = d2.strftime('%Y/%m/%d')
 
