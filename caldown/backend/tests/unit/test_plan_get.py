@@ -93,8 +93,6 @@ def test_plan_get_valid_data():
         json=data
     ).json()
 
-
-
     url = 'https://localhost/api/plan'
     d = date.today()
     d += timedelta(days=2)
@@ -135,9 +133,6 @@ def test_plan_get_valid_data():
     d2 = d2.strftime('%Y/%m/%d')
     url = 'https://localhost/api/history'
     params = 'startDate=' + d1 + '&endDate=' + d2
-    headers = {
-        'Authorization': 'Bearer ' + retVal['token']
-    }
     retVal = requests.get(url + '?' + params,
         verify=False,
         headers=headers
