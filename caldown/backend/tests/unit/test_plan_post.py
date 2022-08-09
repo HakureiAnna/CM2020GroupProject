@@ -147,7 +147,7 @@ def test_plan_post_valid_data():
         'Authorization': 'Bearer ' + retVal['token']
     }
     d = date.today()
-    d.day + 2
+    d += datetime.timedelta(days=2)
     d = d.strftime('%Y/%m/%d')
     data = {
         'breakfast': {

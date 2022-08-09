@@ -78,6 +78,9 @@ def getPlan(conn, uid, data):
         print(args)
         c.execute(q, args)
         retVal = c.fetchall()
+
+    if len(retVal) == 0:
+        return abort(400)
     return jsonify({
         'breakfast': {
             'name': retVal[0][0],
