@@ -99,6 +99,9 @@ def test_plan_get_valid_data():
     d = date.today()
     d += timedelta(days=2)
     d = d.strftime('%Y/%m/%d')
+    headers = {
+        'Authorization': 'Bearer ' + retVal['token']
+    }
     data = {
         'breakfast': {
             'name': 'chicken chops',
