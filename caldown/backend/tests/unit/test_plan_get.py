@@ -87,7 +87,7 @@ def test_plan_get_valid_data():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = requests.get(
+    retVal = requests.post(
         url,
         verify=False,
         json=data
@@ -104,7 +104,7 @@ def test_plan_get_valid_data():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    retVal = requests.post(url + '?' + params,
+    retVal = requests.get(url + '?' + params,
         verify=False,
         headers=headers
     ).json()
@@ -112,7 +112,7 @@ def test_plan_get_valid_data():
     url = 'https://localhost/api/plan'
     planId = retVal['plans'][0]['planId']
     params = 'planId=' + planId
-    retVal = requests.post(url + '?' + params,
+    retVal = requests.get(url + '?' + params,
         verify=False,
         headers=headers
     ).json()
