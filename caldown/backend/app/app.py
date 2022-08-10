@@ -222,7 +222,7 @@ def profile():
         }
         return postProfile(conn, uid, args)
 
-@app.route('/recommendations', methods=['POST'])
+@app.route('/recommendations', methods=['GET'])
 def recommendations():
     auth_hdr = request.headers.get('Authorization', None)
     if auth_hdr is None:
@@ -231,7 +231,7 @@ def recommendations():
     if not uid:
         return abort(401)
 
-    data = request.get_json()
+    data = request.args
     if 'type' not in data:
         return abort(400)
     if 'keyword' not in data:

@@ -20,20 +20,16 @@ def test_recommendations_invalid_method():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    retVal = requests.get(url, 
+    retVal = requests.post(url, 
             verify=False,
             headers=headers).status_code
     assert retVal == 405
 
 def test_recommendations_no_credentials():
     url = 'https://localhost/api/recommendations'
-    data = {
-        'mealType': 'Breakfast',
-        'keyword': 'chicken'
-    }
-    retVal = requests.post(url,
-        verify=False,
-        json=data).status_code
+    params = 'mealType=Breakfast&keyword=chicken'
+    retVal = requests.get(url + '?' + params,
+        verify=False).status_code
     assert retVal == 401
 
 def test_recommendations_missing_data(): 
@@ -42,23 +38,20 @@ def test_recommendations_missing_data():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = requests.post(
+    retVal = requests.get(
         url,
         verify=False,
         json=data
     ).json()
 
     url = 'https://localhost/api/recommendations'
+    params = 'mealType=Breakfast'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    data = {
-        'type': 'Breakfast'
-    }
-    retVal = requests.post(url,
+    retVal = requests.get(url + '?' + params,
         verify=False,
-        headers=headers,
-        json=data).status_code
+        headers=headers).status_code
     assert retVal == 400
 
 def test_recommendations_invalid_data():
@@ -74,17 +67,13 @@ def test_recommendations_invalid_data():
     ).json()
 
     url = 'https://localhost/api/recommendations'
+    params = 'mealType=Breakfast&keyword=chicken'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    data = {
-        'type': 'Supper',
-        'keyword': 'venison'
-    }
-    retVal = requests.post(url,
+    retVal = requests.get(url + '?' + params,
         verify=False,
-        headers=headers,
-        json=data).status_code
+        headers=headers).status_code
     assert retVal == 400
 
 
@@ -104,12 +93,9 @@ def test_recommendations_valid_data():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    data = {
-        'type': 'Breakfast',
-        'keyword': 'chicken'
-    }
-    retVal = requests.post(url,
+    params = 'mealType=Breakfast&keyword=chicken'
+    retVal = requests.get(url + '?' + params,
         verify=False,
-        headers=headers,
-        json=data).json()
+        headers=headers
+    ).json()
     assert len(retVal['recipes']) > 0
