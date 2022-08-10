@@ -38,7 +38,7 @@ def test_recommendations_missing_data():
         'pass': 'password'
     }  
     url = 'https://localhost/api/login'
-    retVal = requests.get(
+    retVal = requests.post(
         url,
         verify=False,
         json=data
@@ -93,7 +93,7 @@ def test_recommendations_valid_data():
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
-    params = 'mealType=Breakfast&keyword=chicken'
+    params = 'type=Breakfast&keyword=chicken'
     retVal = requests.get(url + '?' + params,
         verify=False,
         headers=headers
