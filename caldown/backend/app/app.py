@@ -268,7 +268,7 @@ def recommendations():
     uri += '&q=' + keyword
     uri += '&app_id=' + app_id
     uri += '&app_key=' + app_key
-    uri += '&diet=balanced'
+    uri += '&diet=' + profile['goal']
     uri += '&mealType=' + mealType
     uri += '&calories=' + '{:d}'.format(calories)
     uri += '&field=uri&field=image&field=calories&field=label'
