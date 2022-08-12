@@ -45,7 +45,10 @@ function handleSubmit(event) {
             />
           </div>
           <button class="btn solid">Login</button>
+          <button class="btn clear" @click = "$router.push('signup')">Sign Up
+          </button>
         </form>
+
       </div>
     </div>
   </div>

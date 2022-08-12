@@ -61,6 +61,8 @@ const handleSubmit = () => {
             />
           </div>
           <button class="btn solid">Sign Up</button>
+          <button class="btn clear" @click = "$router.push('login')">Login
+          </button>
         </form>
       </div>
     </div>
