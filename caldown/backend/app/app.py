@@ -224,6 +224,7 @@ def profile():
     
     # otherwise call utility function to handle for POST method
     else:              
+        data = request.get_json()
         return postProfile(conn, uid, data)
 
 # BE6: /recommendations

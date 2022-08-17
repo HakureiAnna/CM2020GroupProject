@@ -33,7 +33,6 @@ def getProfile(conn, uid):
     
 def postProfile(conn, uid, data):
     # extract and validate data from body  
-    data = request.get_json()
     if 'weight' not in data:
         return abort(400)
     if 'height' not in data:
