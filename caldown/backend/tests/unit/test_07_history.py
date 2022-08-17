@@ -5,17 +5,19 @@ import mysql.connector as mc
 import requests
 
 def test_history_invalid_method():  
+    # login to get valid  token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
     
+    # access endpoint with valid token but invalid method
     url = 'https://localhost/api/history'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -32,6 +34,7 @@ def test_history_invalid_method():
     assert retVal == 405
 
 def test_history_no_credentials():
+    # access endpoint with no credentials
     url = 'https://localhost/api/history'
     d = date.today()
     d1 = d - timedelta(days=7)
@@ -44,17 +47,19 @@ def test_history_no_credentials():
     assert retVal == 401
 
 def test_history_missing_data(): 
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # access endpoint with valid token but missing data
     url = 'https://localhost/api/history'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -70,17 +75,19 @@ def test_history_missing_data():
     assert retVal == 400
 
 def test_history_invalid_data():
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # access endpoint with valid token but invalid data
     url = 'https://localhost/api/history'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -98,17 +105,19 @@ def test_history_invalid_data():
 
 
 def test_history_valid_data():  
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # insert new plan with valid token and data
     url = 'https://localhost/api/plan'
     d = date.today()
     d += timedelta(days=2)
@@ -142,6 +151,7 @@ def test_history_valid_data():
         headers=headers,
         json=data).json()
 
+    # access endpoint with valid token and data to retrieve newly inserted plan
     url = 'https://localhost/api/history'    
     d = date.today()
     d1 = d - timedelta(days=7)
