@@ -20,6 +20,7 @@ def test_profile_post_missing_credentials():
     assert retVal == 401
 
 def test_profile_post_missing_data():
+    # login for valid token
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -30,6 +31,8 @@ def test_profile_post_missing_data():
         verify=False,
         json=data
     ).json()
+
+    # access endpoint with valid token but missing required data
     url = 'https://localhost/api/profile'    
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -42,6 +45,7 @@ def test_profile_post_missing_data():
     assert retVal == 400
 
 def test_profile_post_invalid_data():
+    # login to get valid token
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -53,6 +57,7 @@ def test_profile_post_invalid_data():
         json=data
     ).json()
 
+    # access endpoint with valid token but invalid data
     url = 'https://localhost/api/profile'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -127,7 +132,7 @@ def test_profile_post_create_new():
     )
 
 def test_profile_post_update_existing():    
-    # log in
+    # log in for valid token
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',

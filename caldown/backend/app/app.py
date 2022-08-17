@@ -112,6 +112,44 @@ def logout():
     # return success log out message
     return jsonify({'message':'logged off successfully'})
 
+# BE3: /profile
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():    
+    # get token from headers and validation
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+    uid = checkUser(conn, auth_hdr)
+    if not uid:
+        return abort(401)
+        
+    # call utility function to handle for GET method
+    if request.method == 'GET':
+        return getProfile(conn, uid)
+    
+    # otherwise call utility function to handle for POST method
+    else:              
+        data = request.get_json()
+        return postProfile(conn, uid, data)
+
+# BE4: /plan
+@app.route('/plan', methods=['POST', 'GET'])
+def plan():
+    # extract token from header and validate it
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+    uid = checkUser(conn, auth_hdr)
+    if not uid:
+        return abort(401)
+
+    # call GET utility handler when request uses GET method 
+    if request.method == 'GET':
+        return getPlan(conn, uid, request.args)
+    # call POST utility handler when request uses POST method
+    else:
+        return postPlan(conn, uid, request.get_json())
+ 
 # BE5: /signup
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -166,66 +204,6 @@ def signup():
         'token': createToken(uid)
     }
     return jsonify(retVal)
-
-# BE8: /deactivate
-@app.route('/deactivate', methods=['POST'])
-def deactivate():
-    # extract and validate token from header
-    auth_hdr = request.headers.get('Authorization', None)
-    if auth_hdr is None:
-        return abort(401)
-
-    # extract, parse, and validate data from body
-    data = request.get_json()
-    if 'user' not in data:
-        return abort(400)
-    if 'pass' not in data:
-        return abort(400)
-    user = data['user']
-    pw = data['pass']
-    pw = hashlib.sha256(pw.encode()).hexdigest()
-
-    uid = checkUser(conn, auth_hdr)
-    if not uid:
-        return abort(401)
-
-    with conn.cursor() as c:
-        # delete user from DB ONLY if both a valid token and the username and password
-        # matches record in the database, and due to the way the related tables are set up
-        # (cascading delete through foreign keys), the user is effectively purged from the
-        # from all relevant tables
-        q = 'DELETE FROM users WHERE id=%s AND username=%s and password=%s'
-        args = (uid, user, pw)        
-        try:
-            c.execute(q, args)
-            conn.commit()
-        except:
-            return abort(401)
-    
-    # return success deactivation message
-    return jsonify({
-        'message': 'user account deactivated permanently'
-    })       
-
-# BE3: /profile
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():    
-    # get token from headers and validation
-    auth_hdr = request.headers.get('Authorization', None)
-    if auth_hdr is None:
-        return abort(401)
-    uid = checkUser(conn, auth_hdr)
-    if not uid:
-        return abort(401)
-        
-    # call utility function to handle for GET method
-    if request.method == 'GET':
-        return getProfile(conn, uid)
-    
-    # otherwise call utility function to handle for POST method
-    else:              
-        data = request.get_json()
-        return postProfile(conn, uid, data)
 
 # BE6: /recommendations
 @app.route('/recommendations', methods=['GET'])
@@ -309,24 +287,7 @@ def recommendations():
         'recipes': recipes
     })
 
-# BE4: /plan
-@app.route('/plan', methods=['POST', 'GET'])
-def plan():
-    # extract token from header and validate it
-    auth_hdr = request.headers.get('Authorization', None)
-    if auth_hdr is None:
-        return abort(401)
-    uid = checkUser(conn, auth_hdr)
-    if not uid:
-        return abort(401)
 
-    # call GET utility handler when request uses GET method 
-    if request.method == 'GET':
-        return getPlan(conn, uid, request.args)
-    # call POST utility handler when request uses POST method
-    else:
-        return postPlan(conn, uid, request.get_json())
- 
 # BE7: /history
 @app.route('/history', methods=['GET'])
 def history():
@@ -384,6 +345,46 @@ def history():
 
     # format dict as JSON and return to requestor
     return jsonify(result)
+    
+# BE8: /deactivate
+@app.route('/deactivate', methods=['POST'])
+def deactivate():
+    # extract and validate token from header
+    auth_hdr = request.headers.get('Authorization', None)
+    if auth_hdr is None:
+        return abort(401)
+
+    # extract, parse, and validate data from body
+    data = request.get_json()
+    if 'user' not in data:
+        return abort(400)
+    if 'pass' not in data:
+        return abort(400)
+    user = data['user']
+    pw = data['pass']
+    pw = hashlib.sha256(pw.encode()).hexdigest()
+
+    uid = checkUser(conn, auth_hdr)
+    if not uid:
+        return abort(401)
+
+    with conn.cursor() as c:
+        # delete user from DB ONLY if both a valid token and the username and password
+        # matches record in the database, and due to the way the related tables are set up
+        # (cascading delete through foreign keys), the user is effectively purged from the
+        # from all relevant tables
+        q = 'DELETE FROM users WHERE id=%s AND username=%s and password=%s'
+        args = (uid, user, pw)        
+        try:
+            c.execute(q, args)
+            conn.commit()
+        except:
+            return abort(401)
+    
+    # return success deactivation message
+    return jsonify({
+        'message': 'user account deactivated permanently'
+    })       
 
 # start the Flask app running
 if __name__ == '__main__':
