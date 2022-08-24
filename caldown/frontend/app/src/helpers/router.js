@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import { useAuthStore } from "@/stores";
-import { HomeView, LoginView, SignupView, QuestionsView, ProfileView, PlanMealView, RecommendationView } from "@/views";
+import { HomeView, LoginView, SignupView, QuestionsView, ProfileView, PlanMealView, RecommendationView, PastDaysView } from "@/views";
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +41,11 @@ export const router = createRouter({
       name: "recommendation",
       component: RecommendationView,
       props: true
+    },
+    {
+      path: "/past",
+      name: "past",
+      component: PastDaysView
     },
   ],
 });
