@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
 import { useForm } from "vee-validate";
 import * as Yup from "yup";
 
@@ -10,19 +11,17 @@ const schema = Yup.object().shape({
   password: Yup.string().required("Password is required")
 })
 
-const { meta, errors, useFieldModel, handleSubmit, submitCount } = useForm({
+const { useFieldModel, handleSubmit, submitCount } = useForm({
   validationSchema: schema,
 });
 
 const [username, password] = useFieldModel(["username", "password"]);
 
-const onSubmit = handleSubmit(async values => {
-  const authStore = useAuthStore();
-  const response = await authStore.login(username.value, password.value);
+const authStore = useAuthStore();
+const { message } = storeToRefs(authStore);
 
-  // Dear Calvin / Latifa
-  // the variable "response" has the responses from the bad end, can you make a display message that notify users about this, Thank you.
-  console.log(response);
+const onSubmit = handleSubmit(async values => {
+  const response = await authStore.login(username.value, password.value);
 });
 
 const isTooManyAttempts = computed(() => {
@@ -53,6 +52,11 @@ const isTooManyAttempts = computed(() => {
           </button>
         </form>
 
+        <!-- Hello Calvin/Lat
+        I have moved error message to message.response, just to make it easier to access in Vue.
+        All text messages are in the 'message' object, 'response' field
+        -->
+        <div v-if="message.error">{{ message.error }}</div>
       </div>
     </div>
 </template>

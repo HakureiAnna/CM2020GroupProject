@@ -8,7 +8,7 @@ export const useUsersStore = defineStore({
   state: () => ({
     users: {},
     user: {},
-    errors: {}
+    message: {}
   }),
   actions: {
     async signUp(username, password, confirmed_password) {
@@ -26,14 +26,15 @@ export const useUsersStore = defineStore({
             }
           }
         ).catch(error => {
-          console.log(`from stores ${error}`);
-
-          // Bad Practice to return backend error to frontend page, need to properly handle the error.
-          this.errors = error;
-          return error;
+          let status = error.response.status;
+          let error_message = {
+            400: "invalid data/data types",
+            405: "Unknown Error, Please contact customer support"
+          };
+          return error_message[status];
       });
 
-      this.message = response;
+      this.message.response = response;
       return response;
     },
     async getAll() {

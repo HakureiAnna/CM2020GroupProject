@@ -6,7 +6,8 @@ import { router } from "@/helpers";
 export const useQuestionsStore = defineStore({
   id: "questions",
   state: () => ({
-    profile: {}
+    profile: {},
+    message: {}
   }),
   actions: {
     async upload_profile(profile) {
@@ -17,8 +18,16 @@ export const useQuestionsStore = defineStore({
                                     return res.data;
                                   })
                                   .catch(error => {
-                                    console.log(error);
+                                    let status = error.response.status;
+                                    let error_message = {
+                                      400: "invalid data/data types",
+                                      401: "Unauthorized Access",
+                                      405: "Unknown Error, Please contact customer support",
+                                      500: "Server Error"
+                                    };
+                                    this.message.error = error_message[status];
                                   });
+      this.message.response = response;
       return response;
     },
     async get_profile() {
@@ -27,7 +36,14 @@ export const useQuestionsStore = defineStore({
                                     return res.data;
                                   })
                                   .catch(error => {
-                                    return error;
+                                    let status = error.response.status;
+                                    let error_message = {
+                                      400: "invalid data/data types",
+                                      401: "Unauthorized Access",
+                                      405: "Unknown Error, Please contact customer support",
+                                      500: "Server Error"
+                                    };
+                                    this.message.error = error_message[status];
                                   });
     }
   },

@@ -1,9 +1,10 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useForm } from "vee-validate";
 import * as Yup from "yup";
 
 import { useQuestionsStore } from "@/stores";
+import { storeToRefs } from "pinia";
 
 const schema = Yup.object().shape({
   age: Yup.number()
@@ -20,13 +21,23 @@ const schema = Yup.object().shape({
              .typeError("Please enter a number")
              .min(120, "Must be more than 120")
              .required("Height is required"),
-})
+});
 
-const genders = ref("gender");
+const genders = ref(0);
 const genders_options = ref([
   { text: "Male", value: "male" },
   { text: "Female", value: "female" }
-])
+]);
+
+const goals = ref(1);
+const goals_options = ref([
+  { text: "Balanced", value: "balanced" },
+  { text: "High-Fiber", value: "high_fiber" },
+  { text: "High-Protein", value: "high_protein" },
+  { text: "Low-Carbon", value: "low_carbon" },
+  { text: "Low-Fat", value: "low_fat" },
+  { text: "Low-Sodium", value: "low_sodium" },
+]);
 
 const { meta, errors, useFieldModel, handleSubmit, isSubmitting } = useForm({
   validationSchema: schema,
@@ -35,20 +46,18 @@ const { meta, errors, useFieldModel, handleSubmit, isSubmitting } = useForm({
 const [age, weight, height] = useFieldModel(["age", "weight", "height"]);
 
 const questionsStore = useQuestionsStore();
+const { message } = storeToRefs(questionsStore);
 
 const onSubmit = handleSubmit(async values => {
   const profile = {
     age: age.value,
     weight: weight.value,
-    gender: gender.value,
-    wpa: wpa.value,
-    ng: ng.value,
-  };
-
-  return questionsStore.upload_answers(answers).catch((err) => {
-    console.log(err);
-  });
-}
+    height: height.value,
+    gender: genders.value,
+    goal: goals.value
+  }
+  const response = await questionsStore.upload_profile(profile);
+});
 
 function show(){
   document.getElementById('getStarted').style.cssText = "display: none";
@@ -110,16 +119,13 @@ function show(){
         />
         <label for="floatingPassword">Weight (in kg)</label>
       </div>
-
+      
       <select
-        class="form-select mb-3 form-group"
-        aria-label="Weekly Physical Activity"
-        v-model="wpa"
+        class="form-select"
+        aria-label="Goal"
+        v-model="goals"
       >
-        <option disabled value="">Weekly Physical Activity</option>
-        <option value="1">Light (less than twice a week)</option>
-        <option value="2">Moderate (2-4 times a week)</option>
-        <option value="3">Heavy (more than 3 times a week)</option>
+        <option v-for="goal in goals_options" :value="goal.value">{{goal.text}}</option>
       </select>
       <select
         class="questions form-select mb-3 form-group"
@@ -133,6 +139,8 @@ function show(){
       </select>
       <button type="submit" class="questions btn btn-primary">Submit</button>
     </form>
+
+    <div v-if="message.error">{{ message.error }}</div>
   </div>
 </template>
 
