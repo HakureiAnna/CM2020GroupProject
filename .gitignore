@@ -2,3 +2,4 @@
 *.ipynb
 caldown/frontend/app/node_modules/
 caldown/dbserver/data/
+caldown/backend/app/secret

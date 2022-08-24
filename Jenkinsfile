@@ -1,6 +1,11 @@
 pipeline {
 	agent any
 	
+	environment {
+		EDAMAM_APP_ID = credentials('EDAMAM_APP_ID')
+		EDAMAM_APP_KEY = credentials('EDAMAM_APP_KEY')
+	}
+	
 	stages {
 		stage('pull') {
 			steps {
@@ -9,6 +14,7 @@ pipeline {
 		}
 		stage('build') {
 			steps {			
+				bat '(echo app_id=%EDAMAM_APP_ID% & echo app_key=%EDAMAM_APP_KEY%) > caldown/backend/app/secret'
 				bat 'docker compose -f caldown/docker-compose.yaml up --build -d'
 				sleep 10
 			}
@@ -27,7 +33,7 @@ pipeline {
 	}
 	post {	
 		success {
-			sleep 60
+			sleep 1
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 			bat 'docker system prune'
@@ -35,12 +41,11 @@ pipeline {
 		}
 		
 		failure {
-			sleep 180			
+			sleep 10
 			bat 'docker compose -f caldown/docker-compose.yaml down'
 			bat 'rmdir \"caldown/dbserver/data\" /S /Q'
 			bat 'docker system prune'
 			bat 'mkdir \"caldown/dbserver/data\"'
-		}
-			
+		}			
 	}			
 }

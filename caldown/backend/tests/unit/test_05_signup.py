@@ -49,6 +49,7 @@ def test_signup_existing_user():
 
 
 def test_signup_new_user():    
+    # sign up new user with valid data
     url = 'https://localhost/api/signup'
     data = {
         'user': 'testuser2',
@@ -60,6 +61,7 @@ def test_signup_new_user():
     sub = jwt.decode(retVal['token'], 'p@ssw0rd123', algorithms=['HS256'])['sub']      
     assert len(sub)== 36
     
+    # delete the created test account
     url = 'https://localhost/api/deactivate'
     data = {
         'user': 'testuser2',

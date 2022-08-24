@@ -22,6 +22,7 @@ def test_deactivate_no_token():
     assert retVal == 401
 
 def test_deactivate_no_data():
+    # login to get valid token
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -30,6 +31,8 @@ def test_deactivate_no_data():
     retVal = requests.post(url,
         verify=False,
         json=data).json()
+
+    # access endpoint with valid token but no data
     url = 'https://localhost/api/deactivate'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -40,6 +43,7 @@ def test_deactivate_no_data():
     assert retVal == 400
 
 def test_deactivate_missing_data():
+    # login to get valid token
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -48,6 +52,8 @@ def test_deactivate_missing_data():
     retVal = requests.post(url,
         verify=False,
         json=data).json()
+
+    # access endpoint with valid token but missing data
     url = 'https://localhost/api/deactivate'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -64,6 +70,7 @@ def test_deactivate_missing_data():
 
 
 def test_deactivate_valid_arguments():  
+    # signup and get valid token for new account
     url = 'https://localhost/api/signup'
     data = {
         'user': 'testuser1',
@@ -73,13 +80,14 @@ def test_deactivate_valid_arguments():
         verify=False,
         json=data).json()
       
+    # access endpoint with valid token issued for new account
     url = 'https://localhost/api/deactivate'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
     }
     data = {
-        'user': 'testuser',
-        'pass': 'password'
+        'user': 'testuser1',
+        'pass': 'p@ssw0rd!234'
     }
     retVal = requests.post(url, 
             verify=False,

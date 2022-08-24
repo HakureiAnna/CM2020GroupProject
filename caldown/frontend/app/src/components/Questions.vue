@@ -1,17 +1,43 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useForm } from "vee-validate";
+import * as Yup from "yup";
+
 import { useQuestionsStore } from "@/stores";
 
-const age = ref(null);
-const weight = ref(null);
-const gender = ref("");
-const wpa = ref("");
-const ng = ref("");
+const schema = Yup.object().shape({
+  age: Yup.number()
+          .typeError("Please enter an integer")
+          .min(16, "Must be older than 16")
+          .required("Age is required")
+          .max(110, "Must be a valid age")
+          .label("age"),
+  weight: Yup.number()
+             .typeError("Please enter a number")
+             .min(40, "Must be more than 40")
+             .required("Weight is required"),
+  height: Yup.number()
+             .typeError("Please enter a number")
+             .min(120, "Must be more than 120")
+             .required("Height is required"),
+})
 
-function handleSubmit(event) {
-  const questionsStore = useQuestionsStore();
+const genders = ref("gender");
+const genders_options = ref([
+  { text: "Male", value: "male" },
+  { text: "Female", value: "female" }
+])
 
-  const answers = {
+const { meta, errors, useFieldModel, handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+});
+
+const [age, weight, height] = useFieldModel(["age", "weight", "height"]);
+
+const questionsStore = useQuestionsStore();
+
+const onSubmit = handleSubmit(async values => {
+  const profile = {
     age: age.value,
     weight: weight.value,
     gender: gender.value,
@@ -46,8 +72,27 @@ function show(){
       recommended total daily caloric intake.</p>
       <button @click = "show" type="submit" id = "getStarted" class="btn btn-primary">Let's Go!</button>
     </div>
-    <form @submit.prevent="handleSubmit">
-      <div class="questions form-floating mb-3 form-group">
+    <form @submit="onSubmit">
+      <select
+        class="form-select"
+        aria-label="Gender"
+        v-model="genders"
+      >
+        <option v-for="gender in genders_options" :value="gender.value">{{gender.text}}</option>
+      </select>
+      <div class="form-group">
+        <input name="age" v-model="age" type="number" class="form-control" placeholder="Enter Your Age" />
+        <span>{{ errors.age }}</span>
+      </div>
+      <div class="form-group">
+        <input name="weight" v-model="weight" type="number" class="form-control" placeholder="Enter Your Weight" />
+        <span>{{ errors.weight }}</span>
+      </div>
+      <div class="form-group">
+        <input name="height" v-model="height" type="number" class="form-control" placeholder="Enter Your Height" />
+        <span>{{ errors.height }}</span>
+      </div>
+      <!-- <div class="form-floating mb-3 form-group">
         <input
           type="number"
           class="form-control"
@@ -67,16 +112,7 @@ function show(){
       </div>
 
       <select
-        class="questions form-select mb-3 form-group"
-        aria-label="Gender"
-        v-model="gender"
-      >
-        <option disabled value="">Gender</option>
-        <option value="1">Male</option>
-        <option value="2">Female</option>
-      </select>
-      <select
-        class="questions form-select mb-3 form-group"
+        class="form-select mb-3 form-group"
         aria-label="Weekly Physical Activity"
         v-model="wpa"
       >

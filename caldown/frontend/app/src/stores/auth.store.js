@@ -1,42 +1,50 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 
-import { fetchWrapper, router } from "@/helpers";
-
-const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
+import { router } from "@/helpers";
 
 export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
-    // initialize state from local storage to enable user to stay logged in
     user: JSON.parse(localStorage.getItem("user")),
   }),
   actions: {
     async login(username, password) {
-      const user = await fetchWrapper.post(`${baseUrl}/authenticate`, {
-        username,
-        password,
+        const response = await axios.post(`https://localhost/api/login`, { user: username, pass:password }).then(
+          (res) => {
+            this.user = res.data.token;
+            localStorage.setItem("user", JSON.stringify(this.user));
+            router.push("/");
+          }
+        ).catch(error => {
+          console.log(error);
+          return {
+            error: "Username / Password is incorrect / does not exist"
+          }
       });
-
-      // update pinia state
-      this.user = user;
-
-      // store user details and jwt in local storage to keep user logged in between page refreshes
-      localStorage.setItem("user", JSON.stringify(user));
-
-      // redirect to previous url or default to home page
-      router.push("/");
+      this.message = response;
+      return response;
     },
-    async signup(username, password, confirmed_password) {
-      if (password !== confirmed_password) {
-        console.log("Error: Password Does Not Match");
-        return;
-      }
-      router.push("/login");
-    },
-    logout() {
-      this.user = null;
-      localStorage.removeItem("user");
-      router.push("/login");
-    },
+    async logout() {
+      if (!this.user) return;
+
+      // Update headers.
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("user").replace(/["]/g, '')}`;
+
+      const response = await axios.post(`https://localhost/api/logout`).then(
+        (res) => {
+          const response = res.data;
+          console.log(response);
+        }
+      ).then(() => {
+        this.user = null;
+        localStorage.removeItem("user");
+        router.push("/login");
+      }).catch(error => {
+        console.log(error);
+      });
+      this.message = response;
+      return response;
+    }
   },
 });

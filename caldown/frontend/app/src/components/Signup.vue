@@ -1,28 +1,43 @@
 <script setup>
-import { reactive } from "vue";
-import { useAuthStore } from "@/stores";
+import { ref, computed } from "vue";
+import { useForm } from "vee-validate";
+import * as Yup from "yup";
+import { storeToRefs } from "pinia";
 
-// A proxy object
-const signup_info = reactive({
-  username: "",
-  password: "",
-  password_confirm: "",
+import { useUsersStore } from "@/stores";
+
+const schema = Yup.object().shape({
+  username: Yup.string()
+            .min(8, "Username Must be at least 8 characters and Start with a letter")
+            .required("username is required")
+            .label("Your User Name"),
+  password: Yup.string()
+            .min(12, "Password must be at least 12 characters")
+            .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{12,}$/, "Password Must contain at least 1 letter, 1 digit, and 1 special character")
+            .required("Password is required")
+            .label("Your Password"),
+  confirmPassword: Yup.string()
+            .oneOf([Yup.ref("password"), null], "Password Must Match")
+            .required("Confirm Password is required")
+            .label("Confirm Password")
+})
+
+
+const { meta, errors, useFieldModel, handleSubmit, isSubmitting, resetForm, } = useForm({
+  validationSchema: schema,
 });
 
-// Static Transition to Login Page
-const handleSubmit = () => {
-  const authStore = useAuthStore();
+const [username, password, confirmPassword] = useFieldModel(["username", "password", "confirmPassword"]);
 
-  return authStore
-    .signup(
-      signup_info.username,
-      signup_info.password,
-      signup_info.password_confirm
-    )
-    .catch((err) => {
-      console.log(err);
-    });
-};
+const usersStore = useUsersStore();
+
+const onSubmit = handleSubmit( async values => {
+  const response = await usersStore.signUp(username.value, password.value, confirmPassword.value);
+
+  // Dear Calvin / Latifa
+  // the variable "response" has the responses from the bad end, can you make a display message that notify users about this, Thank you.
+  console.log(response);
+});
 </script>
 
 <template>
@@ -31,34 +46,25 @@ const handleSubmit = () => {
       <img src="./icons/logoidea2.png" alt="" />
     </div>
     <div class="container">
-      <div class="signup">
-        <form @submit.prevent="handleSubmit">
+        <form @submit="onSubmit">
           <div class="form-group input-field">
             <i class="fa fa-user" aria-hidden="true"></i>
-            <input
-              type="text"
-              placeholder="Username"
-              class="form-control"
-              v-model="signup_info.username"
-            />
+            <input name="username" v-model="username" type="text" class="form-control" />
+            <span>{{ errors.username }}</span>
           </div>
           <div class="form-group input-field">
             <i class="fa fa-lock" aria-hidden="true"></i>
-            <input
-              type="password"
-              placeholder="Password"
-              class="form-control"
-              v-model="signup_info.password"
-            />
+            <input name="password" v-model="password" type="password" class="form-control" />
+            <span>{{ errors.password }}</span>
           </div>
           <div class="form-group input-field">
             <i class="fa fa-lock" aria-hidden="true"></i>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              class="form-control"
-              v-model="signup_info.password_confirm"
-            />
+            <input name="confirmPassword" v-model="confirmPassword" type="password" class="form-control" />
+            <span>{{ errors.confirmPassword }}</span>
+          </div>
+          <div class="form-group">
+            <button :disabled="isSubmitting" type="submit" class="btn solid">Sign Up</button>
+            <button @click="resetForm()" type="reset" class="btn btn-secondary">Reset</button>
           </div>
           <button class="btn solid">Sign Up</button>
           <button class="btn clear" @click = "$router.push('login')">Login
@@ -66,7 +72,6 @@ const handleSubmit = () => {
         </form>
       </div>
     </div>
-  </div>
 </template>
 
 <style></style>
