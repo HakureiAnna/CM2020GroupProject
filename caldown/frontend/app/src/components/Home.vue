@@ -13,7 +13,7 @@ usersStore.getAll();
 </script>
 
 <template>
-  <div>
+  <div class = "home-container">
     <h1>Hi {{ authUser?.firstName }}!</h1>
     <p>You're logged in with Fake Token(JWT)!!</p>
     <h3>Users from secure api end point:</h3>
@@ -28,3 +28,11 @@ usersStore.getAll();
     </div>
   </div>
 </template>
+
+<style>
+
+.home-container{
+  padding: 20px;
+}
+
+</style>

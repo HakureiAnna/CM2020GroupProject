@@ -5,6 +5,7 @@ import mysql.connector as mc
 import requests
 
 def test_plan_post_invalid_method():  
+    # login to get valid token
     data = {
         'user': 'testuser',
         'pass': 'password'
@@ -16,6 +17,7 @@ def test_plan_post_invalid_method():
         json=data
     ).json()
     
+    # access endpoint with valid token but invalid method
     url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -54,17 +56,19 @@ def test_plan_post_no_credentials():
     assert retVal == 401
 
 def test_plan_post_missing_data(): 
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # access endpoint with valid token but missing data
     url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -87,17 +91,19 @@ def test_plan_post_missing_data():
     assert retVal == 400
 
 def test_plan_post_invalid_data():
+    # login for valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # access endpoint with valid token but with invalid data
     url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -131,17 +137,19 @@ def test_plan_post_invalid_data():
 
 
 def test_plan_post_valid_data():  
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # access endpoint with valid token and data
     url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']

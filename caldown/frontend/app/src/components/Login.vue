@@ -47,6 +47,9 @@ const isTooManyAttempts = computed(() => {
           <div class="form-group">
             <button :disabled="isTooManyAttempts" type="submit" class="btn solid">Login</button>
           </div>
+          <button class="btn solid">Login</button>
+          <button class="btn clear" @click = "$router.push('signup')">Sign Up
+          </button>
         </form>
 
         <!-- Hello Calvin/Lat

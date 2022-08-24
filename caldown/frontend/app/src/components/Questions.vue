@@ -58,16 +58,28 @@ const onSubmit = handleSubmit(async values => {
   }
   const response = await questionsStore.upload_profile(profile);
 });
+
+function show(){
+  document.getElementById('getStarted').style.cssText = "display: none";
+  // document.getElementById('form-age').style.cssText = "display: block";
+  // document.getElementById('form-weight').style.cssText = "display: block";
+  let questions = document.getElementsByClassName('questions');
+  for(var i=0; i<questions.length; i++){
+    questions[i].style.cssText = "display: block";
+  }
+}
+
 </script>
 
 <template>
   <div class="container sm-col-6">
-    <div class="row m-3">
+    <div class="title row m-3">
       <h2>Let's get started!</h2>
     </div>
-    <div class="row ms-3 mb-3">
-      We're going to use the following questions to help determine your
-      recommended total daily caloric intake.
+    <div class="welcome row m-3">
+      <p>We're going to use the following questions to help determine your
+      recommended total daily caloric intake.</p>
+      <button @click = "show" type="submit" id = "getStarted" class="btn btn-primary">Let's Go!</button>
     </div>
     <form @submit="onSubmit">
       <select
@@ -89,6 +101,25 @@ const onSubmit = handleSubmit(async values => {
         <input name="height" v-model="height" type="number" class="form-control" placeholder="Enter Your Height" />
         <span>{{ errors.height }}</span>
       </div>
+      <!-- <div class="form-floating mb-3 form-group">
+        <input
+          type="number"
+          class="form-control"
+          id="floatingAge"
+          v-model.number="age"
+        />
+        <label for="floatingInput">Age</label>
+      </div>
+      <div class="questions form-floating mb-3 form-group">
+        <input
+          type="number"
+          class="form-control"
+          id="floatingWeight"
+          v-model.number="weight"
+        />
+        <label for="floatingPassword">Weight (in kg)</label>
+      </div>
+      
       <select
         class="form-select"
         aria-label="Goal"
@@ -96,12 +127,54 @@ const onSubmit = handleSubmit(async values => {
       >
         <option v-for="goal in goals_options" :value="goal.value">{{goal.text}}</option>
       </select>
-      <button :disabled="isSubmitting" type="submit" class="btn btn-primary">Save</button>
+      <select
+        class="questions form-select mb-3 form-group"
+        aria-label="Nutritional Goal"
+        v-model="ng"
+      >
+        <option disabled value="">Nutritional Goal</option>
+        <option value="1">Weight loss</option>
+        <option value="2">Weight maintenance</option>
+        <option value="3">Weight gain (bulking)</option>
+      </select>
+      <button type="submit" class="questions btn btn-primary">Submit</button>
     </form>
 
     <div v-if="message.error">{{ message.error }}</div>
   </div>
 </template>
 
-<style></style>
-3
+
+<style>
+.btn {
+  background-color: #e68a35;
+}
+
+.btn:hover{
+  background-color: #e68a35; 
+}
+
+.title{
+  height: 8vh;
+  position: relative;
+}
+.title h2{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.welcome{
+  padding: none;
+  position: relative;
+  justify-content: center
+}
+.welcome p{
+  text-align: center;
+}
+
+.questions{
+  display: none;
+}
+
+</style>

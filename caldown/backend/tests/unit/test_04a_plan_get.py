@@ -12,6 +12,7 @@ def test_plan_get_no_credentials():
     assert retVal == 401
 
 def test_plan_get_expired_credentials():
+    # login to get valid token
     url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
@@ -20,6 +21,8 @@ def test_plan_get_expired_credentials():
     retVal = requests.post(url, 
             verify=False,
             json=data).json()
+
+    # extract subject and create token with expired date
     sub = jwt.decode(retVal['token'], 'p@ssw0rd123', algorithms=['HS256'])['sub']    
     now = datetime.now(tz=timezone.utc)
     expiry = now + timedelta(seconds=-30)
@@ -28,6 +31,8 @@ def test_plan_get_expired_credentials():
         'exp': expiry,
         'sub': sub
     }, 'p@ssw0rd123')
+    
+    # access endpoint with expired token
     url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + tok
@@ -38,16 +43,19 @@ def test_plan_get_expired_credentials():
     assert retVal == 401
 
 def test_plan_get_missing_data(): 
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
+
+    # access endpoint with valid token but missing data
     url = 'https://localhost/api/plan'
     headers = {
         'Authorization': 'Bearer ' + retVal['token']
@@ -59,17 +67,19 @@ def test_plan_get_missing_data():
     assert retVal == 400
 
 def test_plan_get_invalid_data():
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # access endpoint with valid token but invalid data
     url = 'https://localhost/api/plan'
     params = 'planId=007'
     headers = {
@@ -82,17 +92,19 @@ def test_plan_get_invalid_data():
 
 
 def test_plan_get_valid_data():  
+    # login to get valid token
+    url = 'https://localhost/api/login'
     data = {
         'user': 'testuser',
         'pass': 'password'
     }  
-    url = 'https://localhost/api/login'
     retVal = requests.post(
         url,
         verify=False,
         json=data
     ).json()
 
+    # insert new plan with valid token
     url = 'https://localhost/api/plan'
     d = date.today()
     d += timedelta(days=2)
@@ -125,13 +137,14 @@ def test_plan_get_valid_data():
         verify=False,
         headers=headers,
         json=data).json()
-        
+
+    # get inserted plan id through history endpoint
+    url = 'https://localhost/api/history'        
     d = date.today()
     d1 = d - timedelta(days=7)
     d2 = d + timedelta(days=7)
     d1 = d1.strftime('%Y/%m/%d')
     d2 = d2.strftime('%Y/%m/%d')
-    url = 'https://localhost/api/history'
     params = 'startDate=' + d1 + '&endDate=' + d2
     retVal = requests.get(url + '?' + params,
         verify=False,
@@ -139,6 +152,7 @@ def test_plan_get_valid_data():
     ).json()
     planId = retVal['plans'][0]['planId']
 
+    # get inserted plan through plan GET endpoint
     url = 'https://localhost/api/plan'
     params = 'planId=' + planId
     retVal = requests.get(url + '?' + params,
