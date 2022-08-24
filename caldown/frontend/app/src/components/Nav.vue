@@ -6,14 +6,14 @@ const authStore = useAuthStore();
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <nav class="navbar navbar-expand-md navbar-dark">
     <div class="container-fluid">
       <RouterLink class="navbar-brand" to="/">Home</RouterLink>
       <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
+        data-bs-target="navbarNav"
         aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
@@ -22,12 +22,12 @@ const authStore = useAuthStore();
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <RouterLink to="/login">Login</RouterLink>
+          <!-- <li class="nav-item">
+            <RouterLink to="/login" >Login</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/signup">Sign Up</RouterLink>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a @click="authStore.logout()" class="">Logout</a>
           </li>
@@ -44,24 +44,42 @@ const authStore = useAuthStore();
 </template>
 
 <style>
+
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: white;
   transition: 0.4s;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+
 }
 
 @media (hover: hover) {
-  a:hover {
+  /* a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
+  } */
+
+  .nav-item:hover{
+    border-radius: 10px;
+    background-color:#e68a35;
   }
+  
 }
 
-nav {
+
+.container{
+  height: 8vh;
+}
+
+
+nav{
   width: 100%;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+  line-height: 50px;
+  background-color: #280137;
 }
 
 nav a {
@@ -69,4 +87,12 @@ nav a {
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
 }
+
+.nav-item a{
+  font-weight: 600;
+  z-index: 1;
+}
+
+
+
 </style>

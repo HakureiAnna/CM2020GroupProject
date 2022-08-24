@@ -66,6 +66,9 @@ const onSubmit = handleSubmit( async values => {
             <button :disabled="isSubmitting" type="submit" class="btn solid">Sign Up</button>
             <button @click="resetForm()" type="reset" class="btn btn-secondary">Reset</button>
           </div>
+          <button class="btn solid">Sign Up</button>
+          <button class="btn clear" @click = "$router.push('login')">Login
+          </button>
         </form>
       </div>
     </div>
