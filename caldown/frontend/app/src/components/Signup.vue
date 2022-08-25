@@ -59,11 +59,8 @@ const onSubmit = handleSubmit( async values => {
             <input name="confirmPassword" v-model="confirmPassword" type="password" class="form-control" />
             <span>{{ errors.confirmPassword }}</span>
           </div>
-          <div class="form-group">
-            <button :disabled="isSubmitting" type="submit" class="btn solid">Sign Up</button>
-            <button @click="resetForm()" type="reset" class="btn btn-secondary">Reset</button>
-          </div>
           <button class="btn solid">Sign Up</button>
+          <button @click="resetForm()" type="reset" class="btn btn-secondary">Reset</button>
           <button class="btn clear" @click = "$router.push('login')">Login
           </button>
         </form>

@@ -22,23 +22,17 @@ const authStore = useAuthStore();
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <!-- <li class="nav-item">
-            <RouterLink to="/login" >Login</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink to="/signup">Sign Up</RouterLink>
-          </li> -->
           <li class="nav-item">
             <a @click="authStore.logout()" class="">Logout</a>
-          </li>
-          <li class="nav-item">
-            <RouterLink to="/questions">Questions</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/profile">Profile</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/plan">Plan</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/past">Past Days</RouterLink>
           </li>
         </ul>
       </div>
@@ -59,22 +53,16 @@ a,
 }
 
 @media (hover: hover) {
-  /* a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  } */
-
   .nav-item:hover{
     border-radius: 10px;
     background-color:#e68a35;
   }
-  
 }
 
 
 .container{
   height: 8vh;
 }
-
 
 nav{
   width: 100%;

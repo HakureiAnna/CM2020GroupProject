@@ -44,12 +44,8 @@ const isTooManyAttempts = computed(() => {
             <i class="fa fa-lock" aria-hidden="true"></i>
             <input name="password" v-model="password" type="password" class="form-control" />
           </div>
-          <div class="form-group">
-            <button :disabled="isTooManyAttempts" type="submit" class="btn solid">Login</button>
-          </div>
-          <button class="btn solid">Login</button>
-          <button class="btn clear" @click = "$router.push('signup')">Sign Up
-          </button>
+          <button :disabled="isTooManyAttempts" type="submit" class="btn solid">Login</button>
+          <button class="btn clear" @click = "$router.push('signup')">Sign Up</button>
         </form>
 
         <!-- Hello Calvin/Lat
