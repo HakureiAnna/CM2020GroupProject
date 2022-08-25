@@ -187,10 +187,10 @@ def postPlan(conn, uid, data):
             c.execute(q, args)
             conn.commit()
         except mysql.connector.Error as err:
-            print('MySQL error:', e)
+            print('MySQL error:', err)
             return abort(500)
-        except Exception e:
-            print('Misc. error:', e)
+        except Exception as e:
+            print('Misc error')
             return abort(500)
             
     # return success message when insertion is successful
