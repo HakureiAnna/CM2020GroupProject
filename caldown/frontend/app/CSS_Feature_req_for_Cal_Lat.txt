@@ -3,6 +3,14 @@
     Signup.vue line 35
     Profile.vue line 14
 
-
 * CSS
     Login.vue & Signup.vue * Profile.vue & questions.vue CSS, anything you'd like to change
+
+* Changes
+    Login.vue: line 52 + signup.vue: line 68
+
+
+
+
+* Note to Self:
+    A problem with default value not showing in select: questions.vue

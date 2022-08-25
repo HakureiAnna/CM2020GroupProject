@@ -4,7 +4,7 @@ import Nav from "@/components/Nav.vue";
 </script>
 
 <template>
-  <Nav />
+  <Nav v-if = "!['login', 'signup'].includes($route.name)"/>
   <RouterView />
 </template>
 
@@ -20,15 +20,17 @@ import Nav from "@/components/Nav.vue";
 }
 
 @media (min-width: 1024px) {
-  body {
+  /* body {
     display: flex;
     place-items: center;
-  }
+  } */
 
-  #app {
+  /* #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
-  }
+  } */
 }
+
+
 </style>

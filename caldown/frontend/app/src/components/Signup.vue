@@ -30,13 +30,10 @@ const { meta, errors, useFieldModel, handleSubmit, isSubmitting, resetForm, } = 
 const [username, password, confirmPassword] = useFieldModel(["username", "password", "confirmPassword"]);
 
 const usersStore = useUsersStore();
+const { message } = storeToRefs(usersStore);
 
 const onSubmit = handleSubmit( async values => {
   const response = await usersStore.signUp(username.value, password.value, confirmPassword.value);
-
-  // Dear Calvin / Latifa
-  // the variable "response" has the responses from the bad end, can you make a display message that notify users about this, Thank you.
-  console.log(response);
 });
 </script>
 
@@ -66,7 +63,16 @@ const onSubmit = handleSubmit( async values => {
             <button :disabled="isSubmitting" type="submit" class="btn solid">Sign Up</button>
             <button @click="resetForm()" type="reset" class="btn btn-secondary">Reset</button>
           </div>
+          <button class="btn solid">Sign Up</button>
+          <button class="btn clear" @click = "$router.push('login')">Login
+          </button>
         </form>
+
+        <!-- Hello Calvin/Lat
+        I have moved error message to message.response, just to make it easier to access in Vue.
+        All text messages are in the 'message' object, 'error' field
+        -->
+        <div v-if="message.error">{{ message.error }}</div>
       </div>
     </div>
 </template>
