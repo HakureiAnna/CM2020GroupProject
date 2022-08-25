@@ -32,11 +32,11 @@ const genders_options = ref([
 const goals = ref(1);
 const goals_options = ref([
   { text: "Balanced", value: "balanced" },
-  { text: "High-Fiber", value: "high_fiber" },
-  { text: "High-Protein", value: "high_protein" },
-  { text: "Low-Carbon", value: "low_carbon" },
-  { text: "Low-Fat", value: "low_fat" },
-  { text: "Low-Sodium", value: "low_sodium" },
+  { text: "High-Fiber", value: "high-fiber" },
+  { text: "High-Protein", value: "high-protein" },
+  { text: "Low-Carbon", value: "low-carbon" },
+  { text: "Low-Fat", value: "low-fat" },
+  { text: "Low-Sodium", value: "low-sodium" },
 ]);
 
 const { meta, errors, useFieldModel, handleSubmit, isSubmitting } = useForm({
@@ -83,59 +83,50 @@ function show(){
     </div>
     <form @submit="onSubmit">
       <select
-        class="form-select"
+        class="questions form-select"
         aria-label="Gender"
-        v-model="genders"
-      >
+        v-model="genders" >
         <option v-for="gender in genders_options" :value="gender.value">{{gender.text}}</option>
       </select>
-      <div class="form-group">
-        <input name="age" v-model="age" type="number" class="form-control" placeholder="Enter Your Age" />
+      <div class=" questions form-floating mb-3 form-group">
+        <input 
+          name="age" 
+          v-model="age" 
+          type="number" 
+          class="form-control" 
+          id="floatingAge" 
+          placeholder="Enter Your Age" />
+        <label for="floatingInput">Age</label>
         <span>{{ errors.age }}</span>
       </div>
-      <div class="form-group">
-        <input name="weight" v-model="weight" type="number" class="form-control" placeholder="Enter Your Weight" />
+      <div class="questions form-floating mb-3 form-group">
+        <input 
+          name="weight" 
+          v-model="weight" 
+          type="number" 
+          class="form-control" 
+          id="floatingWeight" 
+          placeholder="Enter Your Weight" />
+        <label for="floatingPassword">Weight (in kg)</label>
         <span>{{ errors.weight }}</span>
       </div>
-      <div class="form-group">
-        <input name="height" v-model="height" type="number" class="form-control" placeholder="Enter Your Height" />
+      <div class="questions form-floating mb-3 form-group">
+        <input 
+          name="height" 
+          v-model="height" 
+          type="number" 
+          class="form-control" 
+          id="floatingHeight" 
+          placeholder="Enter Your Height" />
+        <label for="floatingPassword">Height (in cm)</label>
         <span>{{ errors.height }}</span>
       </div>
-      <!-- <div class="form-floating mb-3 form-group">
-        <input
-          type="number"
-          class="form-control"
-          id="floatingAge"
-          v-model.number="age"
-        />
-        <label for="floatingInput">Age</label>
-      </div>
-      <div class="questions form-floating mb-3 form-group">
-        <input
-          type="number"
-          class="form-control"
-          id="floatingWeight"
-          v-model.number="weight"
-        />
-        <label for="floatingPassword">Weight (in kg)</label>
-      </div>
-      
       <select
-        class="form-select"
+        class="questions form-select"
         aria-label="Goal"
         v-model="goals"
       >
         <option v-for="goal in goals_options" :value="goal.value">{{goal.text}}</option>
-      </select>
-      <select
-        class="questions form-select mb-3 form-group"
-        aria-label="Nutritional Goal"
-        v-model="ng"
-      >
-        <option disabled value="">Nutritional Goal</option>
-        <option value="1">Weight loss</option>
-        <option value="2">Weight maintenance</option>
-        <option value="3">Weight gain (bulking)</option>
       </select>
       <button type="submit" class="questions btn btn-primary">Submit</button>
     </form>

@@ -6,7 +6,6 @@ import { router } from "@/helpers";
 export const useUsersStore = defineStore({
   id: "users",
   state: () => ({
-    users: {},
     user: {},
     message: {}
   }),
