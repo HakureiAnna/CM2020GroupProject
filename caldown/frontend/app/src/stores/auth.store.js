@@ -35,16 +35,12 @@ export const useAuthStore = defineStore({
       // Update headers.
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("user").replace(/["]/g, '')}`;
 
-      const response = await axios.post(`https://localhost/api/logout`).then(
+      await axios.post(`https://localhost/api/logout`).then(
         (res) => {
-          const response = res.data;
-          return response;
+          localStorage.removeItem("user");
+          router.push("/login");
         }
-      ).then(() => {
-        this.user = null;
-        localStorage.removeItem("user");
-        router.push("/login");
-      }).catch(error => {
+      ).catch(error => {
         let status = error.response.status;
         let error_message = {
           401: "invalid token",
@@ -52,8 +48,6 @@ export const useAuthStore = defineStore({
         };
         this.message.error = error_message[status];
       });
-      this.message.response = response;
-      return response;
     }
   },
 });

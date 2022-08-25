@@ -1,4 +1,5 @@
 <script setup>
+import { onBeforeMount, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 import { useQuestionsStore } from "@/stores";
@@ -6,7 +7,9 @@ import { useQuestionsStore } from "@/stores";
 const questionsStore = useQuestionsStore();
 const { profile, message } = storeToRefs(questionsStore);
 
-questionsStore.get_profile();
+onBeforeMount (() => {
+  questionsStore.get_profile();
+})
 </script>
 
 <template>

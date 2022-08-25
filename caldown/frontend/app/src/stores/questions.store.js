@@ -13,7 +13,6 @@ export const useQuestionsStore = defineStore({
     async upload_profile(profile) {
       const response = await axios.post(`https://localhost/api/profile`, profile)
                                   .then(res => {
-                                    console.log(res.data);
                                     router.push("/profile");
                                     return res.data;
                                   })
@@ -31,20 +30,20 @@ export const useQuestionsStore = defineStore({
       return response;
     },
     async get_profile() {
-      this.profile = await axios.get(`https://localhost/api/profile`)
-                                  .then(res => {
-                                    return res.data;
-                                  })
-                                  .catch(error => {
-                                    let status = error.response.status;
-                                    let error_message = {
-                                      400: "invalid data/data types",
-                                      401: "Unauthorized Access",
-                                      405: "Unknown Error, Please contact customer support",
-                                      500: "Server Error"
-                                    };
-                                    this.message.error = error_message[status];
-                                  });
+      await axios.get(`https://localhost/api/profile`)
+                  .then(res => {
+                    this.profile = res.data;
+                  })
+                  .catch(error => {
+                    let status = error.response.status;
+                    let error_message = {
+                      400: "invalid data/data types",
+                      401: "Unauthorized Access",
+                      405: "Unknown Error, Please contact customer support",
+                      500: "Server Error"
+                    };
+                    this.message.error = error_message[status];
+                  });
     }
   },
 });

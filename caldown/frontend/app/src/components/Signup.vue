@@ -4,7 +4,7 @@ import { useForm } from "vee-validate";
 import * as Yup from "yup";
 import { storeToRefs } from "pinia";
 
-import { useUsersStore } from "@/stores";
+import { useAuthStore, useUsersStore } from "@/stores";
 
 const schema = Yup.object().shape({
   username: Yup.string()
@@ -29,11 +29,15 @@ const { meta, errors, useFieldModel, handleSubmit, isSubmitting, resetForm, } = 
 
 const [username, password, confirmPassword] = useFieldModel(["username", "password", "confirmPassword"]);
 
+const authStore = useAuthStore();
 const usersStore = useUsersStore();
 const { message } = storeToRefs(usersStore);
 
 const onSubmit = handleSubmit( async values => {
   const response = await usersStore.signUp(username.value, password.value, confirmPassword.value);
+
+  // hydrate authetication store
+  authStore.$reset();
 });
 </script>
 
