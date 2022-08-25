@@ -1,6 +1,7 @@
 from datetime import datetime, date, timedelta, timezone
 from flask import jsonify, abort
 import jwt
+import mysql.connector
 import os
 import uuid
 
@@ -185,7 +186,11 @@ def postPlan(conn, uid, data):
         try:
             c.execute(q, args)
             conn.commit()
-        except:
+        except mysql.connector.Error as err:
+            print('MySQL error:', e)
+            return abort(500)
+        except Exception e:
+            print('Misc. error:', e)
             return abort(500)
             
     # return success message when insertion is successful
