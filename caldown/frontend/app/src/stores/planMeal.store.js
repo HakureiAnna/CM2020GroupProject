@@ -34,7 +34,6 @@ export const usePlanMealStore = defineStore({
                     dinner: this.plan["Dinner"].recipe,
                     plannedDate: date
                 }
-                console.log(data);
                 await axios.post(`https://localhost/api/plan`, data)
                             .then((res) => {
                                 console.log(res);
