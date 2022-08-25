@@ -32,11 +32,11 @@ const genders_options = ref([
 const goals = ref(1);
 const goals_options = ref([
   { text: "Balanced", value: "balanced" },
-  { text: "High-Fiber", value: "high_fiber" },
-  { text: "High-Protein", value: "high_protein" },
-  { text: "Low-Carbon", value: "low_carbon" },
-  { text: "Low-Fat", value: "low_fat" },
-  { text: "Low-Sodium", value: "low_sodium" },
+  { text: "High-Fiber", value: "high-fiber" },
+  { text: "High-Protein", value: "high-protein" },
+  { text: "Low-Carbon", value: "low-carbon" },
+  { text: "Low-Fat", value: "low-fat" },
+  { text: "Low-Sodium", value: "low-sodium" },
 ]);
 
 const { meta, errors, useFieldModel, handleSubmit, isSubmitting } = useForm({

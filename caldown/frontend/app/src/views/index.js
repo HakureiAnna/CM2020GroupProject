@@ -5,4 +5,4 @@ export { default as QuestionsView } from "./QuestionsView.vue";
 export { default as ProfileView } from "./ProfileView.vue";
 export { default as PlanMealView } from "./PlanMealView.vue";
 export { default as RecommendationView } from "./RecommendationView.vue";
-export { default as PastDaysView } from "./RecommendationView.vue";
+export { default as PastDaysView } from "./PastDaysView.vue";
