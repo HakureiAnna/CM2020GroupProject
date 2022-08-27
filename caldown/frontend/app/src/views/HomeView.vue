@@ -1,9 +1,9 @@
 <script setup>
-import Questions from "@/components/Questions.vue";
+import QuestionsForm from "@/components/QuestionsForm.vue";
 </script>
 
 <template>
   <main>
-    <Questions />
+    <QuestionsForm />
   </main>
 </template>

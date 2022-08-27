@@ -1,10 +1,9 @@
 <script setup>
-import { ref, computed } from "vue";
 import { useForm } from "vee-validate";
 import * as Yup from "yup";
 import { storeToRefs } from "pinia";
 
-import { useAuthStore, useUsersStore } from "@/stores";
+import { useAuthStore } from "@/stores";
 
 const schema = Yup.object().shape({
   username: Yup.string()
@@ -23,21 +22,17 @@ const schema = Yup.object().shape({
 })
 
 
-const { meta, errors, useFieldModel, handleSubmit, isSubmitting, resetForm, } = useForm({
+const { errors, useFieldModel, handleSubmit, resetForm, } = useForm({
   validationSchema: schema,
 });
 
 const [username, password, confirmPassword] = useFieldModel(["username", "password", "confirmPassword"]);
 
 const authStore = useAuthStore();
-const usersStore = useUsersStore();
-const { message } = storeToRefs(usersStore);
+const { message } = storeToRefs(authStore);
 
 const onSubmit = handleSubmit( async values => {
-  const response = await usersStore.signUp(username.value, password.value, confirmPassword.value);
-
-  // hydrate authetication store
-  authStore.$reset();
+  await authStore.signUp(username.value, password.value, confirmPassword.value);
 });
 </script>
 
@@ -69,10 +64,6 @@ const onSubmit = handleSubmit( async values => {
           </button>
         </form>
 
-        <!-- Hello Calvin/Lat
-        I have moved error message to message.response, just to make it easier to access in Vue.
-        All text messages are in the 'message' object, 'error' field
-        -->
         <div v-if="message.error">{{ message.error }}</div>
       </div>
     </div>

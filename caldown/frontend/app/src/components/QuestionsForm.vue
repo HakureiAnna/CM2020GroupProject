@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useForm } from "vee-validate";
 import * as Yup from "yup";
 
-import { useQuestionsStore } from "@/stores";
+import { useUsersStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
 const schema = Yup.object().shape({
@@ -39,14 +39,14 @@ const goals_options = ref([
   { text: "Low-Sodium", value: "low-sodium" },
 ]);
 
-const { meta, errors, useFieldModel, handleSubmit, isSubmitting } = useForm({
+const { errors, useFieldModel, handleSubmit } = useForm({
   validationSchema: schema,
 });
 
 const [age, weight, height] = useFieldModel(["age", "weight", "height"]);
 
-const questionsStore = useQuestionsStore();
-const { message } = storeToRefs(questionsStore);
+const usersStore = useUsersStore();
+const { message } = storeToRefs(usersStore);
 
 const onSubmit = handleSubmit(async values => {
   const profile = {
@@ -56,7 +56,10 @@ const onSubmit = handleSubmit(async values => {
     gender: genders.value,
     goal: goals.value
   }
-  const response = await questionsStore.upload_profile(profile);
+  await usersStore.upload_profile(profile);
+
+  // Update profile state
+  usersStore.get_profile();
 });
 
 function show(){

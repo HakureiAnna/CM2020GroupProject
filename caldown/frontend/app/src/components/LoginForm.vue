@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useForm } from "vee-validate";
 import * as Yup from "yup";
@@ -11,7 +10,7 @@ const schema = Yup.object().shape({
   password: Yup.string().required("Password is required")
 })
 
-const { useFieldModel, handleSubmit, submitCount } = useForm({
+const { useFieldModel, handleSubmit } = useForm({
   validationSchema: schema,
 });
 
@@ -21,12 +20,9 @@ const authStore = useAuthStore();
 const { message } = storeToRefs(authStore);
 
 const onSubmit = handleSubmit(async values => {
-  const response = await authStore.login(username.value, password.value);
+  await authStore.login(username.value, password.value);
 });
 
-const isTooManyAttempts = computed(() => {
-  return submitCount.value >= 10;
-})
 </script>
 
 <template>
@@ -44,15 +40,11 @@ const isTooManyAttempts = computed(() => {
             <i class="fa fa-lock" aria-hidden="true"></i>
             <input name="password" v-model="password" type="password" class="form-control" />
           </div>
-          <button :disabled="isTooManyAttempts" type="submit" class="btn solid">Login</button>
+          <button type="submit" class="btn solid">Login</button>
           <button class="btn clear" @click = "$router.push('signup')">Sign Up</button>
         </form>
 
-        <!-- Hello Calvin/Lat
-        I have moved error message to message.response, just to make it easier to access in Vue.
-        All text messages are in the 'message' object, 'response' field
-        -->
-        <div v-if="message.error">{{ message.error }}</div>
+        <div v-if="message['login_error']">{{ message['login_error'] }}</div>
       </div>
     </div>
 </template>

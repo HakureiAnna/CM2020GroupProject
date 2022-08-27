@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-<div class="card">
+<div class="card recipe-card">
     <img :src="picture_src" class="card-img-top" :alt="name">
     <div class="card-body">
         <h5 class="card-title">{{ name }}</h5>
@@ -18,3 +18,9 @@ const props = defineProps({
     </div>
 </div>
 </template>
+
+<style>
+.recipe-card {
+    max-height: 500px;
+}
+</style>

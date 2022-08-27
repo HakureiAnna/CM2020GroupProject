@@ -1,8 +1,12 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-import { router } from "@/helpers";
+import { router, error_messages } from "@/helpers";
 
+// handles basic user authentication
+// login
+// logout
+// signup
 export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
@@ -11,23 +15,16 @@ export const useAuthStore = defineStore({
   }),
   actions: {
     async login(username, password) {
-        const response = await axios.post(`https://localhost/api/login`, { user: username, pass:password }).then(
-          (res) => {
+        await axios.post(`https://localhost/api/login`, { user: username, pass:password })
+        .then((res) => {
             this.user = res.data.token;
-            localStorage.setItem("user", JSON.stringify(this.user));
+            localStorage.setItem("user", JSON.stringify(res.data.token));
             router.push("/");
-          }
-        ).catch(error => {
-          let status = error.response.status;
-          let error_message = {
-            400: "invalid data/data types",
-            401: "Non-existing/Wrong Username or Password",
-            405: "Unknown Error, Please contact customer support"
-          };
-          this.message.error = error_message[status];
+          })
+        .catch((error) => {
+          const status = error.response.status;
+          this.message["login_error"] = error_messages[status];
       });
-      this.message.response = response;
-      return response;
     },
     async logout() {
       if (!this.user) return;
@@ -35,19 +32,28 @@ export const useAuthStore = defineStore({
       // Update headers.
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("user").replace(/["]/g, '')}`;
 
-      await axios.post(`https://localhost/api/logout`).then(
-        (res) => {
+      await axios.post(`https://localhost/api/logout`)
+      .then((res) => {
           localStorage.removeItem("user");
           router.push("/login");
-        }
-      ).catch(error => {
-        let status = error.response.status;
-        let error_message = {
-          401: "invalid token",
-          405: "Unknown Error, Please contact customer support"
-        };
-        this.message.error = error_message[status];
+        })
+      .catch((error) => {
+        const status = error.response.status;
+        this.message["logout_error"] = error_messages[status];
       });
-    }
-  },
+    },
+    async signUp(username, password, confirmed_password) {
+      if (password !== confirmed_password) {
+        return;
+      }
+      await axios.post(`https://localhost/api/signup`, { user:username, pass:password })
+        .then((res) => {
+            this.user = res.data.token;
+            router.push("/");
+          })
+        .catch((error) => {
+          const status = error.response.status;
+          this.message["signup_error"] = error_messages[status];
+      });
+  }},
 });

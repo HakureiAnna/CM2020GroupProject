@@ -2,10 +2,12 @@
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores";
 
+import { resetAllStores } from "@/helpers";
+
 const authStore = useAuthStore();
 const logout = () => {
   authStore.logout();
-  authStore.$reset();
+  resetAllStores();
 }
 </script>
 

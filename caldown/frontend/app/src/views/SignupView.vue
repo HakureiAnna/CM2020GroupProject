@@ -1,9 +1,9 @@
 <script setup>
-import SignUp from "@/components/Signup.vue";
+import SignUpForm from "@/components/SignupForm.vue";
 </script>
 
 <template>
   <main>
-    <SignUp />
+    <SignUpForm />
   </main>
 </template>
