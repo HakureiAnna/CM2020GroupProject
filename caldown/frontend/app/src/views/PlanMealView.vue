@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import { useUsersStore } from "@/stores";
 
 import MealSelectOption from "@/components/MealSelectOption.vue";
+import Modal from "@/components/Modal.vue";
 import { sanitizeDate } from "@/helpers";
 
 const usersStore = useUsersStore();
@@ -25,12 +26,24 @@ const saveDate = () => {
   plan.date = sanitizeDate(date.value);
 }
 
+// Modal Methods
+const isModalVisible = ref(null);
+
+const showModal = () => {
+  isModalVisible.value = true;
+}
+
+const closeModal = () => {
+  isModalVisible.value = false;
+}
+
 const submit = () => {
   if (!plan.date) {
     return;
   };
 
   usersStore.post_plan(plan.date);
+  showModal();
 }
 
 
@@ -43,6 +56,12 @@ const submit = () => {
     <MealSelectOption mealType="Lunch" picture_src="lunch.jpg" picture_desc="amazing lunch" />
     <MealSelectOption mealType="Dinner" picture_src="dinner.jpg" picture_desc="amazing dinner" />
     <button @click="submit" type="submit" class="btn btn-secondary">Submit Plan</button>
+
+    <Modal v-show="isModalVisible" @close="closeModal" >
+      <template v-slot:header>
+        "Plan Has Been Successfully Created"
+      </template>
+    </Modal>
   </div>
 </template>
 

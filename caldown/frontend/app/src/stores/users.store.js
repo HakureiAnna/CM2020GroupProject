@@ -67,7 +67,7 @@ export const useUsersStore = defineStore({
             }
             await axios.post(`https://localhost/api/plan`, data)
                         .then((res) => {
-                            console.log(res);
+                            this.$reset();
                         })
                         .catch((error) => {
                             let status = error.response.status;
