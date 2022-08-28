@@ -2,7 +2,7 @@
 import { defineProps, ref } from "vue";
 import { router } from "@/helpers";
 
-import { usePlanMealStore } from "@/stores";
+import { useRecommendationStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
 import RecipeCard from "@/components/RecipeCard.vue";
@@ -13,15 +13,15 @@ const props = defineProps({
 
 const picked_recipe = ref(0);
 
-const planMealStore = usePlanMealStore();
-const { plan, message } = storeToRefs(planMealStore);
+const recommendationStore = useRecommendationStore();
+const { recommendations, message } = storeToRefs(recommendationStore);
 
 // Bad! Short for MealType
-let mt = router.currentRoute.value.params.mealType;
-const response = planMealStore.get_recommendations(mt, mt);
+const mt = router.currentRoute.value.params.mealType;
+recommendationStore.get_recommendations(mt, mt);
 
 const submit = () => {
-    planMealStore.save_recommendation(mt, picked_recipe);
+    recommendationStore.save_recommendation(mt, picked_recipe);
 }
 
 </script>
@@ -30,13 +30,13 @@ const submit = () => {
 <div class="container">
     <div class="row row-cols-1">
         <div class="col">
-            <h2 v-if="plan[mealType]" class="meal-type">{{ plan[mealType].keyword }}</h2>
+            <h2 v-if="recommendations[mealType]" class="meal-type">{{ recommendations[mealType].keyword }}</h2>
             <button @click="submit" type="submit" class="btn btn-primary">Save</button>
             <div v-if="message.error">{{ message.error }}</div>
         </div>
     </div>
-    <div v-if="plan[mealType]" class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4">
-        <div class="col" v-for="recipe in plan[mealType].recipes">
+    <div v-if="recommendations[mealType]" class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4">
+        <div class="col" v-for="recipe in recommendations[mealType].recipes">
             <div class="form-check">
                 <input v-model="picked_recipe" class="form-check-input" type="radio" id="recipe" :name="recipe.name" :value="recipe">
                 <label class="form-check-label" for="recipe">

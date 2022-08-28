@@ -1,3 +1,6 @@
+// Takes in a date-time string returned from Vue-datepicker plugin
+// Returns in the format of "yyyy/mm/dd"
+
 export function sanitizeDate(date) {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;

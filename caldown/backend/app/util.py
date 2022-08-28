@@ -190,7 +190,7 @@ def postPlan(conn, uid, data):
             print('MySQL error:', err)
             return abort(500)
         except Exception as e:
-            print('Misc error')
+            print('Misc. error:', e)
             return abort(500)
             
     # return success message when insertion is successful

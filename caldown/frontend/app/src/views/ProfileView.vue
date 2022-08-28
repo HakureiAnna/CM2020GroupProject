@@ -1,9 +1,9 @@
 <script setup>
-import Profile from "@/components/Profile.vue";
+import ProfileCard from "@/components/ProfileCard.vue";
 </script>
 
 <template>
- <Profile />
+ <ProfileCard />
 </template>
 
 <style></style>

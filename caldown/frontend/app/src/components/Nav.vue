@@ -2,7 +2,13 @@
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores";
 
+import { resetAllStores } from "@/helpers";
+
 const authStore = useAuthStore();
+const logout = () => {
+  authStore.logout();
+  resetAllStores();
+}
 </script>
 
 <template>
@@ -23,7 +29,7 @@ const authStore = useAuthStore();
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a @click="authStore.logout()" class="">Logout</a>
+            <a @click="logout()" class="">Logout</a>
           </li>
           <li class="nav-item">
             <RouterLink to="/profile">Profile</RouterLink>
