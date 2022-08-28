@@ -48,15 +48,22 @@ export const useUsersStore = defineStore({
     },
 
     async get_plan(planId) {
+      await axios.get(`https://localhost/api/plan`, {params: {planId: planId}})
+                  .then((res) => {
+                    this.history[planId] = res.data;
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  })
     },
 
-    async post_plan() {
+    async post_plan(date) {
         if (validatePlan(this.plan)) {
             const data = {
                 breakfast: this.plan["Breakfast"],
                 lunch: this.plan["Lunch"],
                 dinner: this.plan["Dinner"],
-                plannedDate: this.plan["plannedDate"]
+                plannedDate: date
             }
             await axios.post(`https://localhost/api/plan`, data)
                         .then((res) => {
@@ -72,6 +79,13 @@ export const useUsersStore = defineStore({
     },
 
     async get_history(startDate, endDate) {
+      await axios.get(`https://localhost/api/history`, {params: {startDate: startDate, endDate: endDate}})
+                  .then((res) => {
+                    this.history = res.data.plans;
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  })
     },
   },
 });

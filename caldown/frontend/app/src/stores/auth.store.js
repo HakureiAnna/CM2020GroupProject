@@ -26,6 +26,7 @@ export const useAuthStore = defineStore({
           this.message["login_error"] = error_messages[status];
       });
     },
+
     async logout() {
       if (!this.user) return;
 
@@ -42,12 +43,14 @@ export const useAuthStore = defineStore({
         this.message["logout_error"] = error_messages[status];
       });
     },
+    
     async signUp(username, password, confirmed_password) {
       if (password !== confirmed_password) {
         return;
       }
       await axios.post(`https://localhost/api/signup`, { user:username, pass:password })
         .then((res) => {
+            localStorage.setItem("user", JSON.stringify(res.data.token));
             this.user = res.data.token;
             router.push("/");
           })

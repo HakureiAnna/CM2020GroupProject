@@ -1,24 +1,41 @@
 <script setup>
-import { ref, onMounted } from "vue";
 import PlanCard from "@/components/PlanCard.vue";
 
-const date = ref(0);
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
 
-onMounted (() => {
-  const startDate = new Date();
-  const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
-  date.value = [startDate, endDate];
-});
+import { sanitizeDate } from "@/helpers";
+import { useUsersStore } from "@/stores";
+
+const usersStore = useUsersStore();
+const { history } = storeToRefs(usersStore);
+
+const date = ref();
 
 const handleDate = (modelData) => {
-  date.value = modelData;
-  console.log(modelData);
+  let [startDate, endDate] = modelData;
+
+  if (!startDate || !endDate) return;
+
+  startDate = sanitizeDate(startDate);
+  endDate = sanitizeDate(endDate);
+
+  date.value = [startDate, endDate];
+}
+
+const onClosed = () => {
+  if (!date.value || !date.value[0] || !date.value[1]) return;
+  const [startDate, endDate] = date.value;
+
+  usersStore.get_history(startDate, endDate);
 }
 </script>
 
 <template>
-  <main>
-    <Datepicker v-model="date" @update:modelValue="handleDate" range />
-    <!-- <PlanCard plannedDate="" calories="" planId="" /> -->
-  </main>
+  <div class="container">
+    <Datepicker v-model="date" @update:modelValue="handleDate" :enableTimePicker="false" @closed="onClosed" range />
+    <div class="col" v-for="plan in history">
+      <PlanCard :plannedDate="plan['plannedDate']" :calories="plan['calories']" :planId="plan['planId']" />
+    </div>
+  </div>
 </template>
